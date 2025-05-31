@@ -187,7 +187,7 @@ export default function GameResult() {
                     <p className="font-p_semibold text-[32px] text-c_black leading-[39px]">
                         최종 순위는
                         <br />
-                        {"{{rank}}"}위 입니다.
+                        {data?.data.find((x) => x.me)?.rank}위 입니다.
                     </p>
                 </div>
 
