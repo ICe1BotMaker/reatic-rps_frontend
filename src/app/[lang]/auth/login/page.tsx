@@ -44,7 +44,7 @@ export default function Login() {
                         </div>
 
                         <div className="px-[16px] flex flex-col gap-[16px]">
-                            <div className="flex-1 flex justify-end">
+                            <div className="flex-1 flex justify-end animate-[upAnimation_.3s_both_.5s]">
                                 <div className="p-[16px_20px] rounded-[32px] rounded-tr-[0] bg-c_primary">
                                     <span className="font-p_medium text-[16px] text-white">
                                         로그인이 필요한 이유?
@@ -52,7 +52,7 @@ export default function Login() {
                                 </div>
                             </div>
 
-                            <div className="flex-1 flex justify-start">
+                            <div className="flex-1 flex justify-start animate-[upAnimation_.3s_both_2s]">
                                 <div className="p-[16px_20px] rounded-[32px] rounded-tl-[0] bg-[#F1F1F1]">
                                     <span className="font-p_medium text-[16px] text-c_black">
                                         참여 확인과 상품 증정을 위해

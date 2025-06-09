@@ -8,7 +8,7 @@ export enum ButtonVariants {
     primary = `${ButtonVariants.base} bg-c_primary text-white`,
     primary_light = `${ButtonVariants.base} bg-c_primary_light text-c_primary_softlight`,
 
-    disabled = `${ButtonVariants.base} bg-[#F4F4F4] text-[#A9A9A9]`,
+    disabled = `${ButtonVariants.base} bg-[#F4F4F4] text-[#A9A9A9] !transition-none active:!scale-100`,
 
     black = `${ButtonVariants.base} bg-c_black text-white`,
 
@@ -25,7 +25,10 @@ interface ButtonProps {
 
 export const Button = ({ variants, Icon, children, onClick }: ButtonProps) => {
     return (
-        <div className={ButtonVariants[variants]} onClick={onClick}>
+        <div
+            className={ButtonVariants[variants]}
+            onClick={() => variants !== "disabled" && onClick?.()}
+        >
             {Icon}
             {children}
         </div>

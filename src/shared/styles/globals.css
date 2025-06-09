@@ -15,10 +15,19 @@ body {
     user-select: none;
 }
 
-
+@keyframes upAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
 
 @layer base {
-  :root {
+    :root {
         --background: 0 0% 100%;
         --foreground: 222.2 84% 4.9%;
         --card: 0 0% 100%;
@@ -53,7 +62,7 @@ body {
         --sidebar-border: 220 13% 91%;
         --sidebar-ring: 217.2 91.2% 59.8%;
     }
-  .dark {
+    .dark {
         --background: 222.2 84% 4.9%;
         --foreground: 210 40% 98%;
         --card: 222.2 84% 4.9%;
@@ -89,13 +98,11 @@ body {
     }
 }
 
-
-
 @layer base {
-  * {
-    @apply border-border;
+    * {
+        @apply border-border;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }
