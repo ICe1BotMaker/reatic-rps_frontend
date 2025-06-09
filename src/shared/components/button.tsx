@@ -1,5 +1,5 @@
 export enum ButtonVariants {
-    base = "transition-all duration-[.2s] active:scale-95 w-full flex justify-center items-center gap-[10px] p-[16px_18px] rounded-[8px] font-p_semibold text-[16px]",
+    base = "transition-all duration-100 active:scale-[.975] w-full flex justify-center items-center gap-[10px] p-[16px_18px] rounded-[8px] font-p_semibold text-[16px]",
 
     // 기본
     white = `${ButtonVariants.base} bg-c_white text-c_primary_softlight`,
