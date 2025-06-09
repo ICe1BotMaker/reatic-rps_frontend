@@ -191,7 +191,7 @@ export default function Game() {
                         return (
                             <div
                                 key={type}
-                                className={`${containerStyle} flex justify-center items-center w-[120px] h-[120px] rounded-full bg-white shadow-[inset_0_0_32px_#0013ff7f,_0_4px_0_#0000003f] transition-all duration-[.2s]`}
+                                className={`${containerStyle} flex justify-center items-center w-[120px] h-[120px] rounded-full bg-white shadow-[inset_0_0_32px_#0013ff7f,_0_4px_0_#0000003f] transition-all duration-[.2s] active:scale-95`}
                                 style={{ opacity: isActive ? "1" : "0.5" }}
                                 onClick={() =>
                                     !isRoundFinished && setSelected(type)
