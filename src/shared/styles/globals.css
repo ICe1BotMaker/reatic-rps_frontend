@@ -15,6 +15,11 @@ body {
     user-select: none;
 }
 
+ul {
+    list-style: circle;
+    margin: 0 12px;
+}
+
 @keyframes upAnimation {
     from {
         opacity: 0;
