@@ -19,6 +19,7 @@ import { ReactComponent as RockIcon } from "@/assets/game/rock.svg";
 import { ReactComponent as PaperIcon } from "@/assets/game/paper.svg";
 import { play } from "@/features/game/api";
 import { TypeRPS, TypeRPSKorea } from "@/features/game/types";
+import ConfettiEffect from "@/shared/components/confetti-particle";
 
 export default function Game() {
     const getLocalizedPath = useLocalizedPath();
@@ -310,6 +311,8 @@ export default function Game() {
                         {renderFlow()}
                     </motion.div>
                 </AnimatePresence>
+
+                {winningStack > 0 && <ConfettiEffect key={winningStack} />}
             </div>
         </>
     );
