@@ -79,7 +79,9 @@ export default function Ready() {
                 시작하기
             </Button>
         ) : (
-            <Button variants="white">{timer.currentTime}초 후 시작</Button>
+            <Button variants="white_disabled">
+                {timer.currentTime}초 후 시작
+            </Button>
         );
     }, [handleStart, timer.currentTime, timer.isStoped]);
 
