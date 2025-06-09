@@ -120,7 +120,8 @@ export default function Ready() {
 
                             <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[12px] items-center">
                                 <a
-                                    href="mailto:contract@reaticindustry.com"
+                                    target="_blank"
+                                    href="https://www.reaticindustry.com/samgakgame"
                                     className="font-p_regular text-[14px] text-white underline"
                                 >
                                     광고 문의하기
