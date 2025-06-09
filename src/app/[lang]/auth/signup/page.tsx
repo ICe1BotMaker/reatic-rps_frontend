@@ -138,6 +138,7 @@ export default function SignUp() {
 
                             <div className="flex flex-col gap-[14px]">
                                 <Input
+                                    type="tel"
                                     value={user.phone}
                                     setValue={(phone) =>
                                         setUser((prev) => ({ ...prev, phone }))
