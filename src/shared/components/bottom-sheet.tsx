@@ -4,7 +4,6 @@ import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { useEffect } from "react";
 
 import { HapticRunner } from "@/shared/javascripts/haptic.runner";
-import { useBar } from "../stores/bar.zustand";
 
 interface BottomSheetProps {
     isOpen: boolean;
@@ -19,8 +18,6 @@ export const BottomSheet = ({
     onClose,
     children,
 }: BottomSheetProps) => {
-    const bar = useBar();
-
     useEffect(() => {
         if (isOpen) document.body.style.overflow = "hidden";
         else document.body.style.overflow = "";
@@ -53,10 +50,7 @@ export const BottomSheet = ({
                     />
 
                     <motion.div
-                        className="fixed z-[1001] inset-x-[16px] bg-white rounded-t-[20px] rounded-b-[8px]"
-                        style={{
-                            bottom: `${bar.bottom + 16}px`,
-                        }}
+                        className="fixed z-[1001] inset-x-0 bottom-0 bg-white rounded-t-[20px] rounded-b-0"
                         drag="y"
                         dragConstraints={{ top: 0, bottom: 0 }}
                         onDragEnd={handleDragEnd}
