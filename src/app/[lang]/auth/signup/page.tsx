@@ -136,13 +136,20 @@ export default function SignUp() {
                                 전화번호
                             </span>
 
-                            <Input
-                                value={user.phone}
-                                setValue={(phone) =>
-                                    setUser((prev) => ({ ...prev, phone }))
-                                }
-                                placeholder="전화번호를 입력해 주세요."
-                            />
+                            <div className="flex flex-col gap-[14px]">
+                                <Input
+                                    value={user.phone}
+                                    setValue={(phone) =>
+                                        setUser((prev) => ({ ...prev, phone }))
+                                    }
+                                    placeholder="전화번호를 입력해 주세요."
+                                />
+
+                                <span className="font-regular text-[14px] text-[#ff0000]">
+                                    상품 증정을 위해 정확한 전화번호를 입력해
+                                    주세요.
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
