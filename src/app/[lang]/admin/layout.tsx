@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Sidebar,
     SidebarContent,
@@ -9,14 +11,28 @@ import {
     SidebarMenuItem,
     SidebarProvider,
 } from "@/components/ui/sidebar";
-import { LeafIcon, UserIcon } from "lucide-react";
+import { ChartPieIcon, LeafIcon, UserIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
+
+import { match } from "@/shared/utils/url-match";
 
 export default function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const pathname = usePathname();
+
+    if (match(pathname, "/regex:^[a-z]+$/admin")) {
+        return children;
+    }
+
     const items = [
+        {
+            title: "인사이트",
+            url: "/ko/admin/insight",
+            icon: ChartPieIcon,
+        },
         {
             title: "회원 관리",
             url: "/ko/admin/user",
