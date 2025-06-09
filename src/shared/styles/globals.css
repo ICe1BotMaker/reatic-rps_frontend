@@ -15,7 +15,7 @@ body {
     user-select: none;
 }
 
-ul {
+.uld {
     list-style: circle;
     margin: 0 12px;
 }

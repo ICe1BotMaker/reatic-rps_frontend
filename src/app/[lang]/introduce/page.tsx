@@ -91,7 +91,7 @@ export default function Introduce() {
             </div>
 
             <BottomSheet isOpen={isBottomSheetOpen}>
-                <ul className="p-[24px] max-h-[400px] overflow-y-scroll">
+                <ul className="p-[24px] max-h-[400px] overflow-y-scroll uld">
                     <li className="font-p_regular text-[14px] text-c_black py-[12px]">
                         본 게임은 정해진 기간 내에 가위바위보를 연속으로 이긴
                         횟수가 가장 많은 1인이 우승하고 상금을 받습니다.
