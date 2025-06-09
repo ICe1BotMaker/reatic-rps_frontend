@@ -107,7 +107,7 @@ export default function SignUp() {
 
                         <div className="flex flex-col items-center gap-[4px]">
                             <span className="font-semibold text-[20px] text-c_black">
-                                {user.nickname}님
+                                {user.nickname}
                             </span>
 
                             <span className="font-medium text-[14px] text-c_black">
