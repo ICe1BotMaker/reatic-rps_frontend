@@ -10,4 +10,4 @@ export interface ImageGroup {
     [key: string]: ImageAsset[];
 }
 
-export type Actions = "main_loop";
+export type Actions = "main_loop" | "hi";

@@ -36,6 +36,18 @@ const IMAGE_GROUPS: ImageGroup = {
                 priority: "medium",
                 preloaded: true,
             })) as ImageAsset[]),
+        ...(Array(161)
+            .fill(0)
+            .map((_, i) => ({
+                id:
+                    "3_hi" +
+                    (i < 10 ? `000${i}` : i < 100 ? `00${i}` : `0${i}`),
+                src: `/ko/rsp/3_hi/${
+                    "3_hi" + (i < 10 ? `000${i}` : i < 100 ? `00${i}` : `0${i}`)
+                }.png`,
+                priority: "medium",
+                preloaded: true,
+            })) as ImageAsset[]),
     ],
 };
 

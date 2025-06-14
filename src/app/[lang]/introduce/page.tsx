@@ -10,6 +10,7 @@ import { Button } from "@/shared/components/button";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
+import { LazyHandCharacter } from "@/shared/components/lazy-hand-character";
 
 export default function Introduce() {
     const getLocalizedPath = useLocalizedPath();
@@ -23,7 +24,7 @@ export default function Introduce() {
         const timeout = setTimeout(() => {
             setFlow("SECOND");
             setIsBottomSheetOpen(true);
-        }, 3000);
+        }, 12000);
 
         return () => {
             clearTimeout(timeout);
@@ -77,6 +78,17 @@ export default function Introduce() {
                     paddingBottom: `${bar.bottom}px`,
                 }}
             >
+                {!isBottomSheetOpen && (
+                    <LazyHandCharacter
+                        action="hi"
+                        width={window.innerWidth}
+                        style={{
+                            position: "absolute",
+                            bottom: "0",
+                        }}
+                    />
+                )}
+
                 <AnimatePresence mode="popLayout">
                     <motion.div
                         key={flow}
@@ -84,6 +96,7 @@ export default function Introduce() {
                         initial="initial"
                         animate="animate"
                         exit="exit"
+                        className="sticky z-1"
                     >
                         {renderHeader()}
                     </motion.div>
