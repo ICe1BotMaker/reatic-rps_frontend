@@ -4,6 +4,7 @@ import { HelpCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { LazyHandCharacter } from "@/shared/components/lazy-hand-character";
 import { BottomSheet } from "@/shared/components/bottom-sheet";
 import { Button } from "@/shared/components/button";
 import { Link } from "@/shared/components/link";
@@ -35,7 +36,16 @@ export default function Home() {
                     paddingBottom: `${bar.bottom}px`,
                 }}
             >
-                <div className="h-full flex flex-col justify-between">
+                <LazyHandCharacter
+                    action="main_loop"
+                    width={window.innerWidth}
+                    style={{
+                        position: "absolute",
+                        bottom: "100px",
+                    }}
+                />
+
+                <div className="sticky z-1 h-full flex flex-col justify-between">
                     <div className="p-[36px_16px]">
                         <div className="relative">
                             <p className="font-p_semibold text-[32px] text-white leading-[39px]">
