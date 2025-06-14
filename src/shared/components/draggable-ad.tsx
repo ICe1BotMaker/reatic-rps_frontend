@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronUpIcon } from "lucide-react";
 import { useRef, useCallback, useState, TouchEvent } from "react";
 
 interface DraggableProps {
@@ -38,16 +39,25 @@ export const DraggableAD = ({ isDragged, onDragged }: DraggableProps) => {
 
     return (
         <div
-            className={`w-[320px] h-[320px] bg-gray-100 ${
-                isDragged ? "opacity-0" : ""
-            }`}
+            className="flex flex-col gap-[16px] items-center"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             style={{
                 transform: `translateY(${translateY}px)`,
                 transition: translateY === 0 ? "transform 0.2s ease" : "none",
+                opacity: isDragged ? "0" : "1",
             }}
-        />
+        >
+            <div className="flex flex-col items-center gap-[6px]">
+                <ChevronUpIcon />
+
+                <span className="font-p_regular text-[14px] text-c_black">
+                    위로 올려서 순위표 보기
+                </span>
+            </div>
+
+            <div className="size-[320px] bg-gray-100" />
+        </div>
     );
 };

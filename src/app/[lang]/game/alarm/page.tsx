@@ -2,11 +2,16 @@
 
 "use client";
 
+import { useRouter } from "next/navigation";
+
+import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
 
 import { Button } from "@/shared/components/button";
 
 export default function GameAlarm() {
+    const getLocalizedPath = useLocalizedPath();
+    const router = useRouter();
     const bar = useBar();
 
     return (
@@ -34,7 +39,17 @@ export default function GameAlarm() {
                 </div>
 
                 <div className="pt-[10px] pb-[20px] px-[16px]">
-                    <Button variants="black">알림 설정</Button>
+                    <Button
+                        variants="black"
+                        onClick={() => {
+                            alert(
+                                "알림이 설정되었습니다.\n카카오톡 채널로 메시지가 발송됩니다."
+                            );
+                            router.push(getLocalizedPath("/game/result"));
+                        }}
+                    >
+                        알림 설정
+                    </Button>
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { CheckIcon } from "lucide-react";
+import moment from "moment";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
@@ -32,6 +33,7 @@ export default function SignUp() {
 
         name: "",
         phone: "",
+        birthDate: moment().format("YYYY-MM-DD"),
     });
 
     useEffect(() => {
@@ -49,6 +51,7 @@ export default function SignUp() {
 
                 name: "",
                 phone: "",
+                birthDate: moment().format("YYYY-MM-DD"),
             });
         }
     }, [searchParams]);
@@ -77,7 +80,10 @@ export default function SignUp() {
     };
 
     const signUpPossible = useMemo(
-        () => /^[가-힣]+$/.test(user.name) && /^\d{11}$/.test(user.phone),
+        () =>
+            /^[가-힣]+$/.test(user.name) &&
+            /^\d{11}$/.test(user.phone) &&
+            /^(\d{4})-(\d{2})-(\d{2})$/.test(user.birthDate),
         [user]
     );
 
@@ -94,7 +100,7 @@ export default function SignUp() {
             <div
                 className="w-full p-[36px_16px]"
                 style={{
-                    height: `calc(100% - 86px - 42px - ${bar.bottom}px)`,
+                    height: `calc(100% - 86px - 62px - ${bar.bottom}px)`,
                 }}
             >
                 <div className="flex flex-col items-center gap-[48px]">
@@ -128,6 +134,20 @@ export default function SignUp() {
                                     setUser((prev) => ({ ...prev, name }))
                                 }
                                 placeholder="이름을 입력해 주세요."
+                            />
+                        </div>
+
+                        <div className="flex flex-col gap-[6px]">
+                            <span className="font-regular text-[16px] text-c_black">
+                                생년월일
+                            </span>
+
+                            <Input
+                                value={user.birthDate}
+                                setValue={(birthDate) =>
+                                    setUser((prev) => ({ ...prev, birthDate }))
+                                }
+                                placeholder="생년월일 입력해 주세요."
                             />
                         </div>
 

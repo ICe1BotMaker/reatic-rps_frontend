@@ -14,6 +14,8 @@ import { useLocalizedPath } from "@/shared/utils/locale";
 import { ClapperboardIcon, Share2Icon } from "lucide-react";
 import { useSeasonDetail, useSeasonTopTen } from "@/features/season/hooks";
 import moment from "moment";
+import { start } from "@/features/game/api";
+import { enterSeason, getActiveSeasons } from "@/features/season/api";
 
 export default function GameResult() {
     const getLocalizedPath = useLocalizedPath();
@@ -33,6 +35,41 @@ export default function GameResult() {
                 : 0,
     });
 
+    const startGame = async (id: number) => {
+        const { currentRound, seasonId } = (
+            await start({
+                seasonId: id,
+            })
+        ).data;
+
+        localStorage.setItem("currentRound", String(currentRound));
+        localStorage.setItem("seasonId", String(seasonId));
+    };
+
+    const handleStart = useCallback(async () => {
+        const response = await getActiveSeasons();
+
+        if (response.data.length === 0) {
+            alert("활성화된 시즌이 없습니다.");
+            return;
+        }
+
+        try {
+            await startGame(response.data[response.data.length - 1].id);
+            router.push(getLocalizedPath("/game"));
+        } catch {
+            try {
+                await enterSeason({
+                    seasonId: response.data[response.data.length - 1].id,
+                });
+                await startGame(response.data[response.data.length - 1].id);
+                router.push(getLocalizedPath("/game"));
+            } catch {
+                alert("기회가 모두 소진되었습니다");
+            }
+        }
+    }, [getLocalizedPath, router]);
+
     const renderFooter = useCallback(() => {
         return (
             <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[12px] items-center">
@@ -47,6 +84,27 @@ export default function GameResult() {
                     <Button
                         variants="primary_light"
                         Icon={<Share2Icon size={20} />}
+                        onClick={async () => {
+                            if (typeof window === "undefined") return;
+
+                            const { Kakao } = window as unknown as {
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                Kakao: any;
+                            };
+
+                            Kakao.cleanup();
+                            Kakao.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY);
+
+                            if (Kakao.isInitialized) {
+                                await Kakao.Share.sendCustom({
+                                    templateId: 121362,
+                                });
+
+                                handleStart();
+                            } else {
+                                alert("카카오 SDK 오류 발생");
+                            }
+                        }}
                     >
                         공유하고 한판 더하기
                     </Button>
@@ -54,13 +112,14 @@ export default function GameResult() {
                     <Button
                         variants="primary"
                         Icon={<ClapperboardIcon size={20} />}
+                        onClick={handleStart}
                     >
                         광고보고 한판 더하기 (3회 남음)
                     </Button>
                 </div>
             </div>
         );
-    }, [getLocalizedPath, router]);
+    }, [getLocalizedPath, handleStart, router]);
 
     const renderFlow = useCallback(() => {
         if (isAdDragged) {
@@ -168,9 +227,9 @@ export default function GameResult() {
 
                                 <span className="font-p_bold text-[32px] text-c_black">
                                     D-
-                                    {moment(detail?.data.endDate || "").format(
-                                        "D"
-                                    )}
+                                    {moment(
+                                        detail?.data.endDateTime || ""
+                                    ).format("D")}
                                 </span>
                             </div>
                         </div>
@@ -203,7 +262,7 @@ export default function GameResult() {
         );
     }, [
         data?.data,
-        detail?.data.endDate,
+        detail?.data.endDateTime,
         getLocalizedPath,
         isAdDragged,
         renderFooter,

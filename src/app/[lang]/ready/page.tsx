@@ -49,28 +49,18 @@ export default function Ready() {
 
         try {
             await startGame(response.data[response.data.length - 1].id);
+            router.push(getLocalizedPath("/game"));
         } catch {
             try {
                 await enterSeason({
                     seasonId: response.data[response.data.length - 1].id,
                 });
                 await startGame(response.data[response.data.length - 1].id);
+                router.push(getLocalizedPath("/game"));
             } catch {
                 alert("기회가 모두 소진되었습니다");
             }
-        } finally {
-            // await createSeason({
-            //     seasonName: "new season",
-            //     startDate: "2025-05-31",
-            //     endDate: "2024-06-01",
-            // });
-            // await enterSeason({
-            //     seasonId: response.data[0].id + 1,
-            // });
-            // await startGame(response.data[0].id + 1);
         }
-
-        router.push(getLocalizedPath("/game"));
     }, [getLocalizedPath, router]);
 
     const renderButton = useCallback(() => {

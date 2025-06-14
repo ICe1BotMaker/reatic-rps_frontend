@@ -53,8 +53,8 @@ export default function Season() {
 
     const [newSeason, setNewSeason] = useState({
         seasonName: "",
-        startDate: "",
-        endDate: "",
+        startDateTime: "",
+        endDateTime: "",
     });
 
     const queryClient = useQueryClient();
@@ -69,7 +69,11 @@ export default function Season() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["seasons"] });
             setCreateSeasonDialog(false);
-            setNewSeason({ seasonName: "", startDate: "", endDate: "" });
+            setNewSeason({
+                seasonName: "",
+                startDateTime: "",
+                endDateTime: "",
+            });
         },
         onError: (error: any) => {
             setErrorDialog({
@@ -125,8 +129,8 @@ export default function Season() {
     const handleCreateSeason = () => {
         if (
             !newSeason.seasonName ||
-            !newSeason.startDate ||
-            !newSeason.endDate
+            !newSeason.startDateTime ||
+            !newSeason.endDateTime
         ) {
             setErrorDialog({
                 open: true,
@@ -135,7 +139,11 @@ export default function Season() {
             });
             return;
         }
-        createSeasonMutation.mutate(newSeason);
+        createSeasonMutation.mutate({
+            ...newSeason,
+            startDateTime: `${newSeason.startDateTime}T00:00:00`,
+            endDateTime: `${newSeason.endDateTime}T00:00:00`,
+        });
     };
 
     const openParticipantsDialog = (seasonId: number) => {
@@ -198,11 +206,11 @@ export default function Season() {
                                     </label>
                                     <Input
                                         type="date"
-                                        value={newSeason.startDate}
+                                        value={newSeason.startDateTime}
                                         onChange={(e) =>
                                             setNewSeason((prev) => ({
                                                 ...prev,
-                                                startDate: e.target.value,
+                                                startDateTime: e.target.value,
                                             }))
                                         }
                                     />
@@ -213,11 +221,11 @@ export default function Season() {
                                     </label>
                                     <Input
                                         type="date"
-                                        value={newSeason.endDate}
+                                        value={newSeason.endDateTime}
                                         onChange={(e) =>
                                             setNewSeason((prev) => ({
                                                 ...prev,
-                                                endDate: e.target.value,
+                                                endDateTime: e.target.value,
                                             }))
                                         }
                                     />
@@ -275,12 +283,12 @@ export default function Season() {
                                 <TableCell>{season.seasonName}</TableCell>
                                 <TableCell>
                                     {new Date(
-                                        season.startDate
+                                        season.startDateTime
                                     ).toLocaleDateString()}
                                 </TableCell>
                                 <TableCell>
                                     {new Date(
-                                        season.endDate
+                                        season.endDateTime
                                     ).toLocaleDateString()}
                                 </TableCell>
                                 <TableCell>

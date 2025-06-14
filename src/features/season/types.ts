@@ -2,18 +2,18 @@
 export type SeasonsResponse = {
     active: boolean;
     createdAt: string;
-    endDate: string;
+    endDateTime: string;
     id: number;
     paused: boolean;
     seasonName: string;
-    startDate: string;
+    startDateTime: string;
 }[];
 
 // 시즌 생성 req
 export interface CreateSeasonRequest {
     seasonName: string;
-    startDate: string;
-    endDate: string;
+    startDateTime: string;
+    endDateTime: string;
 }
 
 // 시즌 참가 신청 req
@@ -42,8 +42,8 @@ export interface GetSeasonDetailResponse {
     id: number;
     createdAt: string;
     seasonName: string;
-    startDate: string;
-    endDate: string;
+    startDateTime: string;
+    endDateTime: string;
     active: boolean;
     paused: boolean;
 }

@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useMemo, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useBar } from "@/shared/stores/bar.zustand";
+import Script from "next/script";
 
 export const FrozenRoute = ({
     children,
@@ -63,6 +64,16 @@ export const FrozenRoute = ({
                     className="relative bg-white"
                 >
                     {children}
+
+                    <Script
+                        src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+                        integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
+                        crossOrigin="anonymous"
+                        strategy="lazyOnload"
+                        onLoad={() => {
+                            console.log("loadend event: kakao-sdk");
+                        }}
+                    />
                 </motion.div>
             </AnimatePresence>
         </LayoutRouterContext.Provider>
