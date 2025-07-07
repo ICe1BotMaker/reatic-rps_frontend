@@ -74,7 +74,7 @@ export function SquareAd({
         <AdSense
             adSlot={adSlot}
             adFormat="rectangle"
-            style={{ display: "block", width: "300px", height: "250px" }}
+            style={{ display: "block", width: "320px", height: "320px" }}
             className={className}
         />
     );
