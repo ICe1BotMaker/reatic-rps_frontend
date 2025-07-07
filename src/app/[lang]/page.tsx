@@ -2,9 +2,8 @@
 
 import { HelpCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { LazyHandCharacter } from "@/shared/components/lazy-hand-character";
 import { BottomSheet } from "@/shared/components/bottom-sheet";
 import { Button } from "@/shared/components/button";
 import { Link } from "@/shared/components/link";
@@ -27,6 +26,14 @@ export default function Home() {
         router.push(getLocalizedPath("/auth/login"));
     };
 
+    useEffect(() => {
+        try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error("AdSense error", e);
+        }
+    }, []);
+
     return (
         <>
             <div
@@ -36,15 +43,6 @@ export default function Home() {
                     paddingBottom: `${bar.bottom}px`,
                 }}
             >
-                <LazyHandCharacter
-                    action="main_loop"
-                    width={window.innerWidth}
-                    style={{
-                        position: "absolute",
-                        bottom: "100px",
-                    }}
-                />
-
                 <div className="sticky z-1 h-full flex flex-col justify-between">
                     <div className="p-[36px_16px]">
                         <div className="relative">
@@ -59,6 +57,15 @@ export default function Home() {
                                 onClick={() => setIsBottomSheetOpen(true)}
                             />
                         </div>
+
+                        <ins
+                            className="adsbygoogle"
+                            style={{ display: "block" }}
+                            data-ad-client="ca-pub-8406696765705881"
+                            data-ad-slot="1356735070"
+                            data-ad-format="auto"
+                            data-full-width-responsive="true"
+                        />
                     </div>
 
                     <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[8px]">

@@ -1,5 +1,3 @@
-import { LoadingIndicator } from "@/shared/components/loading-indicator";
-import { ImageProvider } from "@/shared/context/image-context";
 import { FramerProvider } from "@/app/[lang]/provider";
 
 import "@/shared/styles/globals.css";
@@ -25,11 +23,7 @@ export default function RootLayout({
             </head>
 
             <body>
-                <ImageProvider>
-                    <LoadingIndicator />
-
-                    <FramerProvider>{children}</FramerProvider>
-                </ImageProvider>
+                <FramerProvider>{children}</FramerProvider>
             </body>
         </html>
     );
