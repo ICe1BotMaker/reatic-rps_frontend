@@ -12,6 +12,7 @@ import { Button } from "@/shared/components/button";
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
 import { useTimer } from "@/shared/hooks/use-timer";
+import { BannerAd } from "@/shared/components/google-ads";
 
 export default function Ready() {
     const getLocalizedPath = useLocalizedPath();
@@ -103,8 +104,8 @@ export default function Ready() {
 
                             {timer.currentTime > 5 && (
                                 <div className="pb-[16px] h-full flex flex-col justify-center">
-                                    <div className="w-full h-[180px] bg-white" />
-                                    <div className="w-full h-[180px] bg-white" />
+                                    <BannerAd adSlot="1356735070" />
+                                    <BannerAd adSlot="5406826578" />
                                 </div>
                             )}
 
