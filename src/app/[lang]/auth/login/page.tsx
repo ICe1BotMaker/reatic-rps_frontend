@@ -103,7 +103,7 @@ export default function Login() {
                             }
                             onClick={() => {
                                 const REDIRECT_URL =
-                                    "http://ec2-52-79-239-238.ap-northeast-2.compute.amazonaws.com:8080/api/members/login/callback";
+                                    "http://api.samgakgame.com/api/members/login/callback";
 
                                 const CLIENT_ID =
                                     "4b441a6d5dd49f091810749329c7ae3c";
