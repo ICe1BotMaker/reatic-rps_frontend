@@ -112,7 +112,7 @@ export default function GameResult() {
                     <Button
                         variants="primary"
                         Icon={<ClapperboardIcon size={20} />}
-                        onClick={handleStart}
+                        onClick={() => router.push(getLocalizedPath("/ad"))}
                     >
                         광고보고 한판 더하기 (3회 남음)
                     </Button>

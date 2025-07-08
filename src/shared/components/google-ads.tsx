@@ -13,6 +13,8 @@ interface AdSenseProps {
 declare global {
     interface Window {
         adsbygoogle: object[];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        googletag: any;
     }
 }
 
