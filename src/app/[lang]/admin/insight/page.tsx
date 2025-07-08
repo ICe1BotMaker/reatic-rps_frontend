@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Gamepad2Icon,
     SmileIcon,
@@ -8,7 +10,11 @@ import {
 
 import { PieChart } from "@/shared/components/pie-chart";
 
+import { useInsight } from "@/features/admin/insight/hooks";
+
 export default function Insight() {
+    const { data: insight } = useInsight();
+
     return (
         <div className="flex-1 p-[50px]">
             <div className="w-full grid grid-cols-2 gap-[20px]">
@@ -26,7 +32,7 @@ export default function Insight() {
                             <TrendingUpIcon />
 
                             <span className="font-p_bold text-[28px] text-c_black">
-                                9,381명
+                                {insight?.data.totalMembers.toLocaleString()}명
                             </span>
                         </div>
                     </div>
@@ -46,7 +52,8 @@ export default function Insight() {
                             <TrendingUpIcon />
 
                             <span className="font-p_bold text-[28px] text-c_black">
-                                72,302번
+                                {insight?.data.totalParticipations.toLocaleString()}
+                                번
                             </span>
                         </div>
                     </div>
@@ -63,23 +70,24 @@ export default function Insight() {
                         </div>
 
                         <PieChart
-                            data={[
-                                {
-                                    label: "10대",
-                                    value: 128,
-                                    color: "#075B5E",
-                                },
-                                {
-                                    label: "20대",
-                                    value: 320,
-                                    color: "#FF3F33",
-                                },
-                                {
-                                    label: "30대",
-                                    value: 47,
-                                    color: "#9FC87E",
-                                },
-                            ]}
+                            data={
+                                Object.keys(
+                                    insight?.data.ageGroupDistribution || {}
+                                ).map((key) => {
+                                    const value =
+                                        insight?.data.ageGroupDistribution[key];
+
+                                    return {
+                                        label: `${key}대`,
+                                        value,
+                                        color: "#075B5E",
+                                    };
+                                }) as unknown as {
+                                    label: string;
+                                    value: number;
+                                    color: string;
+                                }[]
+                            }
                             width={300}
                             height={300}
                         />
@@ -100,12 +108,16 @@ export default function Insight() {
                             data={[
                                 {
                                     label: "남성",
-                                    value: 402,
+                                    value:
+                                        insight?.data.genderDistribution.MALE ||
+                                        0,
                                     color: "#0256af",
                                 },
                                 {
                                     label: "여성",
-                                    value: 217,
+                                    value:
+                                        insight?.data.genderDistribution
+                                            .FEMALE || 0,
                                     color: "#bb1563",
                                 },
                             ]}
