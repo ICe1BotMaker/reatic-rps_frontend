@@ -78,10 +78,7 @@ export const FrozenRoute = ({
                                 window.adsbygoogle
                             ) {
                                 window.adsbygoogle = window.adsbygoogle || [];
-                                window.adsbygoogle.push({
-                                    google_ad_client: "ca-pub-8406696765705881",
-                                    enable_page_level_ads: true,
-                                });
+                                window.adsbygoogle.push({});
                             }
                         }}
                     />

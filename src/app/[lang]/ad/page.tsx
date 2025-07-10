@@ -2,12 +2,9 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Ad() {
-    const [adLoaded, setAdLoaded] = useState(false);
-    const [adError, setAdError] = useState<string | null>(null);
-
     useEffect(() => {
         // Google Ad Manager 스크립트 로드 확인
         const loadGoogleAdManager = () => {
@@ -58,8 +55,6 @@ export default function Ad() {
                 ad.addEventListener("ad_loaded", () => {
                     console.log("리워드 전체화면 광고 로드 완료");
                     console.log("사용자 데이터:", customTargeting);
-                    setAdLoaded(true);
-                    setAdError(null);
 
                     // 광고 즉시 표시 (또는 버튼 클릭 시 표시하도록 수정 가능)
                     ad.show();
@@ -81,8 +76,6 @@ export default function Ad() {
 
                 ad.addEventListener("ad_failed_to_load", (error: any) => {
                     console.error("광고 로드 실패:", error);
-                    setAdError("광고 로드에 실패했습니다.");
-                    setAdLoaded(false);
                 });
 
                 // 광고 로드 시작
@@ -120,15 +113,5 @@ export default function Ad() {
     };
 
     // 리워드 전체화면 광고는 별도의 HTML 태그가 필요하지 않습니다
-    return (
-        <div className="reward-ad-container">
-            {adLoaded && (
-                <p className="text-green-600">광고가 로드되었습니다!</p>
-            )}
-            {adError && <p className="text-red-600">{adError}</p>}
-            <p className="text-gray-600">
-                리워드 전체화면 광고를 로드하고 있습니다...
-            </p>
-        </div>
-    );
+    return <ins className="adsbygoogle" />;
 }

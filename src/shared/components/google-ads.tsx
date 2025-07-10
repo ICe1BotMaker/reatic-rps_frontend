@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-
 interface AdSenseProps {
     adSlot: string;
     adFormat?: string;
@@ -25,16 +23,6 @@ export function AdSense({
     style = { display: "block" },
     className = "",
 }: AdSenseProps) {
-    useEffect(() => {
-        try {
-            if (typeof window !== "undefined" && window.adsbygoogle) {
-                window.adsbygoogle.push({});
-            }
-        } catch (error) {
-            console.error("AdSense error:", error);
-        }
-    }, []);
-
     return (
         <ins
             className={`adsbygoogle ${className}`}
