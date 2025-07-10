@@ -29,7 +29,7 @@ export default function Ad() {
         const initializeAd = () => {
             window.googletag.cmd.push(() => {
                 // 실제 광고 단위 ID로 교체하세요
-                const adUnitId = "/6355419/Travel/Europe"; // 예시 ID
+                const adUnitId = "ca-app-pub-8406696765705881~8267620170"; // 예시 ID
 
                 const ad = new window.googletag.RewardedInterstitialAd(
                     adUnitId
