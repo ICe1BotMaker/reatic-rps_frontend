@@ -6,19 +6,33 @@ import { useEffect } from "react";
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { Storage } from "@/services/storage";
 
+import { kakaoLogin } from "@/features/auth/api";
+
 export default function OauthKakao() {
     const getLocalizedPath = useLocalizedPath();
     const searchParams = useSearchParams();
     const router = useRouter();
 
     useEffect(() => {
-        if (
-            searchParams.get("accessToken") &&
-            searchParams.get("refreshToken")
-        ) {
-            Storage.setAccessToken(searchParams.get("accessToken") as string);
-            router.push(getLocalizedPath("/introduce"));
-        }
+        (async () => {
+            if (searchParams.get("code")) {
+                const response = await kakaoLogin({
+                    code: searchParams.get("code") as string,
+                });
+                const user = response.data.user;
+
+                if (!response.data.accessToken) {
+                    router.push(
+                        getLocalizedPath(
+                            `/auth/signup?kakaoId=${user.kakaoId}&email=${user.email}&nickname=${user.nickname}&profileImageUrl=${user.profileImageUrl}`
+                        )
+                    );
+                    return;
+                }
+
+                Storage.setAccessToken(response.data.accessToken);
+            }
+        })();
     }, [searchParams, router, getLocalizedPath]);
 
     return (

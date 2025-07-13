@@ -17,6 +17,7 @@ import { Input } from "@/shared/components/input";
 import { signup } from "@/features/auth/api";
 
 import { Storage } from "@/services/storage";
+import { Select } from "@/shared/components/select";
 
 export default function SignUp() {
     const getLocalizedPath = useLocalizedPath();
@@ -34,6 +35,11 @@ export default function SignUp() {
         name: "",
         phone: "",
         birthDate: moment().format("YYYY-MM-DD"),
+
+        gender: {
+            value: "",
+            label: "",
+        },
     });
 
     useEffect(() => {
@@ -52,6 +58,11 @@ export default function SignUp() {
                 name: "",
                 phone: "",
                 birthDate: moment().format("YYYY-MM-DD"),
+
+                gender: {
+                    value: "MALE",
+                    label: "남성",
+                },
             });
         }
     }, [searchParams]);
@@ -98,9 +109,9 @@ export default function SignUp() {
             <Header title="회원가입" />
 
             <div
-                className="w-full p-[36px_16px]"
+                className="w-full p-[36px_16px] overflow-y-scroll"
                 style={{
-                    height: `calc(100% - 86px - 62px - ${bar.bottom}px)`,
+                    height: `calc(100% - 86px - 62px)`,
                 }}
             >
                 <div className="flex flex-col items-center gap-[48px]">
@@ -170,6 +181,32 @@ export default function SignUp() {
                                     상품 증정을 위해 정확한 전화번호를 입력해
                                     주세요.
                                 </span>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-[6px]">
+                            <span className="font-regular text-[16px] text-c_black">
+                                성별
+                            </span>
+
+                            <div className="flex flex-col gap-[14px]">
+                                <Select
+                                    value={user.gender}
+                                    setValue={(gender) =>
+                                        setUser((prev) => ({ ...prev, gender }))
+                                    }
+                                    options={[
+                                        {
+                                            value: "MALE",
+                                            label: "남성",
+                                        },
+                                        {
+                                            value: "FEMALE",
+                                            label: "여성",
+                                        },
+                                    ]}
+                                    placeholder="성별을 선택해 주세요."
+                                />
                             </div>
                         </div>
                     </div>

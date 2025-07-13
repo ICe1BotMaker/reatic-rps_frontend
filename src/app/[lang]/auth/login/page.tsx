@@ -103,7 +103,7 @@ export default function Login() {
                             }
                             onClick={() => {
                                 const REDIRECT_URL =
-                                    "http://api.samgakgame.com/api/members/login/callback";
+                                    "https://port-next-frontend-mbg8wo45b1683508.sel4.cloudtype.app/ko/oauth/kakao";
 
                                 const CLIENT_ID =
                                     "4b441a6d5dd49f091810749329c7ae3c";

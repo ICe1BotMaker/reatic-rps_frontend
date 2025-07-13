@@ -34,3 +34,27 @@ export const updateUser = async (credentials: {
 }) => {
     return apiClient.put("/api/members/myprofile", credentials);
 };
+
+// 카카오 로그인 api
+export const kakaoLogin = async (credentials: {
+    code: string;
+}): AsyncResponse<{
+    refreshToken: string;
+    accessToken: string;
+    user: {
+        id: string;
+        kakaoId: string;
+        email: string;
+        nickname: string;
+        profileImageUrl: string;
+        name: string;
+        phoneNumber: string;
+        birthDate: string;
+        gender: "FEMAIL" | "MALE";
+    };
+}> => {
+    return apiClient.get("/api/members/login", {
+        headers: { skipAuth: true },
+        params: credentials,
+    });
+};
