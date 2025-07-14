@@ -1,21 +1,22 @@
 "use client";
 
+import { ClapperboardIcon, Share2Icon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import moment from "moment";
 
+import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
 
 import { OverlayHeader } from "@/shared/components/overlay-header";
 import { DraggableAD } from "@/shared/components/draggable-ad";
 import { Button } from "@/shared/components/button";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { ClapperboardIcon, Share2Icon } from "lucide-react";
 import { useSeasonDetail, useSeasonTopTen } from "@/features/season/hooks";
-import moment from "moment";
-import { start } from "@/features/game/api";
 import { enterSeason, getActiveSeasons } from "@/features/season/api";
+import { share, start } from "@/features/game/api";
+import { useEntry } from "@/features/game/hooks";
 
 export default function GameResult() {
     const getLocalizedPath = useLocalizedPath();
@@ -24,15 +25,21 @@ export default function GameResult() {
 
     const [isAdDragged, setIsAdDragged] = useState(false);
 
+    const seasonId =
+        typeof window !== "undefined"
+            ? Number(localStorage.getItem("seasonId"))
+            : 0;
+
     const { data } = useSeasonTopTen({
-        id: Number(localStorage.getItem("seasonId")) || 0,
+        id: seasonId,
     });
 
     const { data: detail } = useSeasonDetail({
-        id:
-            typeof window !== "undefined"
-                ? Number(localStorage.getItem("seasonId"))
-                : 0,
+        id: seasonId,
+    });
+
+    const { data: entry } = useEntry({
+        seasonId,
     });
 
     const startGame = async (id: number) => {
@@ -80,46 +87,55 @@ export default function GameResult() {
                     새로운 시즌 시작시 알림 받기
                 </span>
 
-                <div className="w-full flex flex-col gap-[6px]">
-                    <Button
-                        variants="primary_light"
-                        Icon={<Share2Icon size={20} />}
-                        onClick={async () => {
-                            if (typeof window === "undefined") return;
+                {(entry?.data.remainingEntry || 0) > 0 ? (
+                    <div className="w-full flex flex-col gap-[6px]">
+                        <Button
+                            variants="primary_light"
+                            Icon={<Share2Icon size={20} />}
+                            onClick={async () => {
+                                if (typeof window === "undefined") return;
 
-                            const { Kakao } = window as unknown as {
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                Kakao: any;
-                            };
+                                const { Kakao } = window as unknown as {
+                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                    Kakao: any;
+                                };
 
-                            Kakao.cleanup();
-                            Kakao.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY);
+                                Kakao.cleanup();
+                                Kakao.init(
+                                    process.env.NEXT_PUBLIC_JAVASCRIPT_KEY
+                                );
 
-                            if (Kakao.isInitialized) {
-                                await Kakao.Share.sendCustom({
-                                    templateId: 121362,
-                                });
+                                if (Kakao.isInitialized) {
+                                    await Kakao.Share.sendCustom({
+                                        templateId: 121362,
+                                    });
 
-                                handleStart();
-                            } else {
-                                alert("카카오 SDK 오류 발생");
-                            }
-                        }}
-                    >
-                        공유하고 한판 더하기
+                                    await share();
+                                    await handleStart();
+                                } else {
+                                    alert("카카오 SDK 오류 발생");
+                                }
+                            }}
+                        >
+                            공유하고 한판 더하기
+                        </Button>
+
+                        <Button
+                            variants="primary"
+                            Icon={<ClapperboardIcon size={20} />}
+                            onClick={() => router.push(getLocalizedPath("/ad"))}
+                        >
+                            광고보고 한판 더하기 (3회 남음)
+                        </Button>
+                    </div>
+                ) : (
+                    <Button variants="primary_light">
+                        기회가 모두 소진되었습니다.
                     </Button>
-
-                    <Button
-                        variants="primary"
-                        Icon={<ClapperboardIcon size={20} />}
-                        onClick={() => router.push(getLocalizedPath("/ad"))}
-                    >
-                        광고보고 한판 더하기 (3회 남음)
-                    </Button>
-                </div>
+                )}
             </div>
         );
-    }, [getLocalizedPath, handleStart, router]);
+    }, [entry, getLocalizedPath, handleStart, router]);
 
     const renderFlow = useCallback(() => {
         if (isAdDragged) {

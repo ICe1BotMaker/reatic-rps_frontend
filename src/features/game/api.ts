@@ -27,3 +27,27 @@ export const play = async (
         })()
     );
 };
+
+// 공유 및 횟수 증가 api
+export const share = async () => {
+    return apiClient.post("/api/game/seasons/entry/share");
+};
+
+// 광고 시청 및 횟수 증가 api
+export const watchAds = async (credentials: { rewardUrl: string }) => {
+    return apiClient.post(
+        `/api/game/seasons/entry/ad/verify?rewardUrl=${credentials.rewardUrl}`
+    );
+};
+
+// 남은 횟수 조회 api
+export const getEntry = async (credentials: {
+    seasonId: number;
+}): AsyncResponse<{
+    remainingEntry: number;
+    totalGivenEntry: number;
+    adEntryCount: number;
+    shareEntryCount: number;
+}> => {
+    return apiClient.get(`/api/game/seasons/${credentials.seasonId}/me`);
+};
