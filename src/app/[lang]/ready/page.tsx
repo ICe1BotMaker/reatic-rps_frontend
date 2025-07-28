@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { enterSeason, getActiveSeasons } from "@/features/season/api";
 import { start } from "@/features/game/api";
 
-// import { BannerAd } from "@/shared/components/google-ads";
+import { BannerAd } from "@/shared/components/google-ads";
 import { Button } from "@/shared/components/button";
 import { Hand } from "@/shared/components/hand";
 
@@ -105,8 +105,8 @@ export default function Ready() {
 
                             {timer.currentTime > 5 ? (
                                 <div className="pb-[16px] h-full flex flex-col justify-center">
-                                    {/* <BannerAd adSlot="1356735070" />
-                                    <BannerAd adSlot="5406826578" /> */}
+                                    <BannerAd adSlot="1356735070" />
+                                    <BannerAd adSlot="5406826578" />
                                 </div>
                             ) : (
                                 <Hand name="5_countdown" />
