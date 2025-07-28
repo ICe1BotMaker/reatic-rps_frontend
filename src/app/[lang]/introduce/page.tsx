@@ -7,6 +7,7 @@ import { CheckIcon } from "lucide-react";
 
 import { BottomSheet } from "@/shared/components/bottom-sheet";
 import { Button } from "@/shared/components/button";
+import { Hand } from "@/shared/components/hand";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
@@ -23,7 +24,7 @@ export default function Introduce() {
         const timeout = setTimeout(() => {
             setFlow("SECOND");
             setIsBottomSheetOpen(true);
-        }, 12000);
+        }, 14000);
 
         return () => {
             clearTimeout(timeout);
@@ -89,6 +90,8 @@ export default function Introduce() {
                         {renderHeader()}
                     </motion.div>
                 </AnimatePresence>
+
+                <Hand name="3_hi" />
             </div>
 
             <BottomSheet isOpen={isBottomSheetOpen}>

@@ -31,6 +31,7 @@ export default function OauthKakao() {
                 }
 
                 Storage.setAccessToken(response.data.accessToken);
+                router.push(getLocalizedPath("/introduce"));
             }
         })();
     }, [searchParams, router, getLocalizedPath]);

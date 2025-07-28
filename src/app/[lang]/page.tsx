@@ -7,6 +7,7 @@ import { useState } from "react";
 import { BottomSheet } from "@/shared/components/bottom-sheet";
 import { Button } from "@/shared/components/button";
 import { Link } from "@/shared/components/link";
+import { Hand } from "@/shared/components/hand";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
@@ -36,7 +37,7 @@ export default function Home() {
                 }}
             >
                 <div className="sticky z-1 h-full flex flex-col justify-between">
-                    <div className="p-[36px_16px]">
+                    <div className="p-[36px_16px] sticky z-1">
                         <div className="relative">
                             <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                                 상금 10만원에
@@ -51,7 +52,9 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[8px]">
+                    <Hand name="1_mainloop" />
+
+                    <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[8px] sticky z-1">
                         <Button
                             variants="white_light"
                             Icon={<HelpCircleIcon size={20} />}
