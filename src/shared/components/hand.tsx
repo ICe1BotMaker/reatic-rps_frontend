@@ -13,6 +13,7 @@ export const Hand = ({ name }: { name: string }) => {
             style={{
                 position: "absolute",
                 bottom: bar.bottom,
+                pointerEvents: "none",
             }}
         />
     );
