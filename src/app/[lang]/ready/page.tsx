@@ -9,7 +9,6 @@ import { start } from "@/features/game/api";
 
 import { BannerAd } from "@/shared/components/google-ads";
 import { Button } from "@/shared/components/button";
-import { Hand } from "@/shared/components/hand";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
@@ -103,13 +102,11 @@ export default function Ready() {
                                 </p>
                             </div>
 
-                            {timer.currentTime > 5 ? (
+                            {timer.currentTime > 5 && (
                                 <div className="pb-[16px] h-full flex flex-col justify-center">
                                     <BannerAd adSlot="1356735070" />
                                     <BannerAd adSlot="5406826578" />
                                 </div>
-                            ) : (
-                                <Hand name="5_countdown" />
                             )}
 
                             <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[12px] items-center">

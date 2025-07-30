@@ -33,6 +33,8 @@ export function AdSense({
             data-full-width-responsive={fullWidthResponsive.toString()}
         ></ins>
     );
+
+    // return <div style={style} className="bg-c_primary_softlight" />;
 }
 
 // 다양한 광고 타입별 컴포넌트
