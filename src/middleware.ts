@@ -17,6 +17,11 @@ export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const search = request.nextUrl.searchParams;
 
+    // ads.txt, robots.txt 등은 리다이렉션 제외
+    if (pathname === "/ads.txt") {
+        return NextResponse.next();
+    }
+
     // 이미 언어 경로가 있는지 확인
     const pathnameHasLocale = SUPPORTED_LOCALES.some(
         (locale) =>
@@ -38,7 +43,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        // 제외할 경로 설정
-        "/((?!api|_next/static|_next/image|favicon.ico).*)",
+        // ads.txt, robots.txt 제외
+        "/((?!api|_next/static|_next/image|favicon.ico|ads.txt|robots.txt).*)",
     ],
 };
