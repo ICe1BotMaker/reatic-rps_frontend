@@ -16,22 +16,26 @@ export default function OauthKakao() {
     useEffect(() => {
         (async () => {
             if (searchParams.get("code")) {
-                const response = await kakaoLogin({
-                    code: searchParams.get("code") as string,
-                });
-                const user = response.data.user;
+                try {
+                    const response = await kakaoLogin({
+                        code: searchParams.get("code") as string,
+                    });
+                    const user = response.data.user;
 
-                if (!response.data.accessToken) {
-                    router.push(
-                        getLocalizedPath(
-                            `/auth/signup?kakaoId=${user.kakaoId}&email=${user.email}&nickname=${user.nickname}&profileImageUrl=${user.profileImageUrl}`
-                        )
-                    );
-                    return;
+                    if (!response.data.accessToken) {
+                        router.push(
+                            getLocalizedPath(
+                                `/auth/signup?kakaoId=${user.kakaoId}&email=${user.email}&nickname=${user.nickname}&profileImageUrl=${user.profileImageUrl}`
+                            )
+                        );
+                        return;
+                    }
+
+                    Storage.setAccessToken(response.data.accessToken);
+                    router.push(getLocalizedPath("/introduce"));
+                } catch {
+                    router.push(getLocalizedPath("/auth/login?failed=true"));
                 }
-
-                Storage.setAccessToken(response.data.accessToken);
-                router.push(getLocalizedPath("/introduce"));
             }
         })();
     }, [searchParams, router, getLocalizedPath]);

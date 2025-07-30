@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -13,6 +13,7 @@ import { useBar } from "@/shared/stores/bar.zustand";
 import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
 
 export default function Login() {
+    const searchParams = useSearchParams();
     const router = useRouter();
     const bar = useBar();
 
@@ -23,6 +24,11 @@ export default function Login() {
         setIsAgree(true);
         setIsBottomSheetOpen(false);
     };
+
+    const loginFailed =
+        typeof window !== "undefined" ? !!searchParams.get("failed") : false;
+
+    console.log(loginFailed);
 
     return (
         <>
@@ -52,7 +58,7 @@ export default function Login() {
                                 </div>
                             </div>
 
-                            <div className="flex-1 flex justify-start animate-[upAnimation_.3s_both_2s]">
+                            <div className="flex-1 flex justify-start animate-[upAnimation_.3s_both_1.5s]">
                                 <div className="p-[16px_20px] rounded-[32px] rounded-tl-[0] bg-[#F1F1F1]">
                                     <span className="font-p_medium text-[16px] text-c_black">
                                         참여 확인과 상품 증정을 위해
@@ -61,6 +67,19 @@ export default function Login() {
                                     </span>
                                 </div>
                             </div>
+
+                            {loginFailed && (
+                                <div className="flex-1 flex justify-start animate-[upAnimation_.3s_both_2s]">
+                                    <div className="p-[16px_20px] rounded-[32px] rounded-tl-[0] bg-[#F1F1F1]">
+                                        <span className="font-p_medium text-[16px] text-c_black">
+                                            하지만 지금 로그인이 안되는
+                                            상황이네요.
+                                            <br />
+                                            잠시 후에 다시 시도해 주시겠어요?
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 
