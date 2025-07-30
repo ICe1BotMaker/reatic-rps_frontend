@@ -268,7 +268,7 @@ export default function Game() {
 
         return (
             <div className="w-full h-full flex flex-col justify-between">
-                <div className="p-[36px_16px]">
+                <div className="p-[36px_16px] animate-[upper_1s_1s_both]">
                     <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                         AI가 가위바위보를
                         <br />
@@ -276,13 +276,13 @@ export default function Game() {
                     </p>
                 </div>
 
-                <div className="w-full h-full">
+                <div className="w-full h-full animate-[upper_1s_1.2s_both]">
                     <div className="w-full h-[140px] bg-gradient-to-r from-transparent to-[#4B58FF]" />
 
                     {renderRps()}
                 </div>
 
-                <div className="pt-[10px] pb-[20px] px-[16px]">
+                <div className="pt-[10px] pb-[20px] px-[16px] animate-[upper_1s_1.4s_both]">
                     {renderButton()}
                 </div>
             </div>
