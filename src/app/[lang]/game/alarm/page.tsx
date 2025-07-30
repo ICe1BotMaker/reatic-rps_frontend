@@ -8,6 +8,7 @@ import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
 
 import { Button } from "@/shared/components/button";
+import { Header } from "@/shared/components/header";
 
 export default function GameAlarm() {
     const getLocalizedPath = useLocalizedPath();
@@ -22,7 +23,21 @@ export default function GameAlarm() {
                 paddingBottom: `${bar.bottom}px`,
             }}
         >
-            <div className="w-full h-full flex flex-col justify-between">
+            <Header
+                title="알림"
+                leftIcon={{
+                    style: "chevron",
+                    onClick: () =>
+                        router.push(getLocalizedPath("/game/result")),
+                }}
+            />
+
+            <div
+                className="w-full flex flex-col justify-between"
+                style={{
+                    height: `calc(100% - 62px)`,
+                }}
+            >
                 <div className="p-[36px_16px]">
                     <p className="font-p_semibold text-[32px] text-c_black leading-[39px]">
                         새 시즌이 시작될 때<br />
@@ -42,13 +57,14 @@ export default function GameAlarm() {
                     <Button
                         variants="black"
                         onClick={() => {
-                            alert(
-                                "알림이 설정되었습니다.\n카카오톡 채널로 메시지가 발송됩니다."
+                            window.open(
+                                "https://pf.kakao.com/_MKgFn",
+                                "_blank"
                             );
                             router.push(getLocalizedPath("/game/result"));
                         }}
                     >
-                        알림 설정
+                        카카오톡 친구 추가하기
                     </Button>
                 </div>
             </div>
