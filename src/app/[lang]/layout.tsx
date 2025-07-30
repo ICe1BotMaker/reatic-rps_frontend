@@ -20,10 +20,6 @@ export default function RootLayout({
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
                 />
-                <meta
-                    name="google-adsense-account"
-                    content="ca-pub-8406696765705881"
-                />
             </head>
 
             <body>

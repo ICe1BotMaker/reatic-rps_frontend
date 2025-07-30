@@ -69,7 +69,7 @@ export const FrozenRoute = ({
                         async
                         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8406696765705881"
                         crossOrigin="anonymous"
-                        strategy="afterInteractive"
+                        strategy="lazyOnload"
                         onLoad={() => {
                             console.log("loadend event: google-ads-sdk");
 
