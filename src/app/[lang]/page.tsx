@@ -2,7 +2,7 @@
 
 import { HelpCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BottomSheet } from "@/shared/components/bottom-sheet";
 import { Button } from "@/shared/components/button";
@@ -16,6 +16,8 @@ import { ReactComponent as QuestionMarkIcon } from "@/assets/question_mark.svg";
 
 import { ReactComponent as PlayIcon } from "@/assets/button/play.svg";
 
+import { useEntry } from "@/features/game/hooks";
+
 export default function Home() {
     const getLocalizedPath = useLocalizedPath();
     const router = useRouter();
@@ -26,6 +28,22 @@ export default function Home() {
     const handleStart = () => {
         router.push(getLocalizedPath("/auth/login"));
     };
+
+    const seasonId =
+        typeof window !== "undefined"
+            ? Number(localStorage.getItem("seasonId"))
+            : 0;
+
+    const { data: entry } = useEntry({
+        seasonId,
+    });
+
+    useEffect(() => {
+        if (entry?.data) {
+            router.push(getLocalizedPath("/game/result"));
+            return;
+        }
+    }, [entry, getLocalizedPath, router]);
 
     return (
         <>
