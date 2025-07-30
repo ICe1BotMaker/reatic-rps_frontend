@@ -9,6 +9,7 @@ import {
 import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import ConfettiEffect from "@/shared/components/confetti-particle";
 import { Button } from "@/shared/components/button";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
@@ -17,9 +18,9 @@ import { useBar } from "@/shared/stores/bar.zustand";
 import { ReactComponent as ScissorsIcon } from "@/assets/game/scissors.svg";
 import { ReactComponent as RockIcon } from "@/assets/game/rock.svg";
 import { ReactComponent as PaperIcon } from "@/assets/game/paper.svg";
-import { play } from "@/features/game/api";
+
 import { TypeRPS, TypeRPSKorea } from "@/features/game/types";
-import ConfettiEffect from "@/shared/components/confetti-particle";
+import { play } from "@/features/game/api";
 
 export default function Game() {
     const getLocalizedPath = useLocalizedPath();
