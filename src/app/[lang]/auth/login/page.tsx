@@ -122,7 +122,7 @@ export default function Login() {
                             }
                             onClick={() => {
                                 const REDIRECT_URL =
-                                    "https://삼각게임.com/ko/oauth/kakao";
+                                    "https://xn--p39a9jw03cqmg.com/ko/oauth/kakao";
 
                                 const CLIENT_ID =
                                     "4b441a6d5dd49f091810749329c7ae3c";
