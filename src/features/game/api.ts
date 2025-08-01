@@ -51,3 +51,12 @@ export const getEntry = async (credentials: {
 }> => {
     return apiClient.get(`/api/game/seasons/${credentials.seasonId}/me`);
 };
+
+// 게임 진행 중 여부 api
+export const getPlaying = async (credentials: {
+    seasonId: number;
+}): AsyncResponse<{
+    isPlaying: boolean;
+}> => {
+    return apiClient.get(`/api/game/seasons/${credentials.seasonId}/isPlaying`);
+};

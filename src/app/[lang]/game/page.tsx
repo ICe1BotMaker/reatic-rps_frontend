@@ -20,12 +20,20 @@ import { ReactComponent as RockIcon } from "@/assets/game/rock.svg";
 import { ReactComponent as PaperIcon } from "@/assets/game/paper.svg";
 
 import { TypeRPS, TypeRPSKorea } from "@/features/game/types";
+import { usePlaying } from "@/features/game/hooks";
 import { play } from "@/features/game/api";
 
 export default function Game() {
     const getLocalizedPath = useLocalizedPath();
     const router = useRouter();
     const bar = useBar();
+
+    const seasonId =
+        typeof window !== "undefined"
+            ? Number(localStorage.getItem("seasonId"))
+            : 0;
+
+    const { data: playing } = usePlaying({ seasonId });
 
     const converter = (name: TypeRPS) =>
         name === "PAPER" ? "보" : name === "ROCK" ? "바위" : "가위";
@@ -54,13 +62,12 @@ export default function Game() {
     const handleSubmit = useCallback(async () => {
         if (!selected) return;
 
-        const id = localStorage.getItem("seasonId");
         const roundNumber = localStorage.getItem("currentRound");
-        if (!id || !roundNumber) return;
+        if (!seasonId || !roundNumber) return;
 
         const { winningStreak, computerChoice } = (
             await play({
-                id: Number(id),
+                id: seasonId,
                 choice: converter(selected),
                 roundNumber: Number(roundNumber),
             })
@@ -84,7 +91,7 @@ export default function Game() {
             setRpsState("WIN");
         else if (selected === "SCISSORS" && computerChoice === "바위")
             setRpsState("LOSE");
-    }, [selected]);
+    }, [seasonId, selected]);
 
     const handleResult = useCallback(() => {
         router.push(getLocalizedPath("/game/result"));
@@ -219,6 +226,31 @@ export default function Game() {
     }, [RPS_OPTIONS, aiSelected, isRoundFinished, rpsState, selected]);
 
     const renderFlow = useCallback(() => {
+        if (playing?.data.isPlaying) {
+            return (
+                <div className="w-full h-full flex flex-col justify-between">
+                    <div className="p-[36px_16px]">
+                        <p className="font-p_semibold text-[32px] text-white leading-[39px]">
+                            지금은
+                            <br />
+                            게임 중이 아니에요.
+                        </p>
+                    </div>
+
+                    <div className="pt-[10px] pb-[20px] px-[16px]">
+                        <Button
+                            variants="white"
+                            onClick={() =>
+                                router.push(getLocalizedPath("/game/result"))
+                            }
+                        >
+                            순위표로 돌아가기
+                        </Button>
+                    </div>
+                </div>
+            );
+        }
+
         if (isRoundFinished) {
             return (
                 <div className="w-full h-full flex flex-col justify-between">
@@ -288,9 +320,12 @@ export default function Game() {
             </div>
         );
     }, [
+        playing?.data.isPlaying,
         isRoundFinished,
-        renderButton,
         renderRps,
+        renderButton,
+        router,
+        getLocalizedPath,
         renderRpsState,
         winningStack,
     ]);
