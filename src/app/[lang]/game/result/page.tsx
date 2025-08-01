@@ -87,46 +87,53 @@ export default function GameResult() {
                     새로운 시즌 시작시 알림 받기
                 </span>
 
-                {(entry?.data.remainingEntry || 0) > 0 ? (
+                {(entry?.data.shareEntryCount || 0) <= 3 ||
+                (entry?.data.adEntryCount || 0) <= 3 ? (
                     <div className="w-full flex flex-col gap-[6px]">
-                        <Button
-                            variants="primary_light"
-                            Icon={<Share2Icon size={20} />}
-                            onClick={async () => {
-                                if (typeof window === "undefined") return;
+                        {(entry?.data.shareEntryCount || 0) <= 3 && (
+                            <Button
+                                variants="primary_light"
+                                Icon={<Share2Icon size={20} />}
+                                onClick={async () => {
+                                    if (typeof window === "undefined") return;
 
-                                const { Kakao } = window as unknown as {
-                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                    Kakao: any;
-                                };
+                                    const { Kakao } = window as unknown as {
+                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                        Kakao: any;
+                                    };
 
-                                Kakao.cleanup();
-                                Kakao.init(
-                                    process.env.NEXT_PUBLIC_JAVASCRIPT_KEY
-                                );
+                                    Kakao.cleanup();
+                                    Kakao.init(
+                                        process.env.NEXT_PUBLIC_JAVASCRIPT_KEY
+                                    );
 
-                                if (Kakao.isInitialized) {
-                                    await Kakao.Share.sendCustom({
-                                        templateId: 121362,
-                                    });
+                                    if (Kakao.isInitialized) {
+                                        await Kakao.Share.sendCustom({
+                                            templateId: 121362,
+                                        });
 
-                                    await share();
-                                    await handleStart();
-                                } else {
-                                    alert("카카오 SDK 오류 발생");
+                                        await share();
+                                        await handleStart();
+                                    } else {
+                                        alert("카카오 SDK 오류 발생");
+                                    }
+                                }}
+                            >
+                                공유하고 한판 더하기
+                            </Button>
+                        )}
+
+                        {(entry?.data.adEntryCount || 0) <= 3 && (
+                            <Button
+                                variants="primary"
+                                Icon={<ClapperboardIcon size={20} />}
+                                onClick={() =>
+                                    router.push(getLocalizedPath("/ad"))
                                 }
-                            }}
-                        >
-                            공유하고 한판 더하기
-                        </Button>
-
-                        <Button
-                            variants="primary"
-                            Icon={<ClapperboardIcon size={20} />}
-                            onClick={() => router.push(getLocalizedPath("/ad"))}
-                        >
-                            광고보고 한판 더하기 (3회 남음)
-                        </Button>
+                            >
+                                광고보고 한판 더하기 (3회 남음)
+                            </Button>
+                        )}
                     </div>
                 ) : (
                     <Button variants="primary_light">
