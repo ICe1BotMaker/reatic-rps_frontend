@@ -226,7 +226,7 @@ export default function Game() {
     }, [RPS_OPTIONS, aiSelected, isRoundFinished, rpsState, selected]);
 
     const renderFlow = useCallback(() => {
-        if (playing?.data.isPlaying) {
+        if (!playing?.data.isPlaying) {
             return (
                 <div className="w-full h-full flex flex-col justify-between">
                     <div className="p-[36px_16px]">
