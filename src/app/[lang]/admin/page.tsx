@@ -10,7 +10,7 @@ export default function Admin() {
     const router = useRouter();
 
     return (
-        <div className="w-screen h-screen flex justify-center items-center">
+        <div className="w-screen h-dvh flex justify-center items-center">
             <div className="w-[400px]">
                 <Button
                     variants="kakao"

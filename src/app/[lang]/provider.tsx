@@ -69,7 +69,7 @@ export const FramerProvider = ({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     style={{
-                        minHeight: "100vh",
+                        minHeight: "100dvh",
                     }}
                 >
                     <QueryClientProvider client={client}>

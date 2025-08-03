@@ -17,7 +17,7 @@ export default function GameAlarm() {
 
     return (
         <div
-            className="w-screen h-screen overflow-hidden bg-white"
+            className="w-screen h-dvh overflow-hidden bg-white"
             style={{
                 paddingTop: `${bar.top}px`,
                 paddingBottom: `${bar.bottom}px`,

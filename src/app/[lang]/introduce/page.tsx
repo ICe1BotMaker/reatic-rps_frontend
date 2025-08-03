@@ -72,7 +72,7 @@ export default function Introduce() {
     return (
         <>
             <div
-                className="w-screen h-screen overflow-hidden bg-gradient-to-b from-c_primary to-[#5289E8]"
+                className="w-screen h-dvh overflow-hidden bg-gradient-to-b from-c_primary to-[#5289E8]"
                 style={{
                     paddingTop: `${bar.top}px`,
                     paddingBottom: `${bar.bottom}px`,
