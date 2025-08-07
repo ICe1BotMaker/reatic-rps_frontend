@@ -67,7 +67,9 @@ export default function User() {
             setErrorDialog({
                 open: true,
                 title: "승격 실패",
-                message: error.response?.data?.message || "승격 중 오류가 발생했습니다.",
+                message:
+                    error.response?.data?.message ||
+                    "승격 중 오류가 발생했습니다.",
             });
         },
     });
@@ -81,7 +83,9 @@ export default function User() {
             setErrorDialog({
                 open: true,
                 title: "강등 실패",
-                message: error.response?.data?.message || "강등 중 오류가 발생했습니다.",
+                message:
+                    error.response?.data?.message ||
+                    "강등 중 오류가 발생했습니다.",
             });
         },
     });
@@ -284,7 +288,9 @@ export default function User() {
                 {/* Error Dialog */}
                 <Dialog
                     open={errorDialog.open}
-                    onOpenChange={(open) => setErrorDialog(prev => ({ ...prev, open }))}
+                    onOpenChange={(open) =>
+                        setErrorDialog((prev) => ({ ...prev, open }))
+                    }
                 >
                     <DialogContent>
                         <DialogHeader>
@@ -295,7 +301,12 @@ export default function User() {
                         </DialogHeader>
                         <DialogFooter>
                             <Button
-                                onClick={() => setErrorDialog(prev => ({ ...prev, open: false }))}
+                                onClick={() =>
+                                    setErrorDialog((prev) => ({
+                                        ...prev,
+                                        open: false,
+                                    }))
+                                }
                             >
                                 확인
                             </Button>

@@ -78,7 +78,7 @@ export default function Insight() {
                                         insight?.data.ageGroupDistribution[key];
 
                                     return {
-                                        label: `${key}대`,
+                                        label: key,
                                         value,
                                         color: "#075B5E",
                                     };
