@@ -80,6 +80,8 @@ export default function SignUp() {
                 profileImageUrl: user.profileImageUrl,
                 name: user.name,
                 phoneNumber: user.phone,
+                gender: user.gender.value,
+                birthDate: user.birthDate,
             });
 
             Storage.setAccessToken(response.data.accessToken);

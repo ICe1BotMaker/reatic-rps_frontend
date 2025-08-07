@@ -6,6 +6,8 @@ export interface SignUpRequest {
     profileImageUrl: string;
     name: string;
     phoneNumber: string;
+    gender: string;
+    birthDate: string;
 }
 
 export interface SignUpResponse {
