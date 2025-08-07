@@ -22,7 +22,7 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getSeasons, createSeason } from "@/features/season/api";
 import { pauseSeason, resumeSeason } from "@/features/admin/season/api";
@@ -56,6 +56,15 @@ export default function Season() {
         startDateTime: "",
         endDateTime: "",
     });
+
+    // Search and pagination states
+    const [searchFilters, setSearchFilters] = useState({
+        seasonName: "",
+    });
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10);
+    const [sortField, setSortField] = useState<string>("");
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
     const queryClient = useQueryClient();
 
@@ -156,6 +165,95 @@ export default function Season() {
         setLogsDialog(true);
     };
 
+    const seasons = useMemo(() => seasonsData?.data || [], [seasonsData?.data]);
+
+    // Filter and sort seasons
+    const filteredAndSortedSeasons = useMemo(() => {
+        let filtered = seasons;
+
+        // Apply search filters
+        filtered = seasons.filter((season) => {
+            const nameMatch = searchFilters.seasonName
+                ? season.seasonName
+                      ?.toLowerCase()
+                      .includes(searchFilters.seasonName.toLowerCase())
+                : true;
+            return nameMatch;
+        });
+
+        // Apply sorting
+        if (sortField) {
+            filtered.sort((a, b) => {
+                let aValue = a[sortField as keyof typeof a];
+                let bValue = b[sortField as keyof typeof b];
+
+                // Handle date sorting
+                if (
+                    sortField === "startDateTime" ||
+                    sortField === "endDateTime" ||
+                    sortField === "createdAt"
+                ) {
+                    aValue = new Date(aValue as string).getTime();
+                    bValue = new Date(bValue as string).getTime();
+                }
+
+                // Convert to string for comparison
+                const aStr = String(aValue || "").toLowerCase();
+                const bStr = String(bValue || "").toLowerCase();
+
+                if (sortDirection === "asc") {
+                    return aStr < bStr ? -1 : aStr > bStr ? 1 : 0;
+                } else {
+                    return aStr > bStr ? -1 : aStr < bStr ? 1 : 0;
+                }
+            });
+        }
+
+        return filtered;
+    }, [seasons, searchFilters, sortField, sortDirection]);
+
+    // Pagination
+    const totalPages = Math.ceil(
+        filteredAndSortedSeasons.length / itemsPerPage
+    );
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentSeasons = filteredAndSortedSeasons.slice(startIndex, endIndex);
+
+    // Reset to first page when search changes
+    const handleFilterChange = (
+        field: keyof typeof searchFilters,
+        value: string
+    ) => {
+        setSearchFilters((prev) => ({ ...prev, [field]: value }));
+        setCurrentPage(1);
+    };
+
+    // Check if any filter is active
+    const hasActiveFilters = Object.values(searchFilters).some(
+        (value) => value !== ""
+    );
+
+    // Handle sorting
+    const handleSort = (field: string) => {
+        if (sortField === field) {
+            setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+        } else {
+            setSortField(field);
+            setSortDirection("asc");
+        }
+    };
+
+    // Pagination handlers
+    const goToPage = (page: number) => {
+        setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+    };
+
+    const getSortIcon = (field: string) => {
+        if (sortField !== field) return "";
+        return sortDirection === "asc" ? "↑" : "↓";
+    };
+
     if (isLoading) {
         return (
             <div className="flex-1 p-[50px]">
@@ -164,12 +262,50 @@ export default function Season() {
         );
     }
 
-    const seasons = seasonsData?.data || [];
-
     return (
         <div className="flex-1">
-            <div className="p-[50px] flex flex-col gap-[50px]">
-                <div className="flex justify-end items-center">
+            <div className="p-[50px]">
+                {/* Search and Info Section */}
+                <div className="mb-6 space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-2xl font-bold">시즌 관리</h1>
+                        <div className="text-sm text-gray-600">
+                            총 {filteredAndSortedSeasons.length}개
+                            {hasActiveFilters &&
+                                ` (전체 ${seasons.length}개 중 검색됨)`}
+                        </div>
+                    </div>
+                    <div className="flex items-end gap-4">
+                        <div className="flex-1">
+                            <label className="text-sm font-medium text-gray-700 mb-1 block">
+                                시즌 이름
+                            </label>
+                            <Input
+                                placeholder="시즌 이름 검색"
+                                value={searchFilters.seasonName}
+                                onChange={(e) =>
+                                    handleFilterChange(
+                                        "seasonName",
+                                        e.target.value
+                                    )
+                                }
+                            />
+                        </div>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                                setSearchFilters({ seasonName: "" });
+                                setSortField("");
+                                setCurrentPage(1);
+                            }}
+                        >
+                            초기화
+                        </Button>
+                    </div>
+                </div>
+
+                <div className="flex justify-end items-center mb-6">
                     <Dialog
                         open={createSeasonDialog}
                         onOpenChange={setCreateSeasonDialog}
@@ -252,16 +388,41 @@ export default function Season() {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>상태</TableHead>
-                            <TableHead>시즌 이름</TableHead>
-                            <TableHead>시작 날짜</TableHead>
-                            <TableHead>끝 날짜</TableHead>
-                            <TableHead>생성일</TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("active")}
+                            >
+                                상태 {getSortIcon("active")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("seasonName")}
+                            >
+                                시즌 이름 {getSortIcon("seasonName")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("startDateTime")}
+                            >
+                                시작 날짜 {getSortIcon("startDateTime")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("endDateTime")}
+                            >
+                                끝 날짜 {getSortIcon("endDateTime")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("createdAt")}
+                            >
+                                생성일 {getSortIcon("createdAt")}
+                            </TableHead>
                             <TableHead>관리</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {seasons.map((season) => (
+                        {currentSeasons.map((season) => (
                             <TableRow key={season.id}>
                                 <TableCell>
                                     <Badge
@@ -344,6 +505,103 @@ export default function Season() {
                         ))}
                     </TableBody>
                 </Table>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-between mt-6">
+                        <div className="text-sm text-gray-600">
+                            {startIndex + 1}-
+                            {Math.min(
+                                endIndex,
+                                filteredAndSortedSeasons.length
+                            )}
+                            페이지 (총 {filteredAndSortedSeasons.length}개 중)
+                        </div>
+                        <div className="flex items-center space-x-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(1)}
+                                disabled={currentPage === 1}
+                            >
+                                처음
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                이전
+                            </Button>
+
+                            <div className="flex items-center space-x-1">
+                                {Array.from(
+                                    { length: Math.min(5, totalPages) },
+                                    (_, i) => {
+                                        let pageNum;
+                                        if (totalPages <= 5) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage <= 3) {
+                                            pageNum = i + 1;
+                                        } else if (
+                                            currentPage >=
+                                            totalPages - 2
+                                        ) {
+                                            pageNum = totalPages - 4 + i;
+                                        } else {
+                                            pageNum = currentPage - 2 + i;
+                                        }
+
+                                        return (
+                                            <Button
+                                                key={pageNum}
+                                                variant={
+                                                    currentPage === pageNum
+                                                        ? "default"
+                                                        : "outline"
+                                                }
+                                                size="sm"
+                                                onClick={() =>
+                                                    goToPage(pageNum)
+                                                }
+                                                className="w-8"
+                                            >
+                                                {pageNum}
+                                            </Button>
+                                        );
+                                    }
+                                )}
+                            </div>
+
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                다음
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(totalPages)}
+                                disabled={currentPage === totalPages}
+                            >
+                                마지막
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Empty State */}
+                {filteredAndSortedSeasons.length === 0 && !isLoading && (
+                    <div className="text-center py-8 text-gray-500">
+                        {hasActiveFilters
+                            ? "검색 결과가 없습니다."
+                            : "시즌이 없습니다."}
+                    </div>
+                )}
 
                 {/* Participants Dialog */}
                 <Dialog

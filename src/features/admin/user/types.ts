@@ -10,5 +10,7 @@ export interface GetMembersResponse {
         status: string; // ACTIVE
         phoneNumber: string;
         profileImageUrl: string;
+        latestSeasonBestStreak: number;
+        latestSeasonRank: string;
     }[];
 }

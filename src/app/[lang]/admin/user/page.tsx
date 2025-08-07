@@ -29,8 +29,9 @@ import {
     demoteMember,
     getMemberLoginLogs,
 } from "@/features/admin/user/api";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Input } from "@/components/ui/input";
 
 export default function User() {
     const { data: membersData, isLoading } = useMembers();
@@ -42,6 +43,18 @@ export default function User() {
         title: string;
         message: string;
     }>({ open: false, title: "", message: "" });
+
+    // Search and pagination states
+    const [searchFilters, setSearchFilters] = useState({
+        name: "",
+        nickname: "",
+        phoneNumber: "",
+        email: "",
+    });
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10);
+    const [sortField, setSortField] = useState<string>("");
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
     const queryClient = useQueryClient();
 
     const banMutation = useMutation({
@@ -115,6 +128,108 @@ export default function User() {
         }
     };
 
+    const users = useMemo(
+        () => membersData?.data.content || [],
+        [membersData?.data.content]
+    );
+
+    // Filter and sort users
+    const filteredAndSortedUsers = useMemo(() => {
+        let filtered = users;
+
+        // Apply search filters
+        filtered = users.filter((user) => {
+            const nameMatch = searchFilters.name
+                ? user.name
+                      ?.toLowerCase()
+                      .includes(searchFilters.name.toLowerCase())
+                : true;
+            const nicknameMatch = searchFilters.nickname
+                ? user.nickname
+                      ?.toLowerCase()
+                      .includes(searchFilters.nickname.toLowerCase())
+                : true;
+            const phoneMatch = searchFilters.phoneNumber
+                ? user.phoneNumber
+                      ?.toLowerCase()
+                      .includes(searchFilters.phoneNumber.toLowerCase())
+                : true;
+            const emailMatch = searchFilters.email
+                ? user.email
+                      ?.toLowerCase()
+                      .includes(searchFilters.email.toLowerCase())
+                : true;
+
+            return nameMatch && nicknameMatch && phoneMatch && emailMatch;
+        });
+
+        // Apply sorting
+        if (sortField) {
+            filtered.sort((a, b) => {
+                let aValue = a[sortField as keyof typeof a];
+                let bValue = b[sortField as keyof typeof b];
+
+                // Handle date sorting
+                if (sortField === "createdAt") {
+                    aValue = new Date(aValue as string).getTime();
+                    bValue = new Date(bValue as string).getTime();
+                }
+
+                // Convert to string for comparison
+                const aStr = String(aValue || "").toLowerCase();
+                const bStr = String(bValue || "").toLowerCase();
+
+                if (sortDirection === "asc") {
+                    return aStr < bStr ? -1 : aStr > bStr ? 1 : 0;
+                } else {
+                    return aStr > bStr ? -1 : aStr < bStr ? 1 : 0;
+                }
+            });
+        }
+
+        return filtered;
+    }, [users, searchFilters, sortField, sortDirection]);
+
+    // Pagination
+    const totalPages = Math.ceil(filteredAndSortedUsers.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentUsers = filteredAndSortedUsers.slice(startIndex, endIndex);
+
+    // Reset to first page when search changes
+    const handleFilterChange = (
+        field: keyof typeof searchFilters,
+        value: string
+    ) => {
+        setSearchFilters((prev) => ({ ...prev, [field]: value }));
+        setCurrentPage(1);
+    };
+
+    // Check if any filter is active
+    const hasActiveFilters = Object.values(searchFilters).some(
+        (value) => value !== ""
+    );
+
+    // Handle sorting
+    const handleSort = (field: string) => {
+        if (sortField === field) {
+            setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+        } else {
+            setSortField(field);
+            setSortDirection("asc");
+        }
+    };
+
+    // Pagination handlers
+    const goToPage = (page: number) => {
+        setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+    };
+
+    const getSortIcon = (field: string) => {
+        if (sortField !== field) return "";
+        return sortDirection === "asc" ? "↑" : "↓";
+    };
+
     if (isLoading) {
         return (
             <div className="flex-1 p-[50px]">
@@ -123,26 +238,155 @@ export default function User() {
         );
     }
 
-    const users = membersData?.data.content || [];
-
     return (
         <div className="flex-1">
             <div className="p-[50px]">
+                {/* Search and Info Section */}
+                <div className="mb-6 space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-2xl font-bold">사용자 관리</h1>
+                        <div className="text-sm text-gray-600">
+                            총 {filteredAndSortedUsers.length}명
+                            {hasActiveFilters &&
+                                ` (전체 ${users.length}명 중 검색됨)`}
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-end">
+                        <div>
+                            <label className="text-sm font-medium text-gray-700 mb-1 block">
+                                이름
+                            </label>
+                            <Input
+                                placeholder="이름 검색"
+                                value={searchFilters.name}
+                                onChange={(e) =>
+                                    handleFilterChange("name", e.target.value)
+                                }
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium text-gray-700 mb-1 block">
+                                닉네임
+                            </label>
+                            <Input
+                                placeholder="닉네임 검색"
+                                value={searchFilters.nickname}
+                                onChange={(e) =>
+                                    handleFilterChange(
+                                        "nickname",
+                                        e.target.value
+                                    )
+                                }
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium text-gray-700 mb-1 block">
+                                전화번호
+                            </label>
+                            <Input
+                                placeholder="전화번호 검색"
+                                value={searchFilters.phoneNumber}
+                                onChange={(e) =>
+                                    handleFilterChange(
+                                        "phoneNumber",
+                                        e.target.value
+                                    )
+                                }
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium text-gray-700 mb-1 block">
+                                이메일
+                            </label>
+                            <Input
+                                placeholder="이메일 검색"
+                                value={searchFilters.email}
+                                onChange={(e) =>
+                                    handleFilterChange("email", e.target.value)
+                                }
+                            />
+                        </div>
+                        <div>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                    setSearchFilters({
+                                        name: "",
+                                        nickname: "",
+                                        phoneNumber: "",
+                                        email: "",
+                                    });
+                                    setSortField("");
+                                    setCurrentPage(1);
+                                }}
+                                className="w-full"
+                            >
+                                초기화
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>상태</TableHead>
-                            <TableHead>이름</TableHead>
-                            <TableHead>닉네임</TableHead>
-                            <TableHead>전화번호</TableHead>
-                            <TableHead>이메일</TableHead>
-                            <TableHead>권한</TableHead>
-                            <TableHead>가입일</TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("status")}
+                            >
+                                상태 {getSortIcon("status")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("name")}
+                            >
+                                이름 {getSortIcon("name")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("nickname")}
+                            >
+                                닉네임 {getSortIcon("nickname")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("phoneNumber")}
+                            >
+                                전화번호 {getSortIcon("phoneNumber")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("email")}
+                            >
+                                이메일 {getSortIcon("email")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("role")}
+                            >
+                                권한 {getSortIcon("role")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() => handleSort("createdAt")}
+                            >
+                                가입일 {getSortIcon("createdAt")}
+                            </TableHead>
+                            <TableHead
+                                className="cursor-pointer hover:bg-gray-50 select-none"
+                                onClick={() =>
+                                    handleSort("latestSeasonBestStreak")
+                                }
+                            >
+                                마지막 시즌 최다 우승{" "}
+                                {getSortIcon("latestSeasonBestStreak")}
+                            </TableHead>
                             <TableHead>관리</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {users.map((user) => (
+                        {currentUsers.map((user) => (
                             <TableRow key={user.id}>
                                 <TableCell>
                                     <Badge
@@ -174,6 +418,11 @@ export default function User() {
                                     {new Date(
                                         user.createdAt
                                     ).toLocaleDateString()}
+                                </TableCell>
+                                <TableCell>
+                                    {user.latestSeasonBestStreak
+                                        ? `${user.latestSeasonBestStreak}번`
+                                        : "없음"}
                                 </TableCell>
                                 <TableCell className="flex gap-[8px]">
                                     <Button
@@ -284,6 +533,100 @@ export default function User() {
                         ))}
                     </TableBody>
                 </Table>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-between mt-6">
+                        <div className="text-sm text-gray-600">
+                            {startIndex + 1}-
+                            {Math.min(endIndex, filteredAndSortedUsers.length)}
+                            페이지 (총 {filteredAndSortedUsers.length}개 중)
+                        </div>
+                        <div className="flex items-center space-x-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(1)}
+                                disabled={currentPage === 1}
+                            >
+                                처음
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                이전
+                            </Button>
+
+                            <div className="flex items-center space-x-1">
+                                {Array.from(
+                                    { length: Math.min(5, totalPages) },
+                                    (_, i) => {
+                                        let pageNum;
+                                        if (totalPages <= 5) {
+                                            pageNum = i + 1;
+                                        } else if (currentPage <= 3) {
+                                            pageNum = i + 1;
+                                        } else if (
+                                            currentPage >=
+                                            totalPages - 2
+                                        ) {
+                                            pageNum = totalPages - 4 + i;
+                                        } else {
+                                            pageNum = currentPage - 2 + i;
+                                        }
+
+                                        return (
+                                            <Button
+                                                key={pageNum}
+                                                variant={
+                                                    currentPage === pageNum
+                                                        ? "default"
+                                                        : "outline"
+                                                }
+                                                size="sm"
+                                                onClick={() =>
+                                                    goToPage(pageNum)
+                                                }
+                                                className="w-8"
+                                            >
+                                                {pageNum}
+                                            </Button>
+                                        );
+                                    }
+                                )}
+                            </div>
+
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                다음
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => goToPage(totalPages)}
+                                disabled={currentPage === totalPages}
+                            >
+                                마지막
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Empty State */}
+                {filteredAndSortedUsers.length === 0 && !isLoading && (
+                    <div className="text-center py-8 text-gray-500">
+                        {hasActiveFilters
+                            ? "검색 결과가 없습니다."
+                            : "사용자가 없습니다."}
+                    </div>
+                )}
 
                 {/* Error Dialog */}
                 <Dialog
