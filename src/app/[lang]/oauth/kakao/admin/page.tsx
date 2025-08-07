@@ -32,7 +32,7 @@ export default function OauthKakao() {
                     }
 
                     Storage.setAccessToken(response.data.accessToken);
-                    router.push(getLocalizedPath("/introduce"));
+                    router.push(getLocalizedPath("/admin/insight"));
                 } catch {
                     router.push(getLocalizedPath("/auth/login?failed=true"));
                 }

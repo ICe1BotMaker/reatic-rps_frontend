@@ -17,7 +17,7 @@ export default function Admin() {
                     Icon={<KakaoIcon className="fill-c_kakao_black" />}
                     onClick={() => {
                         const REDIRECT_URL =
-                            "https://xn--p39a9jw03cqmg.com/ko/oauth/kakao?admin=1";
+                            "https://xn--p39a9jw03cqmg.com/ko/oauth/kakao/admin";
 
                         const CLIENT_ID = "4b441a6d5dd49f091810749329c7ae3c";
 
