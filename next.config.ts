@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
         // 이미지 최적화 설정
         formats: ["image/webp", "image/avif"],
         minimumCacheTTL: 31536000,
+        domains: ["k.kakaocdn.net"],
     },
     // 정적 파일 캐싱 설정
     async headers() {

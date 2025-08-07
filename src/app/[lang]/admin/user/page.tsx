@@ -32,12 +32,15 @@ import {
 import { useState, useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 export default function User() {
     const { data: membersData, isLoading } = useMembers();
     const [selectedMemberId, setSelectedMemberId] = useState<number | null>(
         null
     );
+    const [selectedUser, setSelectedUser] = useState<any>(null);
+    const [showUserDetail, setShowUserDetail] = useState(false);
     const [errorDialog, setErrorDialog] = useState<{
         open: boolean;
         title: string;
@@ -110,6 +113,15 @@ export default function User() {
                 ? getMemberLoginLogs({ id: selectedMemberId })
                 : null,
         enabled: !!selectedMemberId,
+    });
+
+    const { data: selectedUserLoginLogs } = useQuery({
+        queryKey: ["admin.member.loginLogs", selectedUser?.id],
+        queryFn: () =>
+            selectedUser?.id
+                ? getMemberLoginLogs({ id: selectedUser.id })
+                : null,
+        enabled: !!selectedUser?.id,
     });
 
     const handleBanToggle = (memberId: number, currentStatus: string) => {
@@ -387,7 +399,14 @@ export default function User() {
                     </TableHeader>
                     <TableBody>
                         {currentUsers.map((user) => (
-                            <TableRow key={user.id}>
+                            <TableRow 
+                                key={user.id} 
+                                className="cursor-pointer hover:bg-gray-50"
+                                onClick={() => {
+                                    setSelectedUser(user);
+                                    setShowUserDetail(true);
+                                }}
+                            >
                                 <TableCell>
                                     <Badge
                                         variant={
@@ -424,7 +443,10 @@ export default function User() {
                                         ? `${user.latestSeasonBestStreak}번`
                                         : "없음"}
                                 </TableCell>
-                                <TableCell className="flex gap-[8px]">
+                                <TableCell 
+                                    className="flex gap-[8px]"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
                                     <Button
                                         variant={
                                             user.status === "ACTIVE"
@@ -432,12 +454,13 @@ export default function User() {
                                                 : "default"
                                         }
                                         size="sm"
-                                        onClick={() =>
+                                        onClick={(e) => {
+                                            e.stopPropagation();
                                             handleBanToggle(
                                                 user.id,
                                                 user.status
-                                            )
-                                        }
+                                            );
+                                        }}
                                         disabled={
                                             banMutation.isPending ||
                                             unbanMutation.isPending
@@ -452,9 +475,10 @@ export default function User() {
                                             <Button
                                                 variant="outline"
                                                 size="sm"
-                                                onClick={() =>
-                                                    setSelectedMemberId(user.id)
-                                                }
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedMemberId(user.id);
+                                                }}
                                             >
                                                 로그인 로그
                                             </Button>
@@ -516,9 +540,10 @@ export default function User() {
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        onClick={() =>
-                                            handleRoleToggle(user.id, user.role)
-                                        }
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleRoleToggle(user.id, user.role);
+                                        }}
                                         disabled={
                                             promoteMutation.isPending ||
                                             demoteMutation.isPending
@@ -654,6 +679,185 @@ export default function User() {
                                 확인
                             </Button>
                         </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                {/* User Detail Overlay */}
+                <Dialog open={showUserDetail} onOpenChange={setShowUserDetail}>
+                    <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                        {selectedUser && (
+                            <>
+                                <DialogHeader>
+                                    <DialogTitle className="flex items-center gap-4">
+                                        <div className="h-16 w-16 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                                            {selectedUser.profileImageUrl ? (
+                                                <Image 
+                                                    src={selectedUser.profileImageUrl} 
+                                                    alt={selectedUser.name}
+                                                    width={64}
+                                                    height={64}
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            ) : (
+                                                <span className="text-xl font-semibold text-gray-600">
+                                                    {selectedUser.name?.charAt(0) || 'U'}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-bold">{selectedUser.name}</h2>
+                                            <p className="text-gray-600">@{selectedUser.nickname}</p>
+                                        </div>
+                                    </DialogTitle>
+                                </DialogHeader>
+                                
+                                <div className="space-y-6">
+                                    {/* 기본 정보 */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-4">
+                                            <h3 className="text-lg font-semibold border-b pb-2">기본 정보</h3>
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between">
+                                                    <span className="font-medium text-gray-700">이름:</span>
+                                                    <span>{selectedUser.name}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="font-medium text-gray-700">닉네임:</span>
+                                                    <span>{selectedUser.nickname}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="font-medium text-gray-700">이메일:</span>
+                                                    <span className="break-all">{selectedUser.email}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="font-medium text-gray-700">전화번호:</span>
+                                                    <span>{selectedUser.phoneNumber}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="space-y-4">
+                                            <h3 className="text-lg font-semibold border-b pb-2">계정 정보</h3>
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between items-center">
+                                                    <span className="font-medium text-gray-700">상태:</span>
+                                                    <Badge
+                                                        variant={
+                                                            selectedUser.status === "ACTIVE"
+                                                                ? "default"
+                                                                : "destructive"
+                                                        }
+                                                    >
+                                                        {selectedUser.status}
+                                                    </Badge>
+                                                </div>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="font-medium text-gray-700">권한:</span>
+                                                    <Badge
+                                                        variant={
+                                                            selectedUser.role === "ADMIN"
+                                                                ? "default"
+                                                                : "outline"
+                                                        }
+                                                    >
+                                                        {selectedUser.role}
+                                                    </Badge>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="font-medium text-gray-700">가입일:</span>
+                                                    <span>{new Date(selectedUser.createdAt).toLocaleDateString()}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="font-medium text-gray-700">최다 우승:</span>
+                                                    <span>
+                                                        {selectedUser.latestSeasonBestStreak
+                                                            ? `${selectedUser.latestSeasonBestStreak}번`
+                                                            : "없음"}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* 로그인 로그 */}
+                                    <div className="space-y-4">
+                                        <h3 className="text-lg font-semibold border-b pb-2">로그인 로그</h3>
+                                        <div className="max-h-60 overflow-y-auto border rounded">
+                                            <Table>
+                                                <TableHeader>
+                                                    <TableRow>
+                                                        <TableHead>로그인 시간</TableHead>
+                                                        <TableHead>IP 주소</TableHead>
+                                                        <TableHead>사용자 에이전트</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {selectedUserLoginLogs?.data.content?.map((log: any) => (
+                                                        <TableRow key={log.id}>
+                                                            <TableCell>
+                                                                {new Date(log.loginAt).toLocaleString()}
+                                                            </TableCell>
+                                                            <TableCell>{log.ipAddress}</TableCell>
+                                                            <TableCell className="max-w-xs truncate">
+                                                                {log.userAgent}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    )) || (
+                                                        <TableRow>
+                                                            <TableCell colSpan={3} className="text-center py-4">
+                                                                로그인 로그가 없습니다.
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    )}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* 관리 버튼들 */}
+                                    <div className="flex gap-4 pt-4 border-t">
+                                        <Button
+                                            variant={
+                                                selectedUser.status === "ACTIVE"
+                                                    ? "destructive"
+                                                    : "default"
+                                            }
+                                            onClick={() => {
+                                                handleBanToggle(selectedUser.id, selectedUser.status);
+                                                setShowUserDetail(false);
+                                            }}
+                                            disabled={
+                                                banMutation.isPending ||
+                                                unbanMutation.isPending
+                                            }
+                                        >
+                                            {selectedUser.status === "ACTIVE" ? "정지" : "정지 해제"}
+                                        </Button>
+                                        
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => {
+                                                handleRoleToggle(selectedUser.id, selectedUser.role);
+                                                setShowUserDetail(false);
+                                            }}
+                                            disabled={
+                                                promoteMutation.isPending ||
+                                                demoteMutation.isPending
+                                            }
+                                        >
+                                            {selectedUser.role === "USER" ? "관리자 승격" : "관리자 강등"}
+                                        </Button>
+                                        
+                                        <Button
+                                            variant="secondary"
+                                            onClick={() => setShowUserDetail(false)}
+                                        >
+                                            닫기
+                                        </Button>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </DialogContent>
                 </Dialog>
             </div>
