@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { Storage } from "@/services/storage";
 
-import { kakaoLogin } from "@/features/auth/api";
+import { kakaoAdminLogin } from "@/features/auth/api";
 
 export default function OauthKakao() {
     const getLocalizedPath = useLocalizedPath();
@@ -17,7 +17,7 @@ export default function OauthKakao() {
         (async () => {
             if (searchParams.get("code")) {
                 try {
-                    const response = await kakaoLogin({
+                    const response = await kakaoAdminLogin({
                         code: searchParams.get("code") as string,
                     });
                     const user = response.data.user;

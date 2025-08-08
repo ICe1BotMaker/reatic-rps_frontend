@@ -58,3 +58,27 @@ export const kakaoLogin = async (credentials: {
         params: credentials,
     });
 };
+
+// 카카오 관리자 로그인 api
+export const kakaoAdminLogin = async (credentials: {
+    code: string;
+}): AsyncResponse<{
+    refreshToken: string;
+    accessToken: string;
+    user: {
+        id: string;
+        kakaoId: string;
+        email: string;
+        nickname: string;
+        profileImageUrl: string;
+        name: string;
+        phoneNumber: string;
+        birthDate: string;
+        gender: "FEMAIL" | "MALE";
+    };
+}> => {
+    return apiClient.get("/api/members/login/admin", {
+        headers: { skipAuth: true },
+        params: credentials,
+    });
+};
