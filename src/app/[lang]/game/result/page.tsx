@@ -158,6 +158,7 @@ export default function GameResult() {
                                         getLocalizedPath("/auth/mypage")
                                     ),
                             }}
+                            logout
                         />
 
                         <div className="p-[16px] flex">
@@ -279,8 +280,6 @@ export default function GameResult() {
                         onDragged={() => setIsAdDragged(true)}
                     />
                 </div>
-
-                {renderFooter()}
             </div>
         );
     }, [
