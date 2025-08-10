@@ -60,6 +60,7 @@ export default function Ready() {
                 router.push(getLocalizedPath("/game"));
             } catch {
                 alert("기회가 모두 소진되었습니다");
+                router.push(getLocalizedPath("/game/result"));
             }
         }
     }, [getLocalizedPath, router]);
