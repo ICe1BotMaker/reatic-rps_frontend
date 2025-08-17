@@ -16,7 +16,7 @@ export const useServeAds = (credentials: {
 // 관리자 광고 리스트 query
 export const useAds = (credentials: { adType?: string }) => {
     return useQuery({
-        queryKey: ["admin.ads"],
+        queryKey: ["admin.ads", credentials.adType],
         queryFn: async () => await getAds(credentials),
         retry: false,
     });
