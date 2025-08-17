@@ -2,7 +2,7 @@
 
 import { ChevronUpIcon } from "lucide-react";
 import { useRef, useCallback, useState, TouchEvent } from "react";
-import { SquareAd } from "./google-ads";
+import { SquareAd } from "./ads";
 
 interface DraggableProps {
     isDragged: boolean;
@@ -58,7 +58,7 @@ export const DraggableAD = ({ isDragged, onDragged }: DraggableProps) => {
                 </span>
             </div>
 
-            <SquareAd adSlot="7297658596" />
+            <SquareAd />
         </div>
     );
 };

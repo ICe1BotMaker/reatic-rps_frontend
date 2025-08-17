@@ -66,12 +66,6 @@ export const FrozenRoute = ({
                     {children}
 
                     <Script
-                        async
-                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8406696765705881"
-                        crossOrigin="anonymous"
-                    />
-
-                    <Script
                         src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
                         integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
                         crossOrigin="anonymous"
