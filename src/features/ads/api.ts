@@ -35,7 +35,17 @@ export const serveAds = async (credentials: {
 // 관리자 광고 리스트 api
 export const getAds = async (credentials: {
     adType?: string;
-}): AsyncResponse<unknown> => {
+}): AsyncResponse<
+    {
+        active: boolean;
+        adType: string;
+        adUrl: string;
+        advertiser: string;
+        advertiserProfile: string;
+        id: number;
+        stake: number;
+    }[]
+> => {
     return apiClient.get("/api/admin/ads", {
         params: credentials,
     });

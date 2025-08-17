@@ -11,7 +11,7 @@ import {
     SidebarMenuItem,
     SidebarProvider,
 } from "@/components/ui/sidebar";
-import { ChartPieIcon, LeafIcon, UserIcon } from "lucide-react";
+import { AwardIcon, ChartPieIcon, LeafIcon, UserIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { match } from "@/shared/utils/url-match";
@@ -42,6 +42,11 @@ export default function AdminLayout({
             title: "시즌 관리",
             url: "/ko/admin/season",
             icon: LeafIcon,
+        },
+        {
+            title: "지분 광고",
+            url: "/ko/admin/ads",
+            icon: AwardIcon,
         },
     ];
 
