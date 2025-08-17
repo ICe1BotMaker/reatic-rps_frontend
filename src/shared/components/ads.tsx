@@ -17,7 +17,7 @@ export function AdSense({
     );
 }
 
-export function BannerAd({ className }: { className?: string }) {
+export function BannerAds({ className }: { className?: string }) {
     return (
         <AdSense
             style={{ display: "block", width: "100%", height: "180px" }}
@@ -26,7 +26,7 @@ export function BannerAd({ className }: { className?: string }) {
     );
 }
 
-export function SquareAd({ className }: { className?: string }) {
+export function SquareAds({ className }: { className?: string }) {
     return (
         <AdSense
             style={{ display: "block", width: "320px", height: "320px" }}
@@ -35,6 +35,6 @@ export function SquareAd({ className }: { className?: string }) {
     );
 }
 
-export function ResponsiveAd({ className }: { className?: string }) {
+export function ResponsiveAds({ className }: { className?: string }) {
     return <AdSense style={{ display: "block" }} className={className} />;
 }

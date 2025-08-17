@@ -2,14 +2,14 @@
 
 import { ChevronUpIcon } from "lucide-react";
 import { useRef, useCallback, useState, TouchEvent } from "react";
-import { SquareAd } from "./ads";
+import { SquareAds } from "./ads";
 
 interface DraggableProps {
     isDragged: boolean;
     onDragged: () => void;
 }
 
-export const DraggableAD = ({ isDragged, onDragged }: DraggableProps) => {
+export const DraggableAds = ({ isDragged, onDragged }: DraggableProps) => {
     const [translateY, setTranslateY] = useState(0);
     const touchStartYRef = useRef<number | null>(null);
     const threshold = 150;
@@ -58,7 +58,7 @@ export const DraggableAD = ({ isDragged, onDragged }: DraggableProps) => {
                 </span>
             </div>
 
-            <SquareAd />
+            <SquareAds />
         </div>
     );
 };

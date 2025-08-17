@@ -10,7 +10,7 @@ import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
 
 import { OverlayHeader } from "@/shared/components/overlay-header";
-import { DraggableAD } from "@/shared/components/draggable-ad";
+import { DraggableAds } from "@/shared/components/draggable-ads";
 import { Button } from "@/shared/components/button";
 
 import { useSeasonDetail, useSeasonTopTen } from "@/features/season/hooks";
@@ -128,7 +128,7 @@ export default function GameResult() {
                                 variants="primary"
                                 Icon={<ClapperboardIcon size={20} />}
                                 onClick={() =>
-                                    router.push(getLocalizedPath("/ad"))
+                                    router.push(getLocalizedPath("/ads"))
                                 }
                             >
                                 광고보고 한판 더하기 (3회 남음)
@@ -275,7 +275,7 @@ export default function GameResult() {
                 </div>
 
                 <div className="relative pb-[16px] w-full h-full flex justify-center items-center">
-                    <DraggableAD
+                    <DraggableAds
                         isDragged={isAdDragged}
                         onDragged={() => setIsAdDragged(true)}
                     />
