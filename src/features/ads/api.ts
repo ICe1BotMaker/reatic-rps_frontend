@@ -11,8 +11,16 @@ export const redeemAds = async (credentials: {
 // 광고 배정 api
 export const serveAds = async (credentials: {
     adType: string;
-    seasonId?: string;
-}): AsyncResponse<unknown> => {
+    seasonId?: number;
+}): AsyncResponse<{
+    adType: string;
+    adUrl: string;
+    advertiser: string;
+    advertiserProfile: string;
+    id: string;
+    token: string;
+    googleAds: boolean;
+}> => {
     return apiClient.get("/api/ads/serve", {
         params: credentials,
     });

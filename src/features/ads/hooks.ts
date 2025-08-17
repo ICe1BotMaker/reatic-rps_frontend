@@ -4,7 +4,7 @@ import { serveAds, getAds } from "./api";
 // 광고 배정 query
 export const useServeAds = (credentials: {
     adType: string;
-    seasonId?: string;
+    seasonId?: number;
 }) => {
     return useQuery({
         queryKey: ["ads.serve"],
