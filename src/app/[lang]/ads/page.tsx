@@ -91,7 +91,7 @@ export default function Ads() {
                     <img
                         src={served?.data.adUrl}
                         alt="ads"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                     />
                 )
             ) : (
@@ -103,11 +103,18 @@ export default function Ads() {
                         <XIcon />
                     </div>
 
-                    <div className="flex flex-col items-center gap-[16px]">
-                        <div className="size-[128px] rounded-[8px] bg-c_black animate-[upAnimation_.3s_both_.2s]" />
+                    <div className="flex flex-col items-center gap-[14px]">
+                        <div className="size-[128px] rounded-[8px] overflow-hidden animate-[upAnimation_.3s_both_.2s]">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={served?.data.advertiserProfile}
+                                alt="ads"
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
 
-                        <span className="font-p_medium text-[24px] text-c_black animate-[upAnimation_.3s_both_.4s]">
-                            광고주
+                        <span className="font-p_bold text-[18px] text-c_black animate-[upAnimation_.3s_both_.4s]">
+                            {served?.data.advertiser}
                         </span>
                     </div>
                 </>

@@ -33,7 +33,7 @@ export function AdSense({
                 <img
                     src={served?.data.adUrl}
                     alt="ads"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                 />
             )}
         </div>

@@ -6,12 +6,14 @@ import { Button } from "@/shared/components/button";
 
 import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
 
+// import { createAds } from "@/features/ads/api";
+
 export default function Admin() {
     const router = useRouter();
 
     return (
         <div className="w-screen h-dvh flex justify-center items-center">
-            <div className="w-[400px]">
+            <div className="w-[400px] flex flex-col gap-[16px]">
                 <Button
                     variants="kakao"
                     Icon={<KakaoIcon className="fill-c_kakao_black" />}
@@ -28,6 +30,38 @@ export default function Admin() {
                 >
                     카카오 계정으로 계속하기
                 </Button>
+
+                {/* <Button
+                    variants="primary"
+                    onClick={async () => {
+                        await createAds({
+                            adType: "square",
+                            advertiser: "카카오페이",
+                            advertiserProfile:
+                                "https://play-lh.googleusercontent.com/W43xj43ErMIs5BQgCdMKEa0NXCoUUW8DjQc5SxcDfLrC26H8sHDmoFIUWLYmsQahpo0",
+                            stake: 80,
+                            adUrl: "https://pouch.jumpshare.com/preview/uSzvsJCflsGqNi2MJQ5qHKltAHw33-gqO9qILzbBH7cn-M2TTH3kMe2AW7XUrmBsXW5HADpcCDRMYB-W0aieepNyduOJrV2jn0qTrZZ0PvA",
+                        });
+                    }}
+                >
+                    정사각형 광고 하나 만들기
+                </Button>
+
+                <Button
+                    variants="primary"
+                    onClick={async () => {
+                        await createAds({
+                            adType: "front",
+                            advertiser: "카카오페이",
+                            advertiserProfile:
+                                "https://play-lh.googleusercontent.com/W43xj43ErMIs5BQgCdMKEa0NXCoUUW8DjQc5SxcDfLrC26H8sHDmoFIUWLYmsQahpo0",
+                            stake: 80,
+                            adUrl: "https://pouch.jumpshare.com/preview/uSzvsJCflsGqNi2MJQ5qHKltAHw33-gqO9qILzbBH7cn-M2TTH3kMe2AW7XUrmBsXW5HADpcCDRMYB-W0aieepNyduOJrV2jn0qTrZZ0PvA",
+                        });
+                    }}
+                >
+                    전면 광고 하나 만들기
+                </Button> */}
             </div>
         </div>
     );

@@ -5,7 +5,13 @@ import { apiClient } from "@/shared/api/client";
 export const redeemAds = async (credentials: {
     token: string;
 }): AsyncResponse<unknown> => {
-    return apiClient.post("/api/ads/redeem", credentials);
+    return apiClient.post(
+        "/api/ads/redeem",
+        {},
+        {
+            params: credentials,
+        }
+    );
 };
 
 // 광고 배정 api
@@ -36,7 +42,7 @@ export const getAds = async (credentials: {
 };
 
 // 관리자 광고 추가 api
-export const addAds = async (credentials: {
+export const createAds = async (credentials: {
     adType: string;
     advertiser: string;
     advertiserProfile: string;
