@@ -153,13 +153,10 @@ export default function Login() {
                                 로그인 하면
                             </span>
 
-                            <Link text="개인정보처리방침" link="" />
-
-                            <span className="font-p_regular text-[16px] text-c_black">
-                                및
-                            </span>
-
-                            <Link text="이용약관" link="" />
+                            <Link
+                                text="이용약관 및 개인정보처리방침"
+                                link="/ko/terms-of-use"
+                            />
 
                             <span className="font-p_regular text-[16px] text-c_black">
                                 에 동의한 것으로 간주돼요.
