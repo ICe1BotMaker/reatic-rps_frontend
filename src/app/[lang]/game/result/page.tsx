@@ -147,8 +147,8 @@ export default function GameResult() {
     const renderFlow = useCallback(() => {
         if (isAdDragged) {
             return (
-                <div className="h-full flex flex-col justify-between">
-                    <div className="flex flex-col">
+                <div className="h-full flex flex-col">
+                    <div className="flex-1 flex flex-col min-h-0">
                         <OverlayHeader
                             title="순위표"
                             icon={{
@@ -161,7 +161,7 @@ export default function GameResult() {
                             logout
                         />
 
-                        <div className="p-[16px] flex">
+                        <div className="p-[16px] flex flex-shrink-0">
                             <div className="flex-1 flex flex-col">
                                 <span className="font-p_regular text-[18px] text-c_black">
                                     연속 우승
@@ -188,56 +188,62 @@ export default function GameResult() {
                             </div>
                         </div>
 
-                        <div className="p-[16px] flex flex-col gap-[8px] overflow-y-scroll">
-                            {data?.data.map((user, i) => (
-                                <div
-                                    key={user.nickname}
-                                    className="p-[8px] flex justify-between items-center"
-                                >
-                                    <div className="flex items-center gap-[14px]">
-                                        {i === 0 ? (
-                                            <div className="p-[2px_10px] rounded-[4px] bg-[rgba(239,68,82,.12)]">
-                                                <span className="font-p_semibold text-[14px] text-[#EF4452]">
-                                                    {user.rank}위
-                                                </span>
-                                            </div>
-                                        ) : i === 1 ? (
-                                            <div className="p-[2px_10px] rounded-[4px] bg-[rgba(76,123,233,.12)]">
-                                                <span className="font-p_semibold text-[14px] text-[#4C7BE9]">
-                                                    {user.rank}위
-                                                </span>
-                                            </div>
-                                        ) : (
-                                            <div className="p-[2px_10px] rounded-[4px] bg-[rgba(174,180,192,.12)]">
-                                                <span className="font-p_semibold text-[14px] text-[#626276]">
-                                                    {user.rank}위
-                                                </span>
-                                            </div>
-                                        )}
+                        {/* 스크롤 가능한 순위 리스트 */}
+                        <div className="flex-1 min-h-0 px-[16px]">
+                            <div className="h-full overflow-y-auto">
+                                <div className="flex flex-col gap-[8px] pb-[16px]">
+                                    {data?.data.map((user, i) => (
+                                        <div
+                                            key={user.nickname}
+                                            className="p-[8px] flex justify-between items-center"
+                                        >
+                                            <div className="flex items-center gap-[14px]">
+                                                {i === 0 ? (
+                                                    <div className="p-[2px_10px] rounded-[4px] bg-[rgba(239,68,82,.12)]">
+                                                        <span className="font-p_semibold text-[14px] text-[#EF4452]">
+                                                            {user.rank}위
+                                                        </span>
+                                                    </div>
+                                                ) : i === 1 ? (
+                                                    <div className="p-[2px_10px] rounded-[4px] bg-[rgba(76,123,233,.12)]">
+                                                        <span className="font-p_semibold text-[14px] text-[#4C7BE9]">
+                                                            {user.rank}위
+                                                        </span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="p-[2px_10px] rounded-[4px] bg-[rgba(174,180,192,.12)]">
+                                                        <span className="font-p_semibold text-[14px] text-[#626276]">
+                                                            {user.rank}위
+                                                        </span>
+                                                    </div>
+                                                )}
 
-                                        <span className="font-p_semibold text-[20px] text-c_black">
-                                            {user.nickname}
-                                        </span>
-                                    </div>
+                                                <span className="font-p_semibold text-[20px] text-c_black">
+                                                    {user.nickname}
+                                                </span>
+                                            </div>
 
-                                    {i === 0 ? (
-                                        <span className="font-p_semibold text-[20px] text-[#EF4452]">
-                                            {user.score}회
-                                        </span>
-                                    ) : i === 1 ? (
-                                        <span className="font-p_semibold text-[20px] text-[#4C7BE9]">
-                                            {user.score}회
-                                        </span>
-                                    ) : (
-                                        <span className="font-p_semibold text-[20px] text-[#626276]">
-                                            {user.score}회
-                                        </span>
-                                    )}
+                                            {i === 0 ? (
+                                                <span className="font-p_semibold text-[20px] text-[#EF4452]">
+                                                    {user.score}회
+                                                </span>
+                                            ) : i === 1 ? (
+                                                <span className="font-p_semibold text-[20px] text-[#4C7BE9]">
+                                                    {user.score}회
+                                                </span>
+                                            ) : (
+                                                <span className="font-p_semibold text-[20px] text-[#626276]">
+                                                    {user.score}회
+                                                </span>
+                                            )}
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                         </div>
 
-                        <div className="pt-[36px] w-full flex flex-col items-center gap-[24px]">
+                        {/* 하단 고정 정보 */}
+                        <div className="py-[36px] w-full flex flex-col items-center gap-[24px] flex-shrink-0">
                             <div className="flex gap-[4px]">
                                 <div className="size-[8px] rounded-full bg-[#ECECF1]" />
                                 <div className="size-[8px] rounded-full bg-[#ECECF1]" />
@@ -259,7 +265,8 @@ export default function GameResult() {
                         </div>
                     </div>
 
-                    {renderFooter()}
+                    {/* Footer */}
+                    <div className="flex-shrink-0">{renderFooter()}</div>
                 </div>
             );
         }
