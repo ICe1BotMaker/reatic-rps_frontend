@@ -188,7 +188,6 @@ export default function GameResult() {
                             </div>
                         </div>
 
-                        {/* 스크롤 가능한 순위 리스트 */}
                         <div className="flex-1 min-h-0 px-[16px]">
                             <div className="h-full overflow-y-auto">
                                 <div className="flex flex-col gap-[8px] pb-[16px]">
@@ -242,7 +241,6 @@ export default function GameResult() {
                             </div>
                         </div>
 
-                        {/* 하단 고정 정보 */}
                         <div className="py-[36px] w-full flex flex-col items-center gap-[24px] flex-shrink-0">
                             <div className="flex gap-[4px]">
                                 <div className="size-[8px] rounded-full bg-[#ECECF1]" />
@@ -265,7 +263,6 @@ export default function GameResult() {
                         </div>
                     </div>
 
-                    {/* Footer */}
                     <div className="flex-shrink-0">{renderFooter()}</div>
                 </div>
             );

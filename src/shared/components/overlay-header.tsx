@@ -1,7 +1,6 @@
 "use client";
 
 import { LogOutIcon, SettingsIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 import { useLocalizedPath } from "../utils/locale";
 import { Storage } from "@/services/storage";
@@ -17,7 +16,6 @@ interface OverlayHeaderProps {
 
 export const OverlayHeader = ({ title, icon, logout }: OverlayHeaderProps) => {
     const getLocalizedPath = useLocalizedPath();
-    const router = useRouter();
 
     return (
         <div className="p-[16px] flex justify-between items-center">
@@ -38,7 +36,7 @@ export const OverlayHeader = ({ title, icon, logout }: OverlayHeaderProps) => {
                         className="stroke-c_black"
                         onClick={() => {
                             Storage.setAccessToken("");
-                            router.push(getLocalizedPath("/"));
+                            location.href = getLocalizedPath("/");
                         }}
                     />
                 )}
