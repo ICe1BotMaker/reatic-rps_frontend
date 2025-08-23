@@ -24,7 +24,7 @@ export function AdSense({
                 className || ""
             }`}
         >
-            {served?.data.googleAds ? (
+            {served?.data?.googleAds ? (
                 <span className="font-p_medium text-[14px] text-white underline">
                     허가되지 않은 Google Ads 광고입니다.
                 </span>

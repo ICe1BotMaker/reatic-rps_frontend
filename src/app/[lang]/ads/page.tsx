@@ -82,7 +82,7 @@ export default function Ads() {
     return (
         <div className="relative w-dvw h-dvh flex justify-center items-center">
             {!adTimer.isStoped ? (
-                served?.data.googleAds ? (
+                served?.data?.googleAds ? (
                     <span className="font-p_medium text-[14px] text-c_black underline">
                         허가되지 않은 Google Ads 광고입니다.
                     </span>
