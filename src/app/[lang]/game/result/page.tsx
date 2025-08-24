@@ -87,10 +87,10 @@ export default function GameResult() {
                     새로운 시즌 시작시 알림 받기
                 </span>
 
-                {(entry?.data.shareEntryCount || 0) <= 3 ||
-                (entry?.data.adEntryCount || 0) <= 3 ? (
+                {(entry?.data.shareEntryCount || 0) < 3 ||
+                (entry?.data.adEntryCount || 0) < 3 ? (
                     <div className="w-full flex flex-col gap-[6px]">
-                        {(entry?.data.shareEntryCount || 0) <= 3 && (
+                        {(entry?.data.shareEntryCount || 0) < 3 && (
                             <Button
                                 variants="primary_light"
                                 Icon={<Share2Icon size={20} />}
@@ -123,7 +123,7 @@ export default function GameResult() {
                             </Button>
                         )}
 
-                        {(entry?.data.adEntryCount || 0) <= 3 && (
+                        {(entry?.data.adEntryCount || 0) < 3 && (
                             <Button
                                 variants="primary"
                                 Icon={<ClapperboardIcon size={20} />}
