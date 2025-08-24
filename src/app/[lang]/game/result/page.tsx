@@ -131,7 +131,8 @@ export default function GameResult() {
                                     router.push(getLocalizedPath("/ads"))
                                 }
                             >
-                                광고보고 한판 더하기 (3회 남음)
+                                광고보고 한판 더하기 (
+                                {3 - (entry?.data.adEntryCount || 0)}회 남음)
                             </Button>
                         )}
                     </div>
