@@ -191,7 +191,7 @@ export default function GameResult() {
                         <div className="flex-1 min-h-0 px-[16px]">
                             <div className="h-full overflow-y-auto">
                                 <div className="flex flex-col gap-[8px] pb-[16px]">
-                                    {data?.data.map((user, i) => (
+                                    {data?.data.splice(1).map((user, i) => (
                                         <div
                                             key={user.nickname}
                                             className="p-[8px] flex justify-between items-center"
