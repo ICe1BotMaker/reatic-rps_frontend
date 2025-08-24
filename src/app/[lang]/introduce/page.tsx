@@ -7,6 +7,7 @@ import { CheckIcon } from "lucide-react";
 
 import { BottomSheet } from "@/shared/components/bottom-sheet";
 import { Button } from "@/shared/components/button";
+import { Hand } from "@/shared/components/hand";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
@@ -90,16 +91,7 @@ export default function Introduce() {
                     </motion.div>
                 </AnimatePresence>
 
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    src={`/ko/images/3_hi.gif`}
-                    alt="mainloop_compressed"
-                    style={{
-                        position: "absolute",
-                        bottom: bar.bottom,
-                        pointerEvents: "none",
-                    }}
-                />
+                <Hand name="3_hi" />
             </div>
 
             <BottomSheet isOpen={isBottomSheetOpen}>
