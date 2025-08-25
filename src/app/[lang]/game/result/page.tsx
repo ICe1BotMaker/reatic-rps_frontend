@@ -112,7 +112,7 @@ export default function GameResult() {
                                             templateId: 121362,
                                         });
 
-                                        await share();
+                                        await share({ seasonId });
                                         await handleStart();
                                     } else {
                                         alert("카카오 SDK 오류 발생");
@@ -143,7 +143,14 @@ export default function GameResult() {
                 )}
             </div>
         );
-    }, [entry, getLocalizedPath, handleStart, router]);
+    }, [
+        entry?.data.adEntryCount,
+        entry?.data.shareEntryCount,
+        getLocalizedPath,
+        handleStart,
+        router,
+        seasonId,
+    ]);
 
     const renderFlow = useCallback(() => {
         if (isAdDragged) {

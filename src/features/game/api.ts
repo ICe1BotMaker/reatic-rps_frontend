@@ -29,8 +29,8 @@ export const play = async (
 };
 
 // 공유 및 횟수 증가 api
-export const share = async () => {
-    return apiClient.post("/api/game/seasons/entry/share");
+export const share = async (credentials: { seasonId: number }) => {
+    return apiClient.post("/api/game/seasons/entry/share", credentials);
 };
 
 // 광고 시청 및 횟수 증가 api
