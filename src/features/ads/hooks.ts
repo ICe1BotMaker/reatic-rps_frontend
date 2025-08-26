@@ -10,6 +10,7 @@ export const useServeAds = (credentials: {
         queryKey: ["ads.serve"],
         queryFn: async () => await serveAds(credentials),
         retry: false,
+        refetchOnWindowFocus: false,
     });
 };
 
