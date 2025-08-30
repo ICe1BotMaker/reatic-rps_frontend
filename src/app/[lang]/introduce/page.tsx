@@ -60,7 +60,9 @@ export default function Introduce() {
                 <ul className="p-[24px] max-h-[400px] overflow-y-scroll uld">
                     <li className="font-p_regular text-[14px] text-c_black py-[12px]">
                         본 게임은 정해진 기간 내에 가위바위보를 연속으로 이긴
-                        횟수가 가장 많은 1인이 우승하고 상금을 받습니다.
+                        횟수가 가장 많은 1인이 우승하고 상금을 받습니다. (단,
+                        2인 이상이 동일한 기록을 갖고 있을 경우 먼저 플레이한
+                        순서로 우선함)
                     </li>
                     <li className="font-p_regular text-[14px] text-c_black py-[12px]">
                         상금은 매주 이벤트가 갱신되는 시점에 1위를 달성 또는
