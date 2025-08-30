@@ -12,9 +12,15 @@ interface OverlayHeaderProps {
         onClick: () => void;
     };
     logout?: boolean;
+    logoutMessage?: string;
 }
 
-export const OverlayHeader = ({ title, icon, logout }: OverlayHeaderProps) => {
+export const OverlayHeader = ({
+    title,
+    icon,
+    logout,
+    logoutMessage,
+}: OverlayHeaderProps) => {
     const getLocalizedPath = useLocalizedPath();
 
     return (
@@ -35,8 +41,12 @@ export const OverlayHeader = ({ title, icon, logout }: OverlayHeaderProps) => {
                     <LogOutIcon
                         className="stroke-c_black"
                         onClick={() => {
-                            Storage.setAccessToken("");
-                            location.href = getLocalizedPath("/");
+                            const approved = confirm(logoutMessage);
+
+                            if (approved) {
+                                Storage.setAccessToken("");
+                                location.href = getLocalizedPath("/");
+                            }
                         }}
                     />
                 )}

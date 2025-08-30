@@ -168,6 +168,7 @@ export default function GameResult() {
                                     ),
                             }}
                             logout
+                            logoutMessage={`아직 참여할 수 있는 기회가 ${entry?.data.remainingEntry}번 남아있어요! 로그아웃 하시겠어요?`}
                         />
 
                         <div className="p-[16px] flex flex-shrink-0">
@@ -325,6 +326,7 @@ export default function GameResult() {
     }, [
         data?.data,
         detail?.data.endDateTime,
+        entry?.data.remainingEntry,
         getLocalizedPath,
         isAdDragged,
         renderFooter,
