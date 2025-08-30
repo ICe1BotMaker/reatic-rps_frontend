@@ -1,13 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckIcon } from "lucide-react";
 
 import { BottomSheet } from "@/shared/components/bottom-sheet";
 import { Button } from "@/shared/components/button";
-import { Hand } from "@/shared/components/hand";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
@@ -18,41 +16,18 @@ export default function Introduce() {
     const bar = useBar();
 
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-    const [flow, setFlow] = useState<"FIRST" | "SECOND">("FIRST");
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setFlow("SECOND");
             setIsBottomSheetOpen(true);
-        }, 14000);
+        }, 1000);
 
         return () => {
             clearTimeout(timeout);
         };
     }, []);
 
-    const containerVariants = useMemo(
-        () => ({
-            initial: { opacity: 0 },
-            animate: { opacity: 1, transition: { duration: 0.3 } },
-            exit: { opacity: 0, transition: { duration: 0.3 } },
-        }),
-        []
-    );
-
     const renderHeader = useCallback(() => {
-        if (flow === "FIRST") {
-            return (
-                <div className="p-[36px_16px]">
-                    <p className="font-p_semibold text-[32px] text-white leading-[39px]">
-                        안녕하세요!
-                        <br />
-                        저는 &lsquo;손&lsquo; 이에요 :)
-                    </p>
-                </div>
-            );
-        }
-
         return (
             <div className="p-[36px_16px]">
                 <p className="font-p_semibold text-[32px] text-white leading-[39px]">
@@ -62,7 +37,7 @@ export default function Introduce() {
                 </p>
             </div>
         );
-    }, [flow]);
+    }, []);
 
     const handleAgree = () => {
         setIsBottomSheetOpen(false);
@@ -78,20 +53,7 @@ export default function Introduce() {
                     paddingBottom: `${bar.bottom}px`,
                 }}
             >
-                <AnimatePresence mode="popLayout">
-                    <motion.div
-                        key={flow}
-                        variants={containerVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        className="sticky z-1"
-                    >
-                        {renderHeader()}
-                    </motion.div>
-                </AnimatePresence>
-
-                <Hand name="3_hi" />
+                {renderHeader()}
             </div>
 
             <BottomSheet isOpen={isBottomSheetOpen}>
