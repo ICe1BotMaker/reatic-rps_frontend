@@ -286,12 +286,39 @@ export default function GameResult() {
                     </p>
                 </div>
 
+                <div className="p-[16px] flex flex-shrink-0">
+                    <div className="flex-1 flex flex-col">
+                        <span className="font-p_regular text-[18px] text-c_black">
+                            연속 우승
+                        </span>
+
+                        <span className="font-p_bold text-[32px] text-c_black">
+                            {data?.data[0].score}회
+                        </span>
+                    </div>
+
+                    <div className="flex-1 flex flex-col">
+                        <span className="font-p_regular text-[18px] text-c_black">
+                            확률
+                        </span>
+
+                        <span className="font-p_bold text-[32px] text-c_black">
+                            {data?.data[0].score
+                                ? (33.33 / data?.data[0].score).toFixed(2)
+                                : 33.33}
+                            %
+                        </span>
+                    </div>
+                </div>
+
                 <div className="relative pb-[16px] w-full h-full flex justify-center items-center">
                     <DraggableAds
                         isDragged={isAdDragged}
                         onDragged={() => setIsAdDragged(true)}
                     />
                 </div>
+
+                <div className="flex-shrink-0">{renderFooter()}</div>
             </div>
         );
     }, [

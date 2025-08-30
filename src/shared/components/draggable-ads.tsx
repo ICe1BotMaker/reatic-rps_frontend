@@ -12,7 +12,7 @@ interface DraggableProps {
 export const DraggableAds = ({ isDragged, onDragged }: DraggableProps) => {
     const [translateY, setTranslateY] = useState(0);
     const touchStartYRef = useRef<number | null>(null);
-    const threshold = 150;
+    const threshold = 50;
 
     const handleTouchStart = useCallback((e: TouchEvent<HTMLDivElement>) => {
         touchStartYRef.current = e.touches[0].clientY;
@@ -46,7 +46,7 @@ export const DraggableAds = ({ isDragged, onDragged }: DraggableProps) => {
             onTouchEnd={handleTouchEnd}
             style={{
                 transform: `translateY(${translateY}px)`,
-                transition: translateY === 0 ? "transform 0.2s ease" : "none",
+                transition: translateY === 0 ? "transform 0.1s ease" : "none",
                 opacity: isDragged ? "0" : "1",
             }}
         >
