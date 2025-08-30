@@ -309,7 +309,7 @@ export default function Game() {
                 </div>
 
                 <div className="w-full h-full animate-[upper_1s_1.2s_both]">
-                    <div className="w-full h-[140px] bg-gradient-to-r from-transparent to-[#4B58FF]" />
+                    <div className="w-full h-[140px]" />
 
                     {renderRps()}
                 </div>
