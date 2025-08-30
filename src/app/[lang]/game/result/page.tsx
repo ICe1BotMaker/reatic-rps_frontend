@@ -119,7 +119,8 @@ export default function GameResult() {
                                     }
                                 }}
                             >
-                                공유하고 한판 더하기
+                                공유하고 한판 더하기{" "}
+                                {3 - (entry?.data.shareEntryCount || 0)}회 남음)
                             </Button>
                         )}
 
