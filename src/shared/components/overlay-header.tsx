@@ -12,14 +12,14 @@ interface OverlayHeaderProps {
         onClick: () => void;
     };
     logout?: boolean;
-    logoutMessage?: string;
+    remainingEntry?: number;
 }
 
 export const OverlayHeader = ({
     title,
     icon,
     logout,
-    logoutMessage,
+    remainingEntry,
 }: OverlayHeaderProps) => {
     const getLocalizedPath = useLocalizedPath();
 
@@ -41,12 +41,20 @@ export const OverlayHeader = ({
                     <LogOutIcon
                         className="stroke-c_black"
                         onClick={() => {
-                            const approved = confirm(logoutMessage);
+                            if ((remainingEntry || 0) > 0) {
+                                const approved = confirm(
+                                    `아직 참여할 수 있는 기회가 ${remainingEntry}번 남아있어요! 로그아웃 하시겠어요?`
+                                );
 
-                            if (approved) {
-                                Storage.setAccessToken("");
-                                location.href = getLocalizedPath("/");
+                                if (approved) {
+                                    Storage.setAccessToken("");
+                                    location.href = getLocalizedPath("/");
+                                    return;
+                                }
                             }
+
+                            Storage.setAccessToken("");
+                            location.href = getLocalizedPath("/");
                         }}
                     />
                 )}

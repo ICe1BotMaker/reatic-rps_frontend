@@ -119,7 +119,7 @@ export default function GameResult() {
                                     }
                                 }}
                             >
-                                공유하고 한판 더하기{" "}
+                                공유하고 한판 더하기 (
                                 {3 - (entry?.data.shareEntryCount || 0)}회 남음)
                             </Button>
                         )}
@@ -168,7 +168,7 @@ export default function GameResult() {
                                     ),
                             }}
                             logout
-                            logoutMessage={`아직 참여할 수 있는 기회가 ${entry?.data.remainingEntry}번 남아있어요! 로그아웃 하시겠어요?`}
+                            remainingEntry={entry?.data.remainingEntry}
                         />
 
                         <div className="p-[16px] flex flex-shrink-0">
