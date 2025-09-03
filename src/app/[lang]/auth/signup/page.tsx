@@ -34,7 +34,7 @@ export default function SignUp() {
 
         name: "",
         phone: "",
-        birthDate: moment().format("YYYY-MM-DD"),
+        birthDate: moment().format("YYYYMMDD"),
 
         gender: {
             value: "",
@@ -57,7 +57,7 @@ export default function SignUp() {
 
                 name: "",
                 phone: "",
-                birthDate: moment().format("YYYY-MM-DD"),
+                birthDate: moment().format("YYYYMMDD"),
 
                 gender: {
                     value: "MALE",
@@ -81,7 +81,10 @@ export default function SignUp() {
                 name: user.name,
                 phoneNumber: user.phone,
                 gender: user.gender.value,
-                birthDate: user.birthDate,
+                birthDate: user.birthDate.replace(
+                    /(\d{4})(\d{2})(\d{2})/,
+                    "$1-$2-$3"
+                ),
             });
 
             Storage.setAccessToken(response.data.accessToken);
@@ -96,7 +99,7 @@ export default function SignUp() {
         () =>
             /^[가-힣]+$/.test(user.name) &&
             /^\d{11}$/.test(user.phone) &&
-            /^(\d{4})-(\d{2})-(\d{2})$/.test(user.birthDate),
+            /^\d{8}$/.test(user.birthDate),
         [user]
     );
 
@@ -155,13 +158,24 @@ export default function SignUp() {
                                 생년월일
                             </span>
 
-                            <Input
-                                value={user.birthDate}
-                                setValue={(birthDate) =>
-                                    setUser((prev) => ({ ...prev, birthDate }))
-                                }
-                                placeholder="생년월일 입력해 주세요."
-                            />
+                            <div className="flex flex-col gap-[14px]">
+                                <Input
+                                    value={user.birthDate}
+                                    setValue={(birthDate) =>
+                                        setUser((prev) => ({
+                                            ...prev,
+                                            birthDate,
+                                        }))
+                                    }
+                                    placeholder="생년월일 입력해 주세요."
+                                />
+
+                                {/\D/.test(user.birthDate) && (
+                                    <span className="font-regular text-[14px] text-[#ff0000]">
+                                        숫자만 입력해 주세요.
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         <div className="flex flex-col gap-[6px]">
@@ -178,6 +192,12 @@ export default function SignUp() {
                                     }
                                     placeholder="전화번호를 입력해 주세요."
                                 />
+
+                                {/\D/.test(user.phone) && (
+                                    <span className="font-regular text-[14px] text-[#ff0000]">
+                                        숫자만 입력해 주세요.
+                                    </span>
+                                )}
 
                                 <span className="font-regular text-[14px] text-[#ff0000]">
                                     상품 증정을 위해 정확한 전화번호를 입력해
