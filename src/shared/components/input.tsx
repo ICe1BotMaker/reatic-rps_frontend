@@ -19,7 +19,7 @@ export const Input = ({
         <div className="w-full relative">
             <input
                 type={type}
-                className="w-full p-[16px_18px] bg-white border border-[#E9E9E9] rounded-[6px] font-p_medium"
+                className="w-full p-[16px_18px] bg-white border border-[#E9E9E9] rounded-[6px] font-p_regular"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder={placeholder}

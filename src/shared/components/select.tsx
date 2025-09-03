@@ -30,7 +30,7 @@ export const Select = ({
     return (
         <>
             <div
-                className="w-full p-[16px_18px] bg-white border border-[#E9E9E9] rounded-[6px] font-p_medium"
+                className="w-full p-[16px_18px] bg-white border border-[#E9E9E9] rounded-[6px] font-p_regular"
                 onClick={() => setIsBottomSheetOpen(true)}
             >
                 {value ? value.label : placeholder}
@@ -49,7 +49,7 @@ export const Select = ({
                     {options.map((option) => (
                         <div
                             key={option.value}
-                            className="w-full flex justify-between items-center"
+                            className="w-full flex justify-between items-center font-p_regular"
                             onClick={() => {
                                 setIsBottomSheetOpen(false);
                                 setValue(option);
