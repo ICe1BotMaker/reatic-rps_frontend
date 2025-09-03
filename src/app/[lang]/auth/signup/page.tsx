@@ -167,7 +167,7 @@ export default function SignUp() {
                                             birthDate,
                                         }))
                                     }
-                                    placeholder="생년월일 입력해 주세요."
+                                    placeholder="생년월일 8자리를 입력해 주세요."
                                 />
 
                                 {/\D/.test(user.birthDate) && (
@@ -190,7 +190,7 @@ export default function SignUp() {
                                     setValue={(phone) =>
                                         setUser((prev) => ({ ...prev, phone }))
                                     }
-                                    placeholder="전화번호를 입력해 주세요."
+                                    placeholder="전화번호 11자리를 입력해 주세요."
                                 />
 
                                 {/\D/.test(user.phone) && (
