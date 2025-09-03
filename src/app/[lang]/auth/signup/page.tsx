@@ -128,11 +128,11 @@ export default function SignUp() {
                         />
 
                         <div className="flex flex-col items-center gap-[4px]">
-                            <span className="font-semibold text-[20px] text-c_black">
+                            <span className="font-p_semibold text-[20px] text-c_black">
                                 {user.nickname}
                             </span>
 
-                            <span className="font-medium text-[14px] text-c_black">
+                            <span className="font-p_medium text-[14px] text-c_black">
                                 {user.email}
                             </span>
                         </div>
@@ -140,7 +140,7 @@ export default function SignUp() {
 
                     <div className="w-full flex flex-col gap-[24px]">
                         <div className="flex flex-col gap-[6px]">
-                            <span className="font-regular text-[16px] text-c_black">
+                            <span className="font-p_regular text-[16px] text-c_black">
                                 이름
                             </span>
 
@@ -154,7 +154,7 @@ export default function SignUp() {
                         </div>
 
                         <div className="flex flex-col gap-[6px]">
-                            <span className="font-regular text-[16px] text-c_black">
+                            <span className="font-p_regular text-[16px] text-c_black">
                                 생년월일
                             </span>
 
@@ -171,7 +171,7 @@ export default function SignUp() {
                                 />
 
                                 {/\D/.test(user.birthDate) && (
-                                    <span className="font-regular text-[14px] text-[#ff0000]">
+                                    <span className="font-p_regular text-[14px] text-[#ff0000]">
                                         숫자만 입력해 주세요.
                                     </span>
                                 )}
@@ -179,7 +179,7 @@ export default function SignUp() {
                         </div>
 
                         <div className="flex flex-col gap-[6px]">
-                            <span className="font-regular text-[16px] text-c_black">
+                            <span className="font-p_regular text-[16px] text-c_black">
                                 전화번호
                             </span>
 
@@ -194,12 +194,12 @@ export default function SignUp() {
                                 />
 
                                 {/\D/.test(user.phone) && (
-                                    <span className="font-regular text-[14px] text-[#ff0000]">
+                                    <span className="font-p_regular text-[14px] text-[#ff0000]">
                                         숫자만 입력해 주세요.
                                     </span>
                                 )}
 
-                                <span className="font-regular text-[14px] text-[#ff0000]">
+                                <span className="font-p_regular text-[14px] text-[#ff0000]">
                                     상품 증정을 위해 정확한 전화번호를 입력해
                                     주세요.
                                 </span>
@@ -207,7 +207,7 @@ export default function SignUp() {
                         </div>
 
                         <div className="flex flex-col gap-[6px]">
-                            <span className="font-regular text-[16px] text-c_black">
+                            <span className="font-p_regular text-[16px] text-c_black">
                                 성별
                             </span>
 

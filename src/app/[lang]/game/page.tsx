@@ -213,7 +213,7 @@ export default function Game() {
                                 <Icon />
 
                                 {aiSelected === type && rpsState !== "DRAW" && (
-                                    <span className="absolute bottom-[14px] font-bold text-[14px] text-[#3454AF]">
+                                    <span className="absolute bottom-[14px] font-p_bold text-[14px] text-[#3454AF]">
                                         AI
                                     </span>
                                 )}

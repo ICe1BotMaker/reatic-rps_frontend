@@ -86,11 +86,11 @@ export default function Mypage() {
                         />
 
                         <div className="flex flex-col items-center gap-[4px]">
-                            <span className="font-semibold text-[20px] text-c_black">
+                            <span className="font-p_semibold text-[20px] text-c_black">
                                 {user?.data.name}
                             </span>
 
-                            <span className="font-medium text-[14px] text-c_black">
+                            <span className="font-p_medium text-[14px] text-c_black">
                                 {user?.data.email}
                             </span>
                         </div>
@@ -98,7 +98,7 @@ export default function Mypage() {
 
                     <div className="w-full flex flex-col gap-[24px]">
                         <div className="flex flex-col gap-[6px]">
-                            <span className="font-regular text-[16px] text-c_black">
+                            <span className="font-p_regular text-[16px] text-c_black">
                                 이름
                             </span>
 
@@ -110,7 +110,7 @@ export default function Mypage() {
                         </div>
 
                         <div className="flex flex-col gap-[6px]">
-                            <span className="font-regular text-[16px] text-c_black">
+                            <span className="font-p_regular text-[16px] text-c_black">
                                 전화번호
                             </span>
 

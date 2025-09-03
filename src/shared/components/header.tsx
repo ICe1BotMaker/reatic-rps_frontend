@@ -23,7 +23,7 @@ export const Header = ({ leftIcon, rightIcon, title }: HeaderProps) => {
                 )}
             </div>
 
-            <span className="font-semibold text-[20px] text-c_black">
+            <span className="font-p_semibold text-[20px] text-c_black">
                 {title}
             </span>
 
