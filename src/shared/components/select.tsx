@@ -30,7 +30,7 @@ export const Select = ({
     return (
         <>
             <div
-                className="w-full p-[16px_18px] bg-white border border-[#E9E9E9] rounded-[6px]"
+                className="w-full p-[16px_18px] bg-white border border-[#E9E9E9] rounded-[6px] font-p_medium"
                 onClick={() => setIsBottomSheetOpen(true)}
             >
                 {value ? value.label : placeholder}
