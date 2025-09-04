@@ -110,6 +110,10 @@ export default function GameResult() {
                                     if (Kakao.isInitialized) {
                                         await Kakao.Share.sendCustom({
                                             templateId: 121362,
+                                            templateArgs: {
+                                                AMOUNT: data?.data[0].score,
+                                                RANK: data?.data[0].rank,
+                                            },
                                         });
 
                                         await share({ seasonId });
@@ -145,6 +149,7 @@ export default function GameResult() {
             </div>
         );
     }, [
+        data?.data,
         entry?.data.adEntryCount,
         entry?.data.shareEntryCount,
         getLocalizedPath,
