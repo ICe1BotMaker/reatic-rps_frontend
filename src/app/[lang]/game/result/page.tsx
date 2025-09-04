@@ -110,10 +110,11 @@ export default function GameResult() {
                                     if (Kakao.isInitialized) {
                                         await Kakao.Share.sendCustom({
                                             templateId: 121362,
+                                            serverCallbackArgs: async () => {
+                                                await share({ seasonId });
+                                                await handleStart();
+                                            },
                                         });
-
-                                        await share({ seasonId });
-                                        await handleStart();
                                     } else {
                                         alert("카카오 SDK 오류 발생");
                                     }
