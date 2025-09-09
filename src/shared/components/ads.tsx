@@ -23,6 +23,7 @@ export function AdSense({
             className={`bg-c_primary_softlight flex justify-center items-center ${
                 className || ""
             }`}
+            onClick={() => window.open(served?.data.clickUrl, "_blank")}
         >
             {served?.data?.googleAds ? (
                 <span className="font-p_medium text-[14px] text-white underline">

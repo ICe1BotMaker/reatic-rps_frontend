@@ -26,6 +26,7 @@ export const serveAds = async (credentials: {
     id: string;
     token: string;
     googleAds: boolean;
+    clickUrl: string;
 }> => {
     return apiClient.get("/api/ads/serve", {
         params: credentials,
@@ -44,6 +45,7 @@ export const getAds = async (credentials: {
         advertiserProfile: string;
         id: number;
         stake: number;
+        clickUrl: string;
     }[]
 > => {
     return apiClient.get("/api/admin/ads", {
@@ -58,6 +60,7 @@ export const createAds = async (credentials: {
     advertiserProfile: string;
     stake: number;
     adUrl: string;
+    clickUrl: string;
 }): AsyncResponse<unknown> => {
     return apiClient.post("/api/admin/ads", credentials);
 };
@@ -69,6 +72,16 @@ export const modifyAdsStake = async (credentials: {
 }): AsyncResponse<unknown> => {
     return apiClient.patch(`/api/admin/ads/${credentials.id}/stake`, {
         stake: credentials.stake,
+    });
+};
+
+// 관리자 광고 클릭 URL 수정 api
+export const modifyAdsClickUrl = async (credentials: {
+    id: string;
+    clickUrl: string;
+}): AsyncResponse<unknown> => {
+    return apiClient.patch(`/api/admin/ads/${credentials.id}/link`, {
+        clickUrl: credentials.clickUrl,
     });
 };
 

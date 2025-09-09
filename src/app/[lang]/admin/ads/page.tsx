@@ -33,7 +33,7 @@ import {
 import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAds } from "@/features/ads/hooks";
-import { createAds, modifyAdsStake, removeAds } from "@/features/ads/api";
+import { createAds, modifyAdsStake, modifyAdsClickUrl, removeAds } from "@/features/ads/api";
 
 const AD_TYPES = [
     { value: "square", label: "사각형 광고" },
@@ -49,6 +49,7 @@ export default function AdminAds() {
 
     const [createAdDialog, setCreateAdDialog] = useState(false);
     const [editStakeDialog, setEditStakeDialog] = useState(false);
+    const [editClickUrlDialog, setEditClickUrlDialog] = useState(false);
     const [deleteAdDialog, setDeleteAdDialog] = useState(false);
     const [selectedAd, setSelectedAd] = useState<any>(null);
     const [errorDialog, setErrorDialog] = useState<{
@@ -63,9 +64,11 @@ export default function AdminAds() {
         advertiserProfile: "",
         stake: 0,
         adUrl: "",
+        clickUrl: "",
     });
 
     const [editStake, setEditStake] = useState(0);
+    const [editClickUrl, setEditClickUrl] = useState("");
 
     // Search and pagination states
     const [searchFilters, setSearchFilters] = useState({
@@ -89,6 +92,7 @@ export default function AdminAds() {
                 advertiserProfile: "",
                 stake: 0,
                 adUrl: "",
+                clickUrl: "",
             });
         },
         onError: (error: any) => {
@@ -120,6 +124,24 @@ export default function AdminAds() {
         },
     });
 
+    const modifyClickUrlMutation = useMutation({
+        mutationFn: modifyAdsClickUrl,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["admin.ads"] });
+            setEditClickUrlDialog(false);
+            setSelectedAd(null);
+        },
+        onError: (error: any) => {
+            setErrorDialog({
+                open: true,
+                title: "클릭 URL 수정 실패",
+                message:
+                    error.response?.data?.message ||
+                    "클릭 URL 수정 중 오류가 발생했습니다.",
+            });
+        },
+    });
+
     const deleteAdMutation = useMutation({
         mutationFn: removeAds,
         onSuccess: () => {
@@ -144,6 +166,7 @@ export default function AdminAds() {
             !newAd.advertiser ||
             !newAd.advertiserProfile ||
             !newAd.adUrl ||
+            !newAd.clickUrl ||
             newAd.stake <= 0
         ) {
             setErrorDialog({
@@ -178,10 +201,31 @@ export default function AdminAds() {
         });
     };
 
+    const handleEditClickUrl = () => {
+        if (!selectedAd || !editClickUrl.trim()) {
+            setErrorDialog({
+                open: true,
+                title: "입력 오류",
+                message: "클릭 URL을 올바르게 입력해주세요.",
+            });
+            return;
+        }
+        modifyClickUrlMutation.mutate({
+            id: selectedAd.id.toString(),
+            clickUrl: editClickUrl,
+        });
+    };
+
     const openEditStakeDialog = (ad: any) => {
         setSelectedAd(ad);
         setEditStake(ad.stake);
         setEditStakeDialog(true);
+    };
+
+    const openEditClickUrlDialog = (ad: any) => {
+        setSelectedAd(ad);
+        setEditClickUrl(ad.clickUrl);
+        setEditClickUrlDialog(true);
     };
 
     const openDeleteDialog = (ad: any) => {
@@ -463,6 +507,21 @@ export default function AdminAds() {
                                         placeholder="광고 URL을 입력하세요"
                                     />
                                 </div>
+                                <div>
+                                    <Label className="text-sm font-medium">
+                                        클릭 URL
+                                    </Label>
+                                    <Input
+                                        value={newAd.clickUrl}
+                                        onChange={(e) =>
+                                            setNewAd((prev) => ({
+                                                ...prev,
+                                                clickUrl: e.target.value,
+                                            }))
+                                        }
+                                        placeholder="클릭 URL을 입력하세요"
+                                    />
+                                </div>
                             </div>
                             <DialogFooter>
                                 <Button
@@ -519,6 +578,7 @@ export default function AdminAds() {
                                     지분 {getSortIcon("stake")}
                                 </TableHead>
                                 <TableHead>광고 URL</TableHead>
+                                <TableHead>클릭 URL</TableHead>
                                 <TableHead>관리</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -526,7 +586,7 @@ export default function AdminAds() {
                             {filteredAndSortedAds.length === 0 && !isLoading ? (
                                 <TableRow>
                                     <TableCell
-                                        colSpan={7}
+                                        colSpan={8}
                                         className="text-center py-8 text-gray-500"
                                     >
                                         {hasActiveFilters
@@ -566,6 +626,16 @@ export default function AdminAds() {
                                                 {ad.adUrl}
                                             </a>
                                         </TableCell>
+                                        <TableCell>
+                                            <a
+                                                href={ad.clickUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-blue-600 hover:underline max-w-xs truncate block"
+                                            >
+                                                {ad.clickUrl}
+                                            </a>
+                                        </TableCell>
                                         <TableCell className="flex gap-[8px]">
                                             <Button
                                                 variant="outline"
@@ -575,6 +645,15 @@ export default function AdminAds() {
                                                 }
                                             >
                                                 지분 수정
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() =>
+                                                    openEditClickUrlDialog(ad)
+                                                }
+                                            >
+                                                클릭 URL 수정
                                             </Button>
                                             <Button
                                                 variant="destructive"
@@ -718,6 +797,49 @@ export default function AdminAds() {
                             <Button
                                 onClick={handleEditStake}
                                 disabled={modifyStakeMutation.isPending}
+                            >
+                                수정
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                {/* Edit ClickUrl Dialog */}
+                <Dialog
+                    open={editClickUrlDialog}
+                    onOpenChange={setEditClickUrlDialog}
+                >
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>클릭 URL 수정</DialogTitle>
+                            <DialogDescription>
+                                {selectedAd?.advertiser}의 클릭 URL을 수정합니다.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                            <div>
+                                <Label className="text-sm font-medium">
+                                    클릭 URL
+                                </Label>
+                                <Input
+                                    value={editClickUrl}
+                                    onChange={(e) =>
+                                        setEditClickUrl(e.target.value)
+                                    }
+                                    placeholder="새로운 클릭 URL을 입력하세요"
+                                />
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <Button
+                                variant="outline"
+                                onClick={() => setEditClickUrlDialog(false)}
+                            >
+                                취소
+                            </Button>
+                            <Button
+                                onClick={handleEditClickUrl}
+                                disabled={modifyClickUrlMutation.isPending}
                             >
                                 수정
                             </Button>
