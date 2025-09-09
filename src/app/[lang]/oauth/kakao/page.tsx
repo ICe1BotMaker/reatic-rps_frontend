@@ -43,20 +43,26 @@ export default function OauthKakao() {
                             return;
                         }
 
-                        const newSeasonId =
-                            response.data[response.data.length - 1].id;
-                        const entry = await getEntry({ seasonId: newSeasonId });
-                        if (
-                            !(
-                                (entry?.data.shareEntryCount || 0) < 3 ||
-                                (entry?.data.adEntryCount || 0) < 3
-                            )
-                        ) {
-                            router.push(getLocalizedPath("/game/result"));
-                            return;
-                        }
+                        try {
+                            const newSeasonId =
+                                response.data[response.data.length - 1].id;
+                            const entry = await getEntry({
+                                seasonId: newSeasonId,
+                            });
+                            if (
+                                !(
+                                    (entry?.data.shareEntryCount || 0) < 3 ||
+                                    (entry?.data.adEntryCount || 0) < 3
+                                )
+                            ) {
+                                router.push(getLocalizedPath("/game/result"));
+                                return;
+                            }
 
-                        router.push(getLocalizedPath("/introduce"));
+                            router.push(getLocalizedPath("/introduce"));
+                        } catch {
+                            router.push(getLocalizedPath("/introduce"));
+                        }
                     }, 500);
                 } catch {
                     router.push(getLocalizedPath("/auth/login?failed=true"));
