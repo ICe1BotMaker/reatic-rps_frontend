@@ -92,6 +92,9 @@ export default function Ads() {
                         src={served?.data.adUrl}
                         alt="ads"
                         className="w-full h-full object-contain"
+                        onClick={() =>
+                            window.open(served?.data.clickUrl, "_blank")
+                        }
                     />
                 )
             ) : (
@@ -103,7 +106,12 @@ export default function Ads() {
                         <XIcon />
                     </div>
 
-                    <div className="flex flex-col items-center gap-[14px]">
+                    <div
+                        className="flex flex-col items-center gap-[14px]"
+                        onClick={() =>
+                            window.open(served?.data.clickUrl, "_blank")
+                        }
+                    >
                         <div className="size-[128px] rounded-[8px] overflow-hidden animate-[upAnimation_.3s_both_.2s]">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
