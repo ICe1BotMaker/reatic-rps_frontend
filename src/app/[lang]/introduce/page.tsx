@@ -9,8 +9,6 @@ import { Button } from "@/shared/components/button";
 
 import { useLocalizedPath } from "@/shared/utils/locale";
 import { useBar } from "@/shared/stores/bar.zustand";
-import { getActiveSeasons } from "@/features/season/api";
-import { getEntry } from "@/features/game/api";
 
 export default function Introduce() {
     const getLocalizedPath = useLocalizedPath();
@@ -41,27 +39,7 @@ export default function Introduce() {
         );
     }, []);
 
-    const handleAgree = async () => {
-        const response = await getActiveSeasons();
-
-        if (response.data.length === 0) {
-            alert("활성화된 시즌이 없습니다.");
-            return;
-        }
-
-        const newSeasonId = response.data[response.data.length - 1].id;
-        const entry = await getEntry({ seasonId: newSeasonId });
-        if (
-            !(
-                (entry?.data.shareEntryCount || 0) < 3 ||
-                (entry?.data.adEntryCount || 0) < 3
-            )
-        ) {
-            setIsBottomSheetOpen(false);
-            router.push(getLocalizedPath("/game/result"));
-            return;
-        }
-
+    const handleAgree = () => {
         setIsBottomSheetOpen(false);
         router.push(getLocalizedPath("/ready"));
     };
