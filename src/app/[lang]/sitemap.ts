@@ -4,8 +4,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return [
         {
             url: "https://삼각게임.com/ko",
-            lastModified: new Date(),
-            changeFrequency: "daily",
+            changeFrequency: "weekly",
             priority: 1,
         },
     ];
