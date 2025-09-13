@@ -3,11 +3,6 @@ import { FramerProvider } from "@/app/[lang]/provider";
 import "@/shared/styles/globals.css";
 import "@/shared/styles/fonts.css";
 
-export const metadata = {
-    title: "삼각게임",
-    description: "samgakgame",
-};
-
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -24,6 +19,9 @@ export default function RootLayout({
                     name="naver-site-verification"
                     content="a501d2c85e968ab7d03ecd30ef0dfe3a663e1f98"
                 />
+
+                <title>삼각게임</title>
+                <meta property="og:description" content="samgakgame" />
             </head>
 
             <body>

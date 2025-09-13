@@ -1,4 +1,3 @@
-User-Agent: *
+User-agent: *
 Allow: /
-Disallow: /private/
 Sitemap: https://삼각게임.com/ko/sitemap.xml
