@@ -73,14 +73,25 @@ export default function Insight() {
                             data={
                                 Object.keys(
                                     insight?.data.ageGroupDistribution || {}
-                                ).map((key) => {
+                                ).map((key, i) => {
                                     const value =
                                         insight?.data.ageGroupDistribution[key];
 
                                     return {
                                         label: key,
                                         value,
-                                        color: "#075B5E",
+                                        color: [
+                                            "#075B5E",
+                                            "#D4A574",
+                                            "#8B5A8C",
+                                            "#C97064",
+                                            "#2E3A59",
+                                            "#b14d55ff",
+                                            "#9C7A3C",
+                                            "#6B5B73",
+                                            "#F7931E",
+                                            "#5D4E37",
+                                        ][i],
                                     };
                                 }) as unknown as {
                                     label: string;
