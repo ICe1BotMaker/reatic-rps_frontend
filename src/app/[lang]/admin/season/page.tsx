@@ -66,7 +66,9 @@ export default function Season() {
     const [sortField, setSortField] = useState<string>("");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
     const [logSortField, setLogSortField] = useState<string>("");
-    const [logSortDirection, setLogSortDirection] = useState<"asc" | "desc">("asc");
+    const [logSortDirection, setLogSortDirection] = useState<"asc" | "desc">(
+        "asc"
+    );
 
     const queryClient = useQueryClient();
 
@@ -78,9 +80,9 @@ export default function Season() {
     // Sort logs data
     const sortedLogsData = useMemo(() => {
         if (!logsData?.data.content) return [];
-        
-        let sortedLogs = [...logsData.data.content];
-        
+
+        const sortedLogs = [...logsData.data.content];
+
         if (logSortField) {
             sortedLogs.sort((a, b) => {
                 let aValue = a[logSortField as keyof typeof a];
@@ -93,7 +95,10 @@ export default function Season() {
                 }
 
                 // Handle numeric sorting
-                if (logSortField === "gameId" || logSortField === "winningStreak") {
+                if (
+                    logSortField === "gameId" ||
+                    logSortField === "winningStreak"
+                ) {
                     aValue = Number(aValue) || 0;
                     bValue = Number(bValue) || 0;
                 }
@@ -109,7 +114,7 @@ export default function Season() {
                 }
             });
         }
-        
+
         return sortedLogs;
     }, [logsData?.data.content, logSortField, logSortDirection]);
 
@@ -727,7 +732,12 @@ export default function Season() {
                 </Dialog>
 
                 {/* Logs Dialog */}
-                <Dialog open={logsDialog} onOpenChange={(open) => { if (!open) closeLogsDialog(); }}>
+                <Dialog
+                    open={logsDialog}
+                    onOpenChange={(open) => {
+                        if (!open) closeLogsDialog();
+                    }}
+                >
                     <DialogContent className="max-w-4xl">
                         <DialogHeader>
                             <DialogTitle>시즌 게임 로그</DialogTitle>
@@ -741,72 +751,81 @@ export default function Season() {
                                     <TableRow>
                                         <TableHead
                                             className="cursor-pointer hover:bg-gray-50 select-none"
-                                            onClick={() => handleLogSort("gameId")}
+                                            onClick={() =>
+                                                handleLogSort("gameId")
+                                            }
                                         >
                                             게임 ID {getLogSortIcon("gameId")}
                                         </TableHead>
                                         <TableHead
                                             className="cursor-pointer hover:bg-gray-50 select-none"
-                                            onClick={() => handleLogSort("memberEmail")}
+                                            onClick={() =>
+                                                handleLogSort("memberEmail")
+                                            }
                                         >
-                                            플레이어 이메일 {getLogSortIcon("memberEmail")}
+                                            플레이어 이메일{" "}
+                                            {getLogSortIcon("memberEmail")}
                                         </TableHead>
                                         <TableHead
                                             className="cursor-pointer hover:bg-gray-50 select-none"
-                                            onClick={() => handleLogSort("winningStreak")}
+                                            onClick={() =>
+                                                handleLogSort("winningStreak")
+                                            }
                                         >
-                                            연승 횟수 {getLogSortIcon("winningStreak")}
+                                            연승 횟수{" "}
+                                            {getLogSortIcon("winningStreak")}
                                         </TableHead>
                                         <TableHead
                                             className="cursor-pointer hover:bg-gray-50 select-none"
-                                            onClick={() => handleLogSort("createdAt")}
+                                            onClick={() =>
+                                                handleLogSort("createdAt")
+                                            }
                                         >
-                                            진행 시간 {getLogSortIcon("createdAt")}
+                                            진행 시간{" "}
+                                            {getLogSortIcon("createdAt")}
                                         </TableHead>
                                         <TableHead
                                             className="cursor-pointer hover:bg-gray-50 select-none"
-                                            onClick={() => handleLogSort("active")}
+                                            onClick={() =>
+                                                handleLogSort("active")
+                                            }
                                         >
                                             상태 {getLogSortIcon("active")}
                                         </TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {sortedLogsData?.map(
-                                        (log, index) => (
-                                            <TableRow
-                                                key={`${log.gameId}-${index}`}
-                                            >
-                                                <TableCell>
-                                                    {log.gameId}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {log.memberEmail}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {log.winningStreak}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {new Date(
-                                                        log.createdAt
-                                                    ).toLocaleString()}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Badge
-                                                        variant={
-                                                            log.active
-                                                                ? "default"
-                                                                : "outline"
-                                                        }
-                                                    >
-                                                        {log.active
-                                                            ? "진행중"
-                                                            : "완료"}
-                                                    </Badge>
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    )}
+                                    {sortedLogsData?.map((log, index) => (
+                                        <TableRow
+                                            key={`${log.gameId}-${index}`}
+                                        >
+                                            <TableCell>{log.gameId}</TableCell>
+                                            <TableCell>
+                                                {log.memberEmail}
+                                            </TableCell>
+                                            <TableCell>
+                                                {log.winningStreak}
+                                            </TableCell>
+                                            <TableCell>
+                                                {new Date(
+                                                    log.createdAt
+                                                ).toLocaleString()}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge
+                                                    variant={
+                                                        log.active
+                                                            ? "default"
+                                                            : "outline"
+                                                    }
+                                                >
+                                                    {log.active
+                                                        ? "진행중"
+                                                        : "완료"}
+                                                </Badge>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                         </div>
