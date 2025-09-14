@@ -73,8 +73,8 @@ export const FramerProvider = ({
                     }}
                     className={
                         match(pathname, "/regex:[a-z]{2}/admin/regex:.*")
-                            ? "w-full max-w-[500px] h-[100%] max-h-[1002px]"
-                            : ""
+                            ? "w-dvh"
+                            : "w-full max-w-[500px] h-[100%] max-h-[1002px]"
                     }
                 >
                     <QueryClientProvider client={client}>
