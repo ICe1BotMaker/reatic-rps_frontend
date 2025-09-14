@@ -18,6 +18,8 @@ import { enterSeason, getActiveSeasons } from "@/features/season/api";
 import { share, start } from "@/features/game/api";
 import { useEntry } from "@/features/game/hooks";
 
+import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
+
 export default function GameResult() {
     const getLocalizedPath = useLocalizedPath();
     const router = useRouter();
@@ -79,14 +81,7 @@ export default function GameResult() {
 
     const renderFooter = useCallback(() => {
         return (
-            <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[12px] items-center">
-                <span
-                    className="font-p_regular text-[14px] text-c_white_light underline"
-                    onClick={() => router.push(getLocalizedPath("/game/alarm"))}
-                >
-                    새로운 시즌 시작시 알림 받기
-                </span>
-
+            <div className="pt-[10px] pb-[20px] px-[16px] flex flex-col gap-[6px] items-center">
                 {(entry?.data.shareEntryCount || 0) < 3 ||
                 (entry?.data.adEntryCount || 0) < 3 ? (
                     <div className="w-full flex flex-col gap-[6px]">
@@ -146,6 +141,14 @@ export default function GameResult() {
                         기회가 모두 소진되었습니다.
                     </Button>
                 )}
+
+                <Button
+                    variants="kakao"
+                    Icon={<KakaoIcon className="fill-c_kakao_black" />}
+                    onClick={() => router.push(getLocalizedPath("/game/alarm"))}
+                >
+                    새로운 시즌 시작시 알림 받기
+                </Button>
             </div>
         );
     }, [

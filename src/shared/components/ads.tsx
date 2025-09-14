@@ -20,7 +20,7 @@ export function AdSense({
     return (
         <div
             style={style}
-            className={`bg-c_primary_softlight flex justify-center items-center ${
+            className={`bg-stone-100 flex justify-center items-center ${
                 className || ""
             }`}
             onClick={() => window.open(served?.data.clickUrl, "_blank")}

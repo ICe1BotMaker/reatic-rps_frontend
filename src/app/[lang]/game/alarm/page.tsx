@@ -10,6 +10,8 @@ import { useBar } from "@/shared/stores/bar.zustand";
 import { Button } from "@/shared/components/button";
 import { Header } from "@/shared/components/header";
 
+import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
+
 export default function GameAlarm() {
     const getLocalizedPath = useLocalizedPath();
     const router = useRouter();
@@ -56,6 +58,7 @@ export default function GameAlarm() {
                 <div className="pt-[10px] pb-[20px] px-[16px]">
                     <Button
                         variants="black"
+                        Icon={<KakaoIcon className="fill-white" />}
                         onClick={() => {
                             window.open(
                                 "https://pf.kakao.com/_MKgFn",
