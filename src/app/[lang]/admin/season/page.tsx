@@ -65,6 +65,8 @@ export default function Season() {
     const [itemsPerPage] = useState(10);
     const [sortField, setSortField] = useState<string>("");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+    const [logSortField, setLogSortField] = useState<string>("");
+    const [logSortDirection, setLogSortDirection] = useState<"asc" | "desc">("asc");
 
     const queryClient = useQueryClient();
 
@@ -72,6 +74,44 @@ export default function Season() {
         selectedSeasonId || 0
     );
     const { data: logsData } = useSeasonLogs(selectedSeasonId || 0);
+
+    // Sort logs data
+    const sortedLogsData = useMemo(() => {
+        if (!logsData?.data.content) return [];
+        
+        let sortedLogs = [...logsData.data.content];
+        
+        if (logSortField) {
+            sortedLogs.sort((a, b) => {
+                let aValue = a[logSortField as keyof typeof a];
+                let bValue = b[logSortField as keyof typeof b];
+
+                // Handle date sorting
+                if (logSortField === "createdAt") {
+                    aValue = new Date(aValue as string).getTime();
+                    bValue = new Date(bValue as string).getTime();
+                }
+
+                // Handle numeric sorting
+                if (logSortField === "gameId" || logSortField === "winningStreak") {
+                    aValue = Number(aValue) || 0;
+                    bValue = Number(bValue) || 0;
+                }
+
+                // Convert to string for comparison
+                const aStr = String(aValue || "").toLowerCase();
+                const bStr = String(bValue || "").toLowerCase();
+
+                if (logSortDirection === "asc") {
+                    return aStr < bStr ? -1 : aStr > bStr ? 1 : 0;
+                } else {
+                    return aStr > bStr ? -1 : aStr < bStr ? 1 : 0;
+                }
+            });
+        }
+        
+        return sortedLogs;
+    }, [logsData?.data.content, logSortField, logSortDirection]);
 
     const createSeasonMutation = useMutation({
         mutationFn: createSeason,
@@ -165,6 +205,12 @@ export default function Season() {
         setLogsDialog(true);
     };
 
+    const closeLogsDialog = () => {
+        setLogsDialog(false);
+        setLogSortField("");
+        setLogSortDirection("asc");
+    };
+
     const seasons = useMemo(() => seasonsData?.data || [], [seasonsData?.data]);
 
     // Filter and sort seasons
@@ -252,6 +298,21 @@ export default function Season() {
     const getSortIcon = (field: string) => {
         if (sortField !== field) return "";
         return sortDirection === "asc" ? "↑" : "↓";
+    };
+
+    // Handle log sorting
+    const handleLogSort = (field: string) => {
+        if (logSortField === field) {
+            setLogSortDirection(logSortDirection === "asc" ? "desc" : "asc");
+        } else {
+            setLogSortField(field);
+            setLogSortDirection("asc");
+        }
+    };
+
+    const getLogSortIcon = (field: string) => {
+        if (logSortField !== field) return "";
+        return logSortDirection === "asc" ? "↑" : "↓";
     };
 
     if (isLoading) {
@@ -666,7 +727,7 @@ export default function Season() {
                 </Dialog>
 
                 {/* Logs Dialog */}
-                <Dialog open={logsDialog} onOpenChange={setLogsDialog}>
+                <Dialog open={logsDialog} onOpenChange={(open) => { if (!open) closeLogsDialog(); }}>
                     <DialogContent className="max-w-4xl">
                         <DialogHeader>
                             <DialogTitle>시즌 게임 로그</DialogTitle>
@@ -678,15 +739,40 @@ export default function Season() {
                             <Table>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead>게임 ID</TableHead>
-                                        <TableHead>플레이어 이메일</TableHead>
-                                        <TableHead>연승 횟수</TableHead>
-                                        <TableHead>진행 시간</TableHead>
-                                        <TableHead>상태</TableHead>
+                                        <TableHead
+                                            className="cursor-pointer hover:bg-gray-50 select-none"
+                                            onClick={() => handleLogSort("gameId")}
+                                        >
+                                            게임 ID {getLogSortIcon("gameId")}
+                                        </TableHead>
+                                        <TableHead
+                                            className="cursor-pointer hover:bg-gray-50 select-none"
+                                            onClick={() => handleLogSort("memberEmail")}
+                                        >
+                                            플레이어 이메일 {getLogSortIcon("memberEmail")}
+                                        </TableHead>
+                                        <TableHead
+                                            className="cursor-pointer hover:bg-gray-50 select-none"
+                                            onClick={() => handleLogSort("winningStreak")}
+                                        >
+                                            연승 횟수 {getLogSortIcon("winningStreak")}
+                                        </TableHead>
+                                        <TableHead
+                                            className="cursor-pointer hover:bg-gray-50 select-none"
+                                            onClick={() => handleLogSort("createdAt")}
+                                        >
+                                            진행 시간 {getLogSortIcon("createdAt")}
+                                        </TableHead>
+                                        <TableHead
+                                            className="cursor-pointer hover:bg-gray-50 select-none"
+                                            onClick={() => handleLogSort("active")}
+                                        >
+                                            상태 {getLogSortIcon("active")}
+                                        </TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {logsData?.data.content?.map(
+                                    {sortedLogsData?.map(
                                         (log, index) => (
                                             <TableRow
                                                 key={`${log.gameId}-${index}`}

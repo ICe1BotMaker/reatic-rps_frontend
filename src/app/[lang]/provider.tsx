@@ -71,7 +71,11 @@ export const FramerProvider = ({
                     style={{
                         position: "fixed",
                     }}
-                    className="w-full max-w-[500px] h-[100%] max-h-[1002px]"
+                    className={
+                        match(pathname, "/regex:[a-z]{2}/admin/regex:.*")
+                            ? "w-full max-w-[500px] h-[100%] max-h-[1002px]"
+                            : ""
+                    }
                 >
                     <QueryClientProvider client={client}>
                         <FrozenRoute>{children}</FrozenRoute>
