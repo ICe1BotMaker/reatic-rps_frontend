@@ -349,7 +349,7 @@ export default function GameResult() {
 
     return (
         <div
-            className="w-screen h-dvh overflow-hidden"
+            className="w-full h-full overflow-hidden"
             style={{
                 paddingTop: `${bar.top}px`,
                 paddingBottom: `${bar.bottom}px`,

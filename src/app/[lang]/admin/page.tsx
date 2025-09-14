@@ -12,7 +12,7 @@ export default function Admin() {
     const router = useRouter();
 
     return (
-        <div className="w-screen h-dvh flex justify-center items-center">
+        <div className="w-full h-full flex justify-center items-center">
             <div className="w-[400px] flex flex-col gap-[16px]">
                 <Button
                     variants="kakao"

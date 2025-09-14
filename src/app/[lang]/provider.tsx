@@ -53,7 +53,7 @@ export const FramerProvider = ({
             )}
 
             <div
-                className="fixed z-20 left-0 w-full h-[6px] bg-transparent"
+                className="max-w-[500px] fixed z-20 left-0 w-full h-[6px] bg-transparent"
                 style={{
                     top: `${bar.top}px`,
                 }}
@@ -69,9 +69,9 @@ export const FramerProvider = ({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     style={{
-                        minHeight: "100dvh",
                         position: "fixed",
                     }}
+                    className="w-full max-w-[500px] h-[100%] max-h-[1002px]"
                 >
                     <QueryClientProvider client={client}>
                         <FrozenRoute>{children}</FrozenRoute>

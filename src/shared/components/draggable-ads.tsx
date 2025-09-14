@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronUpIcon } from "lucide-react";
-import { useRef, useCallback, useState, TouchEvent } from "react";
+import { useRef, useCallback, useState, TouchEvent, MouseEvent } from "react";
 import { SquareAds } from "./ads";
 
 interface DraggableProps {
@@ -11,39 +11,86 @@ interface DraggableProps {
 
 export const DraggableAds = ({ isDragged, onDragged }: DraggableProps) => {
     const [translateY, setTranslateY] = useState(0);
-    const touchStartYRef = useRef<number | null>(null);
+    const startYRef = useRef<number | null>(null);
+    const isDraggingRef = useRef(false);
     const threshold = 50;
 
+    // 터치 이벤트 핸들러
     const handleTouchStart = useCallback((e: TouchEvent<HTMLDivElement>) => {
-        touchStartYRef.current = e.touches[0].clientY;
+        startYRef.current = e.touches[0].clientY;
+        isDraggingRef.current = true;
     }, []);
 
     const handleTouchMove = useCallback(
         (e: TouchEvent<HTMLDivElement>) => {
-            if (touchStartYRef.current === null) return;
+            if (startYRef.current === null || !isDraggingRef.current) return;
             const currentY = e.touches[0].clientY;
-            const deltaY = currentY - touchStartYRef.current;
+            const deltaY = currentY - startYRef.current;
             setTranslateY(deltaY);
 
             if (deltaY <= -threshold) {
                 onDragged();
-                touchStartYRef.current = null;
+                startYRef.current = null;
+                isDraggingRef.current = false;
             }
         },
-        [onDragged]
+        [onDragged, threshold]
     );
 
     const handleTouchEnd = useCallback(() => {
-        touchStartYRef.current = null;
+        startYRef.current = null;
+        isDraggingRef.current = false;
         setTranslateY(0);
+    }, []);
+
+    // 마우스 이벤트 핸들러
+    const handleMouseDown = useCallback((e: MouseEvent<HTMLDivElement>) => {
+        startYRef.current = e.clientY;
+        isDraggingRef.current = true;
+        e.preventDefault(); // 텍스트 선택 방지
+    }, []);
+
+    const handleMouseMove = useCallback(
+        (e: MouseEvent<HTMLDivElement>) => {
+            if (startYRef.current === null || !isDraggingRef.current) return;
+            const currentY = e.clientY;
+            const deltaY = currentY - startYRef.current;
+            setTranslateY(deltaY);
+
+            if (deltaY <= -threshold) {
+                onDragged();
+                startYRef.current = null;
+                isDraggingRef.current = false;
+            }
+        },
+        [onDragged, threshold]
+    );
+
+    const handleMouseUp = useCallback(() => {
+        startYRef.current = null;
+        isDraggingRef.current = false;
+        setTranslateY(0);
+    }, []);
+
+    const handleMouseLeave = useCallback(() => {
+        // 마우스가 요소를 벗어나면 드래깅 종료
+        if (isDraggingRef.current) {
+            startYRef.current = null;
+            isDraggingRef.current = false;
+            setTranslateY(0);
+        }
     }, []);
 
     return (
         <div
-            className="flex flex-col gap-[16px] items-center"
+            className="flex flex-col gap-[16px] items-center select-none cursor-pointer"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
             style={{
                 transform: `translateY(${translateY}px)`,
                 transition: translateY === 0 ? "transform 0.1s ease" : "none",

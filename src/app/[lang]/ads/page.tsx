@@ -80,7 +80,7 @@ export default function Ads() {
     };
 
     return (
-        <div className="relative w-dvw h-dvh flex justify-center items-center">
+        <div className="relative w-full h-full flex justify-center items-center">
             {!adTimer.isStoped ? (
                 served?.data?.googleAds ? (
                     <span className="font-p_medium text-[14px] text-c_black underline">

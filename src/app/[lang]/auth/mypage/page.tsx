@@ -56,7 +56,7 @@ export default function Mypage() {
 
     return (
         <div
-            className="w-screen h-dvh overflow-hidden bg-white"
+            className="w-full h-full overflow-hidden bg-white"
             style={{
                 paddingTop: `${bar.top}px`,
                 paddingBottom: `${bar.bottom}px`,

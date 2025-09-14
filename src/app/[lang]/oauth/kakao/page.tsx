@@ -72,7 +72,7 @@ export default function OauthKakao() {
     }, [searchParams, router, getLocalizedPath]);
 
     return (
-        <div className="w-screen h-dvh flex justify-center items-center">
+        <div className="w-full h-full flex justify-center items-center">
             <div className="w-[10px] h-[24px] bg-c_black animate-spin rounded-[100px]" />
         </div>
     );
