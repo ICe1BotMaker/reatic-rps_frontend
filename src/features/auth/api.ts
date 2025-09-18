@@ -1,5 +1,5 @@
-import { AsyncResponse } from "@/shared/api/types";
-import { apiClient } from "@/shared/api/client";
+import { AsyncResponse } from "@/api/types";
+import { apiClient } from "@/api/client";
 
 import { SignUpRequest, SignUpResponse } from "./types";
 

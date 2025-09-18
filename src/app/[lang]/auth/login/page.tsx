@@ -4,11 +4,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 
-import { BottomSheet } from "@/shared/components/bottom-sheet";
-import { Button } from "@/shared/components/button";
-import { Link } from "@/shared/components/link";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { Button } from "@/components/button";
+import { Link } from "@/components/link";
 
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useBar } from "@/stores/bar.zustand";
 
 import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
 

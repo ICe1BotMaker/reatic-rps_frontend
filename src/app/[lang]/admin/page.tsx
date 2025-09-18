@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/shared/components/button";
+import { Button } from "@/components/button";
 
 import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
 

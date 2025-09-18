@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckIcon } from "lucide-react";
 
-import { BottomSheet } from "@/shared/components/bottom-sheet";
-import { Button } from "@/shared/components/button";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { Button } from "@/components/button";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useLocalizedPath } from "@/utils/locale";
+import { useBar } from "@/stores/bar.zustand";
 
 export default function Introduce() {
     const getLocalizedPath = useLocalizedPath();

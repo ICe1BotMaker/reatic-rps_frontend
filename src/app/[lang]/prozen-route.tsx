@@ -4,7 +4,7 @@ import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.sha
 import React, { useContext, useEffect, useMemo, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useBar } from "@/stores/bar.zustand";
 import Script from "next/script";
 
 export const FrozenRoute = ({

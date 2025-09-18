@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-import { PieChart } from "@/shared/components/pie-chart";
+import { PieChart } from "@/components/pie-chart";
 
 import {
     useInsight,

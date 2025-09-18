@@ -1,5 +1,5 @@
-import { AsyncResponse } from "@/shared/api/types";
-import { apiClient } from "@/shared/api/client";
+import { AsyncResponse } from "@/api/types";
+import { apiClient } from "@/api/client";
 
 // 전면 광고 인증 api
 export const redeemAds = async (credentials: {

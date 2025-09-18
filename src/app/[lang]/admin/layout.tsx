@@ -14,7 +14,7 @@ import {
 import { AwardIcon, ChartPieIcon, LeafIcon, UserIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-import { match } from "@/shared/utils/url-match";
+import { match } from "@/utils/url-match";
 
 export default function AdminLayout({
     children,

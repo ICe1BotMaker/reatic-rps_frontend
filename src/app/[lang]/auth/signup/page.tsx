@@ -7,17 +7,17 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckIcon } from "lucide-react";
 import moment from "moment";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useLocalizedPath } from "@/utils/locale";
+import { useBar } from "@/stores/bar.zustand";
 
-import { Header } from "@/shared/components/header";
-import { Button } from "@/shared/components/button";
-import { Input } from "@/shared/components/input";
+import { Header } from "@/components/header";
+import { Button } from "@/components/button";
+import { Input } from "@/components/input";
 
 import { signup } from "@/features/auth/api";
 
 import { Storage } from "@/services/storage";
-import { Select } from "@/shared/components/select";
+import { Select } from "@/components/select";
 
 export default function SignUp() {
     const getLocalizedPath = useLocalizedPath();

@@ -1,5 +1,5 @@
-import { AsyncResponse } from "@/shared/api/types";
-import { apiClient } from "@/shared/api/client";
+import { AsyncResponse } from "@/api/types";
+import { apiClient } from "@/api/client";
 
 // 인사이트 조회 api
 export const getInsight = async (): AsyncResponse<{

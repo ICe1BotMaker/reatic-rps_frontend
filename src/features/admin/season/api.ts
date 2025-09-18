@@ -1,5 +1,5 @@
-import { apiClient } from "@/shared/api/client";
-import { AsyncResponse } from "@/shared/api/types";
+import { apiClient } from "@/api/client";
+import { AsyncResponse } from "@/api/types";
 
 // 시즌 일시중지 api
 export const pauseSeason = async ({ id }: { id: number }) => {

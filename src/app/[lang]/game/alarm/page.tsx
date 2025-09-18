@@ -4,11 +4,11 @@
 
 import { useRouter } from "next/navigation";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useLocalizedPath } from "@/utils/locale";
+import { useBar } from "@/stores/bar.zustand";
 
-import { Button } from "@/shared/components/button";
-import { Header } from "@/shared/components/header";
+import { Button } from "@/components/button";
+import { Header } from "@/components/header";
 
 import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
 

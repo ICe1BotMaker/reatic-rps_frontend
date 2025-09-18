@@ -3,7 +3,7 @@
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { useEffect } from "react";
 
-import { HapticRunner } from "@/shared/javascripts/haptic.runner";
+import { HapticRunner } from "@/javascripts/haptic.runner";
 
 interface BottomSheetProps {
     isOpen: boolean;
