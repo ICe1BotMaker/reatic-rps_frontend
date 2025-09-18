@@ -7,12 +7,12 @@ import { useRouter } from "next/navigation";
 import { enterSeason, getActiveSeasons } from "@/features/season/api";
 import { start } from "@/features/game/api";
 
-import { BannerAds } from "@/shared/components/ads";
-import { Button } from "@/shared/components/button";
+import { BannerAds } from "@/components/ads";
+import { Button } from "@/components/button";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useBar } from "@/shared/stores/bar.zustand";
-import { useTimer } from "@/shared/hooks/use-timer";
+import { useLocalizedPath } from "@/utils/locale";
+import { useBar } from "@/stores/bar.zustand";
+import { useTimer } from "@/hooks/use-timer";
 
 export default function Ready() {
     const getLocalizedPath = useLocalizedPath();

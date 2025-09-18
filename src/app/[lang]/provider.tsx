@@ -8,8 +8,8 @@ import moment from "moment";
 
 import { FrozenRoute } from "./prozen-route";
 
-import { useBar } from "@/shared/stores/bar.zustand";
-import { match } from "@/shared/utils/url-match";
+import { useBar } from "@/stores/bar.zustand";
+import { match } from "@/utils/url-match";
 
 import { ReactComponent as WifiIcon } from "@/assets/test/wifi.svg";
 import { ReactComponent as SignIcon } from "@/assets/test/sign.svg";

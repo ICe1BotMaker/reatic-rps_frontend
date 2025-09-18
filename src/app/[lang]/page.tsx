@@ -4,13 +4,13 @@ import { HelpCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { BottomSheet } from "@/shared/components/bottom-sheet";
-import { Button } from "@/shared/components/button";
-import { Link } from "@/shared/components/link";
-import { Hand } from "@/shared/components/hand";
+import { BottomSheet } from "@/components/bottom-sheet";
+import { Button } from "@/components/button";
+import { Link } from "@/components/link";
+import { Hand } from "@/components/hand";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useLocalizedPath } from "@/utils/locale";
+import { useBar } from "@/stores/bar.zustand";
 
 import { ReactComponent as QuestionMarkIcon } from "@/assets/question_mark.svg";
 

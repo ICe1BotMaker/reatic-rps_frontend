@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { SaveIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useLocalizedPath } from "@/utils/locale";
+import { useBar } from "@/stores/bar.zustand";
 
-import { Header } from "@/shared/components/header";
-import { Button } from "@/shared/components/button";
-import { Input } from "@/shared/components/input";
+import { Header } from "@/components/header";
+import { Button } from "@/components/button";
+import { Input } from "@/components/input";
 import { useUser } from "@/features/auth/hooks";
 import { updateUser } from "@/features/auth/api";
 

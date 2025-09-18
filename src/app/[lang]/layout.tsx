@@ -2,8 +2,8 @@ import { Metadata } from "next";
 
 import { FramerProvider } from "@/app/[lang]/provider";
 
-import "@/shared/styles/globals.css";
-import "@/shared/styles/fonts.css";
+import "@/styles/globals.css";
+import "@/styles/fonts.css";
 
 export const metadata: Metadata = {
     title: {

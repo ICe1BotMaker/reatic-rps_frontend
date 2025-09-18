@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
+import { useLocalizedPath } from "@/utils/locale";
 import { Storage } from "@/services/storage";
 
 import { getActiveSeasons } from "@/features/season/api";
