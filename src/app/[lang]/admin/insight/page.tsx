@@ -7,16 +7,50 @@ import {
     UsersRoundIcon,
     VenusAndMarsIcon,
 } from "lucide-react";
+import { useState } from "react";
 
 import { PieChart } from "@/shared/components/pie-chart";
 
-import { useInsight } from "@/features/admin/insight/hooks";
+import {
+    useInsight,
+    useInsightWithSeason,
+} from "@/features/admin/insight/hooks";
+import { useActiveSeason } from "@/features/season/hooks";
 
 export default function Insight() {
+    const [selectedSeasonId, setSelectedSeasonId] = useState<number | null>(
+        null
+    );
+
+    const { data: seasons } = useActiveSeason();
     const { data: insight } = useInsight();
+    const { data: seasonInsight } = useInsightWithSeason({
+        seasonId: selectedSeasonId!,
+    });
+
+    const currentInsight = selectedSeasonId ? seasonInsight : insight;
 
     return (
         <div className="flex-1 p-[50px]">
+            <div className="mb-[20px]">
+                <select
+                    value={selectedSeasonId || ""}
+                    onChange={(e) =>
+                        setSelectedSeasonId(
+                            e.target.value ? Number(e.target.value) : null
+                        )
+                    }
+                    className="border border-[#d5d5d5] p-[8px] rounded-[8px] font-p_medium text-[14px]"
+                >
+                    <option value="">전체 시즌</option>
+                    {seasons?.data.map((season) => (
+                        <option key={season.id} value={season.id}>
+                            {season.seasonName}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
             <div className="w-full grid grid-cols-2 gap-[20px]">
                 <div className="border border-[#d5d5d5] p-[20px] rounded-[16px]">
                     <div className="flex flex-col gap-[8px]">
@@ -32,7 +66,13 @@ export default function Insight() {
                             <TrendingUpIcon />
 
                             <span className="font-p_bold text-[28px] text-c_black">
-                                {insight?.data.totalMembers.toLocaleString()}명
+                                {(
+                                    currentInsight?.data?.totalMembers ||
+                                    currentInsight?.data
+                                        ?.totalMembersAtSeason ||
+                                    0
+                                ).toLocaleString()}
+                                명
                             </span>
                         </div>
                     </div>
@@ -52,7 +92,7 @@ export default function Insight() {
                             <TrendingUpIcon />
 
                             <span className="font-p_bold text-[28px] text-c_black">
-                                {insight?.data.totalParticipations.toLocaleString()}
+                                {currentInsight?.data.totalParticipations.toLocaleString()}
                                 번
                             </span>
                         </div>
@@ -72,10 +112,12 @@ export default function Insight() {
                         <PieChart
                             data={
                                 Object.keys(
-                                    insight?.data.ageGroupDistribution || {}
+                                    currentInsight?.data.ageGroupDistribution ||
+                                        {}
                                 ).map((key, i) => {
                                     const value =
-                                        insight?.data.ageGroupDistribution[key];
+                                        currentInsight?.data
+                                            .ageGroupDistribution[key];
 
                                     return {
                                         label: key,
@@ -120,14 +162,14 @@ export default function Insight() {
                                 {
                                     label: "남성",
                                     value:
-                                        insight?.data.genderDistribution.MALE ||
-                                        0,
+                                        currentInsight?.data.genderDistribution
+                                            .MALE || 0,
                                     color: "#0256af",
                                 },
                                 {
                                     label: "여성",
                                     value:
-                                        insight?.data.genderDistribution
+                                        currentInsight?.data.genderDistribution
                                             .FEMALE || 0,
                                     color: "#bb1563",
                                 },
