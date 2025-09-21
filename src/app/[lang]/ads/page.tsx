@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { XIcon } from "lucide-react";
 import { useCallback } from "react";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useTimer } from "@/shared/hooks/use-timer";
+import { useLocalizedPath } from "@/utils/locale";
+import { useTimer } from "@/hooks/use-timer";
 
 import { enterSeason, getActiveSeasons } from "@/features/season/api";
 import { useServeAds } from "@/features/ads/hooks";

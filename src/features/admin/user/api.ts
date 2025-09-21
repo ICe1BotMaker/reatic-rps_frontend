@@ -1,5 +1,5 @@
-import { apiClient } from "@/shared/api/client";
-import { AsyncResponse } from "@/shared/api/types";
+import { apiClient } from "@/api/client";
+import { AsyncResponse } from "@/api/types";
 import { GetMembersResponse } from "./types";
 
 // 회원 목록 조회 api

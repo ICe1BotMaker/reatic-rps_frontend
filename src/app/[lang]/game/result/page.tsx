@@ -6,12 +6,12 @@ import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import moment from "moment";
 
-import { useLocalizedPath } from "@/shared/utils/locale";
-import { useBar } from "@/shared/stores/bar.zustand";
+import { useLocalizedPath } from "@/utils/locale";
+import { useBar } from "@/stores/bar.zustand";
 
-import { OverlayHeader } from "@/shared/components/overlay-header";
-import { DraggableAds } from "@/shared/components/draggable-ads";
-import { Button } from "@/shared/components/button";
+import { OverlayHeader } from "@/components/overlay-header";
+import { DraggableAds } from "@/components/draggable-ads";
+import { Button } from "@/components/button";
 
 import { useSeasonDetail, useSeasonTopTen } from "@/features/season/hooks";
 import { enterSeason, getActiveSeasons } from "@/features/season/api";

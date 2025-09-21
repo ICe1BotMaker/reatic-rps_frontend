@@ -2,8 +2,8 @@ import { Metadata } from "next";
 
 import { FramerProvider } from "@/app/[lang]/provider";
 
-import "@/shared/styles/globals.css";
-import "@/shared/styles/fonts.css";
+import "@/styles/globals.css";
+import "@/styles/fonts.css";
 
 export const metadata: Metadata = {
     title: {
@@ -25,7 +25,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="ko">
             <head>
                 <meta
                     name="viewport"
