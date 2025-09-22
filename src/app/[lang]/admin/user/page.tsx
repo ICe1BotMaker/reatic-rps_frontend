@@ -133,7 +133,7 @@ type SummaryCardData = {
 
 const ROLE_LABELS: Record<MemberRole, string> = {
     ADMIN: "관리자",
-    USER: "일반 사용자",
+    MEMBER: "일반 사용자",
 };
 
 const STATUS_LABELS: Record<string, string> = {
@@ -164,7 +164,7 @@ const STATUS_BADGE_STYLES: Record<
 
 const ROLE_BADGE_STYLES: Record<MemberRole, string> = {
     ADMIN: "border-transparent bg-sky-500/15 text-sky-600",
-    USER: "border-border/60 bg-muted/60 text-muted-foreground",
+    MEMBER: "border-border/60 bg-muted/60 text-muted-foreground",
 };
 
 export default function UserManagementPage() {
@@ -210,7 +210,7 @@ export default function UserManagementPage() {
     }, [members]);
 
     const roleCounts = useMemo(() => {
-        const counts: Record<MemberRole, number> = { ADMIN: 0, USER: 0 };
+        const counts: Record<MemberRole, number> = { ADMIN: 0, MEMBER: 0 };
         members.forEach((member) => {
             counts[member.role] += 1;
         });
@@ -299,7 +299,7 @@ export default function UserManagementPage() {
         const filteredCount = filteredMembers.length;
         const activeCount = statusCounts.ACTIVE ?? 0;
         const adminCount = roleCounts.ADMIN ?? 0;
-        const userCount = roleCounts.USER ?? 0;
+        const memberCount = roleCounts.MEMBER ?? 0;
         const { recent, previous } = recentSignupStats;
         const trendDifference = recent - previous;
 
@@ -362,7 +362,7 @@ export default function UserManagementPage() {
                 label: "관리자 계정",
                 value: formatNumber(adminCount),
                 helper: `일반 사용자 ${formatNumber(
-                    userCount
+                    memberCount
                 )}명 · 관리자 비율 ${formatPercentage(adminRatio)}`,
                 icon: ShieldCheckIcon,
                 iconClassName: "bg-sky-500/10 text-sky-600",
@@ -464,7 +464,7 @@ export default function UserManagementPage() {
     };
 
     const handleRoleToggle = (member: Member) => {
-        if (member.role === "USER") {
+        if (member.role === "MEMBER") {
             promoteMutation.mutate({ id: member.id });
         } else {
             demoteMutation.mutate({ id: member.id });
