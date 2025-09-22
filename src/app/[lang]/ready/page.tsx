@@ -80,7 +80,7 @@ export default function Ready() {
     return (
         <>
             <div
-                className="w-full h-full overflow-hidden bg-gradient-to-b from-c_primary to-[#5289E8]"
+                className="w-full h-full obg-gradient-to-b from-c_primary to-[#5289E8]"
                 style={{
                     paddingTop: `${bar.top}px`,
                     paddingBottom: `${bar.bottom}px`,
@@ -95,7 +95,7 @@ export default function Ready() {
                         className="w-full h-full"
                     >
                         <div className="w-full h-full flex flex-col justify-between">
-                            <div className="p-[36px_16px]">
+                            <div className="p-[36px_20px]">
                                 <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                                     도전하기 전,
                                     <br />

@@ -29,7 +29,7 @@ export default function Introduce() {
 
     const renderHeader = useCallback(() => {
         return (
-            <div className="p-[36px_16px]">
+            <div className="p-[36px_20px]">
                 <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                     도전하기 전에
                     <br />
@@ -47,7 +47,7 @@ export default function Introduce() {
     return (
         <>
             <div
-                className="w-full h-full overflow-hidden bg-gradient-to-b from-c_primary to-[#5289E8]"
+                className="w-full h-full bg-gradient-to-b from-c_primary to-[#5289E8] "
                 style={{
                     paddingTop: `${bar.top}px`,
                     paddingBottom: `${bar.bottom}px`,

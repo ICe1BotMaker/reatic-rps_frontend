@@ -33,7 +33,7 @@ export default function Login() {
     return (
         <>
             <div
-                className="w-full h-full overflow-hidden bg-white"
+                className="w-full h-full bg-white"
                 style={{
                     paddingTop: `${bar.top}px`,
                     paddingBottom: `${bar.bottom}px`,
@@ -41,7 +41,7 @@ export default function Login() {
             >
                 <div className="h-full flex flex-col justify-between">
                     <div className="flex flex-col gap-[28px]">
-                        <div className="p-[36px_16px]">
+                        <div className="p-[36px_20px]">
                             <p className="font-p_semibold text-[32px] text-c_black leading-[39px]">
                                 도전하기 전,
                                 <br />

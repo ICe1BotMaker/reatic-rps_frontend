@@ -56,7 +56,7 @@ export default function Mypage() {
 
     return (
         <div
-            className="w-full h-full overflow-hidden bg-white"
+            className="w-full h-full bg-white"
             style={{
                 paddingTop: `${bar.top}px`,
                 paddingBottom: `${bar.bottom}px`,
@@ -72,7 +72,7 @@ export default function Mypage() {
             />
 
             <div
-                className="w-full p-[36px_16px]"
+                className="w-full p-[36px_20px]"
                 style={{
                     height: `calc(100% - 86px - 62px - ${bar.bottom}px)`,
                 }}

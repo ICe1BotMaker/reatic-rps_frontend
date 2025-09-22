@@ -48,14 +48,14 @@ export default function Home() {
     return (
         <>
             <div
-                className="w-full h-full overflow-hidden bg-gradient-to-b from-c_primary to-[#5289E8]"
+                className="w-full h-full bg-gradient-to-b from-c_primary to-[#5289E8] "
                 style={{
                     paddingTop: `${bar.top}px`,
                     paddingBottom: `${bar.bottom}px`,
                 }}
             >
                 <div className="sticky z-1 h-full flex flex-col justify-between">
-                    <div className="p-[36px_16px] sticky z-1">
+                    <div className="p-[36px_20px] sticky z-1">
                         <div className="relative">
                             <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                                 상금 10만원에

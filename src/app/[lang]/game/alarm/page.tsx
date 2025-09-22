@@ -19,7 +19,7 @@ export default function GameAlarm() {
 
     return (
         <div
-            className="w-full h-full overflow-hidden bg-white"
+            className="w-full h-full  bg-white"
             style={{
                 paddingTop: `${bar.top}px`,
                 paddingBottom: `${bar.bottom}px`,
@@ -40,7 +40,7 @@ export default function GameAlarm() {
                     height: `calc(100% - 62px)`,
                 }}
             >
-                <div className="p-[36px_16px]">
+                <div className="p-[36px_20px]">
                     <p className="font-p_semibold text-[32px] text-c_black leading-[39px]">
                         새 시즌이 시작될 때<br />
                         알림을 받을 수 있어요.

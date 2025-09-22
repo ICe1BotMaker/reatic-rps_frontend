@@ -32,6 +32,21 @@ body {
     margin: 0 12px;
 }
 
+@layer utilities {
+    .scrollbar-overlay::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .scrollbar-overlay::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 4px;
+    }
+
+    .scrollbar-overlay::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
 @keyframes upAnimation {
     from {
         opacity: 0;

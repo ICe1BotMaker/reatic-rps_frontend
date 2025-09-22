@@ -229,7 +229,7 @@ export default function Game() {
         if (!playing?.data.isPlaying) {
             return (
                 <div className="w-full h-full flex flex-col justify-between">
-                    <div className="p-[36px_16px]">
+                    <div className="p-[36px_20px]">
                         <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                             지금은
                             <br />
@@ -254,7 +254,7 @@ export default function Game() {
         if (isRoundFinished) {
             return (
                 <div className="w-full h-full flex flex-col justify-between">
-                    <div className="p-[36px_16px] flex flex-col gap-[36px]">
+                    <div className="p-[36px_20px] flex flex-col gap-[36px]">
                         <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                             {renderRpsState()}
                         </p>
@@ -300,7 +300,7 @@ export default function Game() {
 
         return (
             <div className="w-full h-full flex flex-col justify-between">
-                <div className="p-[36px_16px] animate-[upper_1s_1s_both]">
+                <div className="p-[36px_20px] animate-[upper_1s_1s_both]">
                     <p className="font-p_semibold text-[32px] text-white leading-[39px]">
                         AI가 가위바위보를
                         <br />
@@ -333,7 +333,7 @@ export default function Game() {
     return (
         <>
             <div
-                className="w-full h-full overflow-hidden bg-gradient-to-b from-c_primary to-[#5289E8]"
+                className="w-full h-full  bg-gradient-to-b from-c_primary to-[#5289E8]"
                 style={{
                     paddingTop: `${bar.top}px`,
                     paddingBottom: `${bar.bottom}px`,
