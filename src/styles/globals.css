@@ -17,6 +17,9 @@
 html,
 body {
     background: white;
+
+    /* TODO: Dialog 후 클릭 불가 문제 미봉책 */
+    pointer-events: auto !important;
 }
 
 * {
