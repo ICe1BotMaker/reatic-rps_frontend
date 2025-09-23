@@ -33,7 +33,12 @@ import {
 import { useState, useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAds } from "@/features/ads/hooks";
-import { createAds, modifyAdsStake, modifyAdsClickUrl, removeAds } from "@/features/ads/api";
+import {
+    createAds,
+    modifyAdsStake,
+    modifyAdsClickUrl,
+    removeAds,
+} from "@/features/ads/api";
 
 const AD_TYPES = [
     { value: "square", label: "사각형 광고" },
@@ -611,9 +616,15 @@ export default function AdminAds() {
                                         <TableCell>
                                             {getAdTypeLabel(ad.adType)}
                                         </TableCell>
-                                        <TableCell>{ad.advertiser}</TableCell>
-                                        <TableCell>
-                                            {ad.advertiserProfile}
+                                        <TableCell className="min-w-[100px]">
+                                            {ad.advertiser}
+                                        </TableCell>
+                                        <TableCell className="min-w-[60px] p-1">
+                                            <img
+                                                src={ad.advertiserProfile}
+                                                className="w-10 h-10 rounded-full object-cover ma"
+                                                alt=""
+                                            />
                                         </TableCell>
                                         <TableCell>{ad.stake}</TableCell>
                                         <TableCell>
@@ -813,7 +824,8 @@ export default function AdminAds() {
                         <DialogHeader>
                             <DialogTitle>클릭 URL 수정</DialogTitle>
                             <DialogDescription>
-                                {selectedAd?.advertiser}의 클릭 URL을 수정합니다.
+                                {selectedAd?.advertiser}의 클릭 URL을
+                                수정합니다.
                             </DialogDescription>
                         </DialogHeader>
                         <div className="space-y-4">
