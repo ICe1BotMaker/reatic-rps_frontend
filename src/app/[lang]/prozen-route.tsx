@@ -61,7 +61,7 @@ export const FrozenRoute = ({
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    className="relative bg-white w-full h-full"
+                    className="relative flex-1 w-full min-h-full md:overflow-y-auto h-full"
                 >
                     {children}
 

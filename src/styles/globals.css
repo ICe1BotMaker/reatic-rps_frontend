@@ -17,6 +17,9 @@
 html,
 body {
     background: white;
+
+    /* TODO: Dialog 후 클릭 불가 문제 미봉책 */
+    pointer-events: auto !important;
 }
 
 * {
@@ -30,6 +33,21 @@ body {
 .uld {
     list-style: circle;
     margin: 0 12px;
+}
+
+@layer utilities {
+    .scrollbar-overlay::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .scrollbar-overlay::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 4px;
+    }
+
+    .scrollbar-overlay::-webkit-scrollbar-track {
+        background: transparent;
+    }
 }
 
 @keyframes upAnimation {

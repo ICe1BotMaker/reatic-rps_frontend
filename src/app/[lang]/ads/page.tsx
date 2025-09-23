@@ -112,7 +112,7 @@ export default function Ads() {
                             window.open(served?.data.clickUrl, "_blank")
                         }
                     >
-                        <div className="size-[128px] rounded-[8px] overflow-hidden animate-[upAnimation_.3s_both_.2s]">
+                        <div className="size-[128px] rounded-[8px] animate-[upAnimation_.3s_both_.2s]">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={served?.data.advertiserProfile}

@@ -105,7 +105,7 @@ export default function SignUp() {
 
     return (
         <div
-            className="w-full h-full overflow-hidden bg-white"
+            className="w-full h-full bg-white"
             style={{
                 paddingTop: `${bar.top}px`,
                 paddingBottom: `${bar.bottom}px`,
@@ -114,7 +114,7 @@ export default function SignUp() {
             <Header title="회원가입" />
 
             <div
-                className="w-full p-[36px_16px] overflow-y-scroll"
+                className="w-full p-[36px_20px] overflow-y-scroll"
                 style={{
                     height: `calc(100% - 86px - 62px)`,
                 }}

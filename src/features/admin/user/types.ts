@@ -6,7 +6,7 @@ export interface GetMembersResponse {
         nickname: string;
         name: string;
         email: string;
-        role: "ADMIN" | "USER";
+        role: "ADMIN" | "MEMBER";
         status: string; // ACTIVE
         phoneNumber: string;
         profileImageUrl: string;

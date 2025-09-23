@@ -41,7 +41,7 @@ export const BottomSheet = ({
             {isOpen && (
                 <>
                     <motion.div
-                        className="max-w-[500px] fixed z-[1000] inset-0 bg-black bg-opacity-50"
+                        className="fixed z-[1000] inset-0 bg-black bg-opacity-50"
                         onClick={onClose}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 0.5 }}
@@ -50,7 +50,7 @@ export const BottomSheet = ({
                     />
 
                     <motion.div
-                        className="max-w-[500px] fixed z-[1001] inset-x-0 bottom-0 bg-white rounded-t-[20px] rounded-b-0"
+                        className="max-w-[500px] fixed z-[1001] inset-x-0 bottom-0 bg-white rounded-t-[20px] rounded-b-0 mx-auto"
                         drag="y"
                         dragConstraints={{ top: 0, bottom: 0 }}
                         onDragEnd={handleDragEnd}

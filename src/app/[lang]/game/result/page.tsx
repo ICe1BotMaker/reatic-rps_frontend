@@ -288,7 +288,7 @@ export default function GameResult() {
 
         return (
             <div className="h-full flex flex-col justify-between">
-                <div className="p-[36px_16px]">
+                <div className="pt-[36px] px-[20px]">
                     <p className="font-p_semibold text-[32px] text-c_black leading-[39px]">
                         최종 순위는
                         <br />
@@ -352,7 +352,7 @@ export default function GameResult() {
 
     return (
         <div
-            className="w-full h-full overflow-hidden"
+            className="w-full h-full "
             style={{
                 paddingTop: `${bar.top}px`,
                 paddingBottom: `${bar.bottom}px`,
