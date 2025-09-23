@@ -476,7 +476,7 @@ export default function Insight() {
                                                 남성
                                             </span>
                                             <span>
-                                                {genderData.MALE}명 ·{" "}
+                                                {genderData.MALE || 0}명 ·{" "}
                                                 {malePercentage}%
                                             </span>
                                         </div>
@@ -487,7 +487,7 @@ export default function Insight() {
                                                 여성
                                             </span>
                                             <span>
-                                                {genderData.FEMALE}명 ·{" "}
+                                                {genderData.FEMALE || 0}명 ·{" "}
                                                 {femalePercentage}%
                                             </span>
                                         </div>
