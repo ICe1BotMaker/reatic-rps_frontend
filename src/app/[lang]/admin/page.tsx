@@ -2,11 +2,11 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 import { Button } from "@/components/button";
 
 import { ReactComponent as KakaoIcon } from "@/assets/kakao/logo.svg";
-import Link from "next/link";
 
 const CLIENT_ID = "4b441a6d5dd49f091810749329c7ae3c";
 

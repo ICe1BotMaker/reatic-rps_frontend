@@ -7,6 +7,7 @@ import { useLocalizedPath } from "@/utils/locale";
 import { Storage } from "@/services/storage";
 
 import { kakaoAdminLogin } from "@/features/auth/api";
+import { decodeJWT } from "@/utils/jwt-decode";
 
 export default function OauthKakao() {
     const getLocalizedPath = useLocalizedPath();
@@ -32,7 +33,16 @@ export default function OauthKakao() {
                     }
 
                     Storage.setAccessToken(response.data.accessToken);
-                    router.push(getLocalizedPath("/admin/insight"));
+                    const decodedJWT = decodeJWT(
+                        response.data.accessToken || ""
+                    );
+
+                    if (
+                        decodedJWT === null ||
+                        (decodedJWT !== null && decodedJWT.role === "MEMBER")
+                    )
+                        router.push(getLocalizedPath("/introduce"));
+                    else router.push(getLocalizedPath("/admin/insight"));
                 } catch {
                     router.push(getLocalizedPath("/auth/login?failed=true"));
                 }
